@@ -6,6 +6,8 @@ Boop is a web application which acts like a library checkout system, but for com
 
 Its current main goal is to be better than writing on paper.
 
+For the WIP code, see the `develop` branch.
+
 <!-- This README would normally document whatever steps are necessary to get the
 application up and running. -->
 
