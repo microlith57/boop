@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require 'digest'
 require 'securerandom'
 
+# Represents a person who can issue devices.
 class Issuer < ApplicationRecord
-  has_many :devices
+  has_many :devices, dependent: :nullify
 
   validates :name,
             presence: true

@@ -72,3 +72,9 @@ gem 'devise'
 
 # Pagination
 gem 'kaminari'
+
+group :development do
+  gem 'rubocop'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
+end
