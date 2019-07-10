@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+jeffrey:
+  name: Jeffrey TestUser
+  email: jefferey@example.com
+  barcode: 12345
+
+jeremy:
+  name: Jeremy TestUser # No relation to Jeffrey
+  email: jeremy@example.com
+  barcode: 54321
