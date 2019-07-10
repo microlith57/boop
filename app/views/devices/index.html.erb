@@ -1,0 +1,13 @@
+<h1>Devices#index</h1>
+
+<%= paginate @devices %>
+
+<ul>
+  <% @devices.each do |device| %>
+    <li>
+      <%= link_to device.name, device %>
+    </li>
+  <% end %>
+</ul>
+
+<%= paginate @devices %>
