@@ -10,6 +10,7 @@ class HomeController < ApplicationController
     @issuer = Issuer.find_by barcode: params[:issuer]
 
     @device.issuer = @issuer
+    @device.issued_at = Time.current
     if @device.save
       redirect_to root_path
     else
@@ -23,6 +24,7 @@ class HomeController < ApplicationController
     @device = Device.find_by barcode: params[:device]
 
     @device.issuer = nil
+    @device.issued_at = nil
     if @device.save
       redirect_to root_path
     else
