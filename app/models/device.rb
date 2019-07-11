@@ -23,6 +23,23 @@ class Device < ApplicationRecord
     name.parameterize
   end
 
+  def issue(to: nil)
+    raise 'cannot issue without an issuer' if to.nil?
+
+    if !to.allowance.nil? && to.devices.length + 1 > to.allowance
+      errors[:allowance] << 'must not be exceeded'
+      return
+    end
+
+    self.issuer = to
+    self.issued_at = Time.current
+  end
+
+  def return
+    self.issuer = nil
+    self.issued_at = nil
+  end
+
   private
 
   # TODO: Generate valid barcodes
