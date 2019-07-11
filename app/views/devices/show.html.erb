@@ -5,6 +5,10 @@
 <% if @device.issuer.nil? %>
   <p>Not currently issued</p>
 <% else %>
-  <p>Issued by:
-    <%= link_to @device.issuer.name, issuer_path(@device.issuer) %></p>
+  <p>
+    Issued by
+    <%= link_to @device.issuer.name, issuer_path(@device.issuer) %>
+    at
+    <%= @device.issued_at %>
+  </p>
 <% end %>
