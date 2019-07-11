@@ -12,7 +12,7 @@ class IssuersController < ApplicationController
   end
 
   def show
-    @issuer = Issuer.find params[:id]
+    @issuer = find_issuer params[:id]
   end
 
   def new
@@ -20,7 +20,7 @@ class IssuersController < ApplicationController
   end
 
   def edit
-    @issuer = Issuer.find params[:id]
+    @issuer = find_issuer params[:id]
   end
 
   def create
@@ -34,7 +34,7 @@ class IssuersController < ApplicationController
   end
 
   def update
-    @issuer = Issuer.find params[:id]
+    @issuer = find_issuer params[:id]
 
     if @issuer.update issuer_params
       redirect_to @issuer
@@ -44,14 +44,19 @@ class IssuersController < ApplicationController
   end
 
   def delete
-    @issuer = Issuer.find params[:id]
+    @issuer = find_issuer params[:id]
     @issuer.delete
     redirect_to issuers_path
   end
 
   private
 
+  # TODO 404
+  def find_issuer(search_code)
+    Issuer.find_by code: search_code.downcase
+  end
+
   def issuer_params
-    params.require(:issuer).permit(:name, :email)
+    params.require(:issuer).permit(:name, :email, :code)
   end
 end

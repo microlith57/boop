@@ -19,6 +19,10 @@ class Device < ApplicationRecord
 
   before_validation :generate_barcode
 
+  def to_param
+    name.parameterize
+  end
+
   private
 
   # TODO: Generate valid barcodes

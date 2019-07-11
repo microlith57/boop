@@ -12,7 +12,7 @@ class DevicesController < ApplicationController
   end
 
   def show
-    @device = Device.find params[:id]
+    @device = find_device params[:id]
   end
 
   def new
@@ -20,7 +20,7 @@ class DevicesController < ApplicationController
   end
 
   def edit
-    @device = Device.find params[:id]
+    @device = find_device params[:id]
   end
 
   def create
@@ -34,7 +34,7 @@ class DevicesController < ApplicationController
   end
 
   def update
-    @device = Device.find params[:id]
+    @device = find_device params[:id]
 
     if @device.update device_params
       redirect_to @device
@@ -44,12 +44,21 @@ class DevicesController < ApplicationController
   end
 
   def delete
-    @device = Device.find params[:id]
+    @device = find_device params[:id]
     @device.delete
     redirect_to devices_path
   end
 
   private
+
+  # TODO 404
+  def find_device(search_name)
+    table = Device.arel_table
+    devices = Device.where(table[:name].matches(search_name))
+    return nil if devices.blank?
+
+    devices.first
+  end
 
   def device_params
     params.require(:device).permit(:name, :description)

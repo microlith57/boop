@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_10_193124) do
+ActiveRecord::Schema.define(version: 2019_07_11_003553) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -44,7 +44,9 @@ ActiveRecord::Schema.define(version: 2019_07_10_193124) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "salt"
+    t.string "code"
     t.index ["barcode"], name: "index_issuers_on_barcode", unique: true
+    t.index ["code"], name: "index_issuers_on_code", unique: true
   end
 
 end
