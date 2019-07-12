@@ -51,7 +51,7 @@ class DevicesController < ApplicationController
 
   private
 
-  # TODO 404
+  # TODO: 404
   def find_device(search_name)
     table = Device.arel_table
     devices = Device.where(table[:name].matches(search_name))
