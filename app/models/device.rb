@@ -26,18 +26,27 @@ class Device < ApplicationRecord
   def issue(to: nil)
     raise 'cannot issue without an issuer' if to.nil?
 
-    if !to.allowance.nil? && to.devices.length + 1 > to.allowance
+    if to.allowance && to.devices.length + 1 > to.allowance
       errors[:allowance] << 'must not be exceeded'
-      return
+      return false
+    end
+
+    if issuer
+      errors[:device] << 'must not be issued already'
+      return false
     end
 
     self.issuer = to
     self.issued_at = Time.current
+
+    true
   end
 
   def return
     self.issuer = nil
     self.issued_at = nil
+
+    true
   end
 
   private
