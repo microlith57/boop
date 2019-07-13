@@ -1,0 +1,24 @@
+= form_for issuer do |form|
+  - if issuer.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(issuer.errors.count, "error")
+        prohibited
+        this issuer from being saved:
+      %ul
+        - issuer.errors.full_messages.each do |msg|
+          %li= msg
+  %p
+    = form.label :name
+    %br/
+    = form.text_field :name
+  %p
+    = form.label :code
+    %br/
+    = form.text_field :code
+  %p
+    = form.label :email
+    %br/
+    = form.text_field :email
+  %p
+    = form.submit

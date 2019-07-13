@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %meta{ :content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }/
+    %title Boop
+    // Cross-Site Request Forgery related tags
+    = csrf_meta_tags
+    // Content Security Policy related tags
+    = csp_meta_tag
+    // Stylesheets
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    // Javascript
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    %p.notice= notice
+    %p.alert= alert
+    = yield

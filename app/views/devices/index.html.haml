@@ -1,0 +1,7 @@
+%h1 Devices#index
+= paginate @devices
+%ul
+  - @devices.each do |device|
+    %li
+      = link_to device.name, device
+= paginate @devices

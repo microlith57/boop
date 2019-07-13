@@ -1,0 +1,7 @@
+%h1 Issuers#index
+= paginate @issuers
+%ul
+  - @issuers.each do |issuer|
+    %li
+      = link_to issuer.name, issuer
+= paginate @issuers
