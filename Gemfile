@@ -79,3 +79,9 @@ group :development do
   gem 'rubocop-performance'
   gem 'rubocop-rails'
 end
+
+# Fast HAML implementation for views
+gem 'hamlit-rails'
+group :development do
+  gem 'html2haml'
+end

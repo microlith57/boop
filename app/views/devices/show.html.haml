@@ -1,0 +1,11 @@
+%h1= @device.name
+%pre= @device.barcode
+%p= @device.description
+- if @device.issuer.nil?
+  %p Not currently issued
+- else
+  %p
+    Issued by
+    \#{link_to @device.issuer.name, issuer_path(@device.issuer)}
+    at
+    \#{@device.issued_at}

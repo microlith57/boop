@@ -1,0 +1,10 @@
+%h1= @issuer.name
+%p= @issuer.email
+%pre= @issuer.barcode
+- if @issuer.devices.empty?
+  %p No devices issued
+- else
+  Currently issuing:
+  %ul
+    - @issuer.devices.each do |device|
+      %li= link_to device.name, device_path(device)
