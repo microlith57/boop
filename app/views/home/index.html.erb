@@ -2,19 +2,19 @@
 <p>Find me in app/views/home/index.html.erb</p>
 
 <p>
-<%= form_tag controller: "home", action: "issue" do %>
-  <%= label_tag(:issuer, "Issuer Barcode") %><br />
-  <%= text_field_tag(:issuer) %><br />
-  <%= label_tag(:device, "Device Barcode") %><br />
-  <%= text_field_tag(:device) %><br />
+<%= form_tag({ controller: "home", action: "issue" }, remote: true, data: { type: "json", action: "ajax:success->issue-form#on-success ajax:error->issue-form#on-error" }) do %>
+  <%= label_tag(:issue_issuer, "Issuer Barcode") %><br/>
+  <%= text_field_tag(:issue_issuer) %><br/>
+  <%= label_tag(:issue_device, "Device Barcode") %><br/>
+  <%= text_field_tag(:issue_device) %><br/>
   <%= submit_tag("Issue") %>
 <% end %>
 </p>
 
 <p>
-<%= form_tag controller: "home", action: "return" do %>
-  <%= label_tag(:device, "Device Barcode") %><br />
-  <%= text_field_tag(:device) %><br />
+<%= form_tag({ controller: "home", action: "return" }, remote: true, data: { type: "json", action: "ajax:success->return-form#on-success ajax:error->return-form#on-error" }) do %>
+  <%= label_tag(:return_device, "Device Barcode") %><br/>
+  <%= text_field_tag(:return_device) %><br/>
   <%= submit_tag("Return") %>
 <% end %>
 </p>

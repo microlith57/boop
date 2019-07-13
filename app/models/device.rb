@@ -23,30 +23,36 @@ class Device < ApplicationRecord
     name.parameterize
   end
 
+  # Issues the device *to* an Issuer.
+  # Returns an Array of errors (can be empty).
   def issue(to: nil)
+    errors = []
+
     raise 'cannot issue without an issuer' if to.nil?
 
-    if to.allowance && to.devices.length + 1 > to.allowance
-      errors[:allowance] << 'must not be exceeded'
-      return false
+    if issuer
+      errors << 'device must not be already issued'
+      return errors
     end
 
-    if issuer
-      errors[:device] << 'must not be issued already'
-      return false
+    if to.allowance && to.devices.length + 1 > to.allowance
+      errors << 'allowance must not be exceeded'
+      return errors
     end
 
     self.issuer = to
     self.issued_at = Time.current
 
-    true
+    []
   end
 
+  # Return the device from its issuer.
+  # Returns an Array of errors (always empty; this method never fails)
   def return
     self.issuer = nil
     self.issued_at = nil
 
-    true
+    []
   end
 
   private
