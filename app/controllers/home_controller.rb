@@ -11,16 +11,12 @@ class HomeController < ApplicationController
 
     @errors = @device.issue to: @issuer
 
-    respond_to do |format|
-      if @device.save && @errors.empty?
-        format.json { render json: { form: 'issue_form', result: 'success' } }
-      else
-        @errors += @device.errors.full_messages
-        format.json do
-          render json: { form: 'issue_form', result: 'error', errors: @errors },
-                 status: :bad_request
-        end
-      end
+    if @device.save && @errors.empty?
+      render json: []
+    else
+      @errors += @device.errors.full_messages
+      render json: @errors,
+             status: :bad_request
     end
   end
 
@@ -29,17 +25,13 @@ class HomeController < ApplicationController
 
     @errors = @device.return
 
-    respond_to do |format|
-      if @device.save && @errors.empty?
-        format.json { render json: { form: 'return_form', result: 'success' } }
-      else
-        @errors += @device.errors.full_messages
+    if @device.save && @errors.empty?
+      render json: []
+    else
+      @errors += @device.errors.full_messages
+      render json: @errors,
+             status: :bad_request
 
-        format.json do
-          render json: { form: 'return_form', result: 'error', errors: @errors },
-                 status: :bad_request
-        end
-      end
     end
   end
 end

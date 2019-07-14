@@ -85,3 +85,6 @@ gem 'hamlit-rails'
 group :development do
   gem 'html2haml'
 end
+
+# Webpacker to pack JS files
+gem 'webpacker', '~> 4.x'

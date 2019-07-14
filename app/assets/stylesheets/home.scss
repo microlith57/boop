@@ -1,3 +1,49 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#home_forms {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 100%;
+
+  form {
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid #ededed;
+    border-radius: 5px;
+
+    box-shadow: 0 2px 3px #aaa;
+
+    width: max-content;
+
+    background: #ededed;
+
+    input {
+      margin-bottom: 2px;
+    }
+
+    ul {
+      padding-left: 0;
+    	list-style: inside "! ";
+
+      li {
+        font-style: italic;
+      }
+
+      li::marker {
+        color: red;
+        font-style: normal;
+      }
+    }
+  }
+
+  form.success {
+    border-color: green;
+  }
+
+  form.error {
+    border-color: red;
+  }
+}
