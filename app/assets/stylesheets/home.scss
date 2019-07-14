@@ -13,20 +13,26 @@
     margin: 10px;
     border: 2px solid #ededed;
     border-radius: 5px;
-
     box-shadow: 0 2px 3px #aaa;
-
-    width: max-content;
-
+    width: 300px;
     background: #ededed;
+    display: flex;
+    flex-wrap: wrap;
 
     input {
       margin-bottom: 2px;
+      height: 30px - 6px;
+    }
+
+    input[type="text"] {
+      align-self: flex-end;
+      width: 100%;
     }
 
     ul {
       padding-left: 0;
-    	list-style: inside "! ";
+      list-style: inside "! ";
+      align-self: flex-end;
 
       li {
         font-style: italic;
