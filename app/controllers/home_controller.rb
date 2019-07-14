@@ -9,6 +9,8 @@ class HomeController < ApplicationController
     @device = Device.find_by barcode: params[:issue_device]
     @issuer = Issuer.find_by barcode: params[:issue_issuer]
 
+    raise ActiveRecord::RecordNotFound unless @device && @issuer
+
     @errors = @device.issue to: @issuer
 
     if @device.save && @errors.empty?
@@ -22,16 +24,22 @@ class HomeController < ApplicationController
 
   def return
     @device = Device.find_by barcode: params[:return_device]
+    raise ActiveRecord::RecordNotFound unless @device
 
-    @errors = @device.return
+    if @device
+      @errors = @device.return
 
-    if @device.save && @errors.empty?
-      render json: []
+      if @device.save && @errors.empty?
+        render json: []
+      else
+        @errors += @device.errors.full_messages
+        render json: @errors,
+               status: :bad_request
+
+      end
     else
-      @errors += @device.errors.full_messages
-      render json: @errors,
-             status: :bad_request
-
+      render json: ['no such device'],
+             status: :not_found
     end
   end
 end
