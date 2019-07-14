@@ -1,20 +1,17 @@
 %h1 Home#index
 %p Find me in app/views/home/index.html.erb
-%p
-  = form_tag({ controller: "home", action: "issue" }, remote: true, data: { type: "json", action: "ajax:success->issue-form#on-success ajax:error->issue-form#on-error" }) do
-    = label_tag(:issue_issuer, "Issuer Barcode")
+%div#home_forms
+  = form_tag({ controller: "home", action: "issue" }, remote: true, data: { type: "json", controller: 'issue-form', action: "ajax:success->issue-form#on_success ajax:error->issue-form#on_error" }) do
+    = text_field_tag(:issue_issuer, nil, data: { target: 'issue-form.issuerField' }, placeholder: 'Issuer')
     %br/
-    = text_field_tag(:issue_issuer)
+    = text_field_tag(:issue_device, nil, data: { target: 'issue-form.deviceField' }, placeholder: 'Device')
     %br/
-    = label_tag(:issue_device, "Device Barcode")
-    %br/
-    = text_field_tag(:issue_device)
-    %br/
+    = hidden_field_tag :authenticity_token, form_authenticity_token
     = submit_tag("Issue")
-%p
-  = form_tag({ controller: "home", action: "return" }, remote: true, data: { type: "json", action: "ajax:success->return-form#on-success ajax:error->return-form#on-error" }) do
-    = label_tag(:return_device, "Device Barcode")
+    %ul{'data-target': 'issue-form.errorDetail'}
+  = form_tag({ controller: "home", action: "return" }, remote: true, data: { type: "json", controller: 'return-form', action: "ajax:success->return-form#on_success ajax:error->return-form#on_error" }) do
+    = text_field_tag(:return_device, nil, data: { target: 'return-form.deviceField' }, placeholder: 'Device')
     %br/
-    = text_field_tag(:return_device)
-    %br/
+    = hidden_field_tag :authenticity_token, form_authenticity_token
     = submit_tag("Return")
+    %ul{'data-target': 'return-form.errorDetail'}
