@@ -25,6 +25,7 @@ class Device < ApplicationRecord
 
   # Issues the device *to* an Issuer.
   # Returns an Array of errors (can be empty).
+  # TODO: Use exceptions instead of these silly Arrays
   def issue(to: nil)
     errors = []
 
@@ -48,11 +49,22 @@ class Device < ApplicationRecord
 
   # Return the device from its issuer.
   # Returns an Array of errors (always empty; this method never fails)
+  # TODO: Use exceptions instead of these silly Arrays
   def return
     self.issuer = nil
     self.issued_at = nil
 
     []
+  end
+
+  # TODO: Add timezone to config?
+  # TODO: Configurable rollover time
+  def overdue?
+    return false if issuer.nil?
+
+    # Was it issued before yesterday at 4:30 pm?
+    rollover = Time.parse('4:30 pm NZST').utc - 1.day
+    rollover > issued_at
   end
 
   private
