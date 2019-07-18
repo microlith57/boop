@@ -2,9 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$shadow: 0 2px 3px #aaa;
+$background: #fff;
+$on-background: #ededed;
+$foreground: #000;
+$on-foreground: #333;
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Overpass', sans-serif;
   margin-bottom: 5px;
+}
+
+body {
+  background-color: $background;
 }
 
 #home_forms {
@@ -12,13 +22,14 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   flex-wrap: wrap;
   height: 100%;
+  padding-top: 50px;
 
   form {
     padding: 10px;
     margin: 10px;
-    border: 2px solid #ededed;
+    border: 2px solid $on-background;
     border-radius: 5px;
-    box-shadow: 0 2px 3px #aaa;
+    box-shadow: $shadow;
     width: 300px;
     background: #ededed;
 
@@ -70,14 +81,14 @@ h1, h2, h3, h4, h5, h6 {
   .notice {
     border-radius: 5px;
     padding: 15px;
-    box-shadow: 0 2px 2px #aaa;
+    box-shadow: $shadow;
     background: #c9ead7;
   }
 
   .alert {
     border-radius: 5px;
     padding: 15px;
-    box-shadow: 0 2px 2px #aaa;
+    box-shadow: $shadow;
     background: #e1dac2;
   }
 }
