@@ -31,7 +31,7 @@ class Device < ApplicationRecord
     raise 'cannot issue without an issuer' if to.nil?
 
     if issuer
-      errors << 'device must not be already issued'
+      errors << 'device is already issued'
       return errors
     end
 

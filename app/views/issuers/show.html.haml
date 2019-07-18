@@ -1,4 +1,7 @@
 %h1= @issuer.name
+%ul.menu
+  %li= link_to 'Back', issuers_url
+  %li= link_to 'Edit', edit_issuer_url(@issuer)
 %p= @issuer.email
 %pre= @issuer.barcode
 - if @issuer.devices.empty?

@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Overpass', sans-serif;
+  margin-bottom: 5px;
+}
+
 #home_forms {
   display: flex;
   justify-content: center;
@@ -16,23 +21,22 @@
     box-shadow: 0 2px 3px #aaa;
     width: 300px;
     background: #ededed;
-    display: flex;
-    flex-wrap: wrap;
 
     input {
       margin-bottom: 2px;
       height: 30px - 6px;
+      display: block;
     }
 
     input[type="text"] {
-      align-self: flex-end;
-      width: 100%;
+      width: calc(100% - 14px);
     }
 
     ul {
+      list-style: inside "!";
+      margin: 0;
+      padding-top: 4px;
       padding-left: 0;
-      list-style: inside "! ";
-      align-self: flex-end;
 
       li {
         font-style: italic;
@@ -41,6 +45,7 @@
       li::marker {
         color: red;
         font-style: normal;
+        margin-right: 5px;
       }
     }
   }
@@ -51,5 +56,47 @@
 
   form.error {
     border-color: red;
+  }
+}
+
+#notices {
+  position: fixed;
+  display: flex;
+  right: 0;
+  margin-top: 0px;
+  margin-right: 16px;
+  z-index: 50;
+
+  .notice {
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 2px #aaa;
+    background: #c9ead7;
+  }
+
+  .alert {
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 2px #aaa;
+    background: #e1dac2;
+  }
+}
+
+.menu {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  li {
+    display: inline;
+    padding: 3px;
+
+    a {
+      color: black;
+      text-decoration: underline;
+    }
   }
 }

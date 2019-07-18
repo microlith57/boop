@@ -1,17 +1,37 @@
-%h1 Home#index
-%p Find me in app/views/home/index.html.erb
-%div#home_forms
-  = form_tag({ controller: "home", action: "issue" }, remote: true, data: { type: "json", controller: 'issue-form', action: "ajax:success->issue-form#on_success ajax:error->issue-form#on_error" }) do
-    = text_field_tag(:issue_issuer, nil, data: { target: 'issue-form.issuerField' }, placeholder: 'Issuer')
-    %br/
-    = text_field_tag(:issue_device, nil, data: { target: 'issue-form.deviceField' }, placeholder: 'Device')
-    %br/
+%h1 Home
+= render 'home/menu'
+%section#home_forms
+  = form_tag({ controller: 'home', action: 'issue' },
+             remote: true,
+             data: { type: 'json',
+                     controller: 'issue-form',
+                     action: 'ajax:success->issue-form#on_success ajax:error->issue-form#on_error' },
+             class: 'success') do
+    = text_field_tag :issue_issuer,
+                     nil,
+                     data: { target: 'issue-form.issuerField' },
+                     placeholder: 'Issuer',
+                     required: true
+    = text_field_tag :issue_device,
+                     nil,
+                     data: { target: 'issue-form.deviceField' },
+                     placeholder: 'Device',
+                     required: true
     = hidden_field_tag :authenticity_token, form_authenticity_token
-    = submit_tag("Issue")
-    %ul{'data-target': 'issue-form.errorDetail'}
-  = form_tag({ controller: "home", action: "return" }, remote: true, data: { type: "json", controller: 'return-form', action: "ajax:success->return-form#on_success ajax:error->return-form#on_error" }) do
-    = text_field_tag(:return_device, nil, data: { target: 'return-form.deviceField' }, placeholder: 'Device')
-    %br/
+    = submit_tag('Issue')
+    %ul{ 'data-target': 'issue-form.errorDetail' }
+
+  = form_tag({ controller: 'home', action: 'return' },
+               remote: true,
+               data: { type: 'json',
+                       controller: 'return-form',
+                       action: 'ajax:success->return-form#on_success ajax:error->return-form#on_error' },
+               class: 'success') do
+    = text_field_tag :return_device,
+                     nil,
+                     data: { target: 'return-form.deviceField' },
+                     placeholder: 'Device',
+                     required: true
     = hidden_field_tag :authenticity_token, form_authenticity_token
-    = submit_tag("Return")
-    %ul{'data-target': 'return-form.errorDetail'}
+    = submit_tag('Return')
+    %ul{ 'data-target': 'return-form.errorDetail' }
