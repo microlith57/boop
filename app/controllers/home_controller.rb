@@ -9,7 +9,7 @@ class HomeController < ApplicationController
     @device = Device.find_by barcode: params[:issue_device]
     @issuer = Issuer.find_by barcode: params[:issue_issuer]
 
-    raise ActiveRecord::RecordNotFound unless @device && @issuer
+    return render json: ['invalid device or issuer'], status: :bad_request unless @device && @issuer
 
     @errors = @device.issue to: @issuer
 
@@ -24,7 +24,7 @@ class HomeController < ApplicationController
 
   def return
     @device = Device.find_by barcode: params[:return_device]
-    raise ActiveRecord::RecordNotFound unless @device
+    return render json: ['invalid device'], status: :bad_request unless @device
 
     if @device
       @errors = @device.return

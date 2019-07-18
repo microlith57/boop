@@ -1,4 +1,5 @@
-%h1 Issuers#index
+%h1 Issuers
+= render 'home/menu'
 = paginate @issuers
 %ul
   - @issuers.each do |issuer|
