@@ -1,0 +1,8 @@
+%h1 Devices
+= render 'home/menu'
+= paginate @devices
+%ul
+  - @devices.each do |device|
+    %li
+      = link_to "#{device.name} (#{device.days_overdue})", device
+= paginate @devices

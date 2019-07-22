@@ -11,6 +11,14 @@ class DevicesController < ApplicationController
     @devices = devices.per(limit_value)
   end
 
+  def overdue
+    page = params[:page]
+    devices = Device.overdue.order(:name).page(page)
+
+    limit_value = params[:limit] || devices.limit_value
+    @devices = devices.per(limit_value)
+  end
+
   def show
     @device = find_device params[:id]
   end
