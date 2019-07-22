@@ -59,12 +59,37 @@ class Device < ApplicationRecord
 
   # TODO: Add timezone to config?
   # TODO: Configurable rollover time
-  def overdue?
-    return false if issuer.nil?
+  def self.overdue_rollover(time = DateTime.current)
+    # Time.parse('4:30 pm NZST').utc - 1.day
+    time.at_noon.advance(hours: 4, minutes: 30)
+  end
 
-    # Was it issued before yesterday at 4:30 pm?
-    rollover = Time.parse('4:30 pm NZST').utc - 1.day
-    rollover > issued_at
+  # Scope for overdue devices.
+  def self.overdue
+    where.not(issued_at: nil).where('issued_at < ?', overdue_rollover - 1.day)
+  end
+
+  def self.issued_before(time)
+    where.not(issued_at: nil).where('issued_at < ?', time)
+  end
+
+  def overdue?
+    return false if issued_at.nil?
+
+    issued_at < (overdue_rollover - 1.day)
+  end
+
+  def issued_before?(time)
+    return false if issued_at.nil?
+
+    issued_at < time
+  end
+
+  def days_overdue
+    date_today  = Internal.adjust_by_rollover DateTime.current
+    date_issued = Internal.adjust_by_rollover issued_at
+
+    (date_today - date_issued).to_i
   end
 
   private
@@ -75,5 +100,16 @@ class Device < ApplicationRecord
 
     self.salt = SecureRandom.base64(20)
     self.barcode = Digest::SHA256.hexdigest name + salt
+  end
+
+  module Internal
+    def self.adjust_by_rollover(time)
+      rollover = Device.overdue_rollover time
+      if time < rollover
+        time.to_date
+      else
+        time.to_date + 1.day
+      end
+    end
   end
 end
