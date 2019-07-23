@@ -15,6 +15,13 @@ class IssuersController < ApplicationController
     @issuer = find_issuer params[:id]
   end
 
+  def barcode
+    @issuer = find_issuer params[:id]
+    send_data @issuer.barcode_png,
+              type: 'image/png',
+              disposition: 'inline'
+  end
+
   def new
     @issuer = Issuer.new
     @issuer.allowance = 1

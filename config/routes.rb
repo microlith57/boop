@@ -10,8 +10,14 @@ Rails.application.routes.draw do
     collection do
       get 'overdue'
     end
+    member do
+      get 'barcode'
+    end
   end
 
   resources :issuers do
+    member do
+      get 'barcode'
+    end
   end
 end

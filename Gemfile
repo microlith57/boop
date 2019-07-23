@@ -88,3 +88,7 @@ end
 
 # Webpacker to pack JS files
 gem 'webpacker', '~> 4.x'
+
+# Barcode to PNG
+gem 'barby'
+gem 'chunky_png'
