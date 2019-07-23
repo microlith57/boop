@@ -6,6 +6,12 @@ Rails.application.routes.draw do
   post 'issue',  to: 'home#issue'
   post 'return', to: 'home#return'
 
-  resources :devices
-  resources :issuers
+  resources :devices do
+    collection do
+      get 'overdue'
+    end
+  end
+
+  resources :issuers do
+  end
 end

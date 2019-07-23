@@ -17,6 +17,7 @@ class IssuersController < ApplicationController
 
   def new
     @issuer = Issuer.new
+    @issuer.allowance = 1
   end
 
   def edit
@@ -43,7 +44,7 @@ class IssuersController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     @issuer = find_issuer params[:id]
     @issuer.delete
     redirect_to issuers_path
@@ -59,6 +60,6 @@ class IssuersController < ApplicationController
   end
 
   def issuer_params
-    params.require(:issuer).permit(:name, :email, :code)
+    params.require(:issuer).permit(:name, :email, :code, :allowance, :barcode)
   end
 end

@@ -76,7 +76,7 @@ class Device < ApplicationRecord
   def overdue?
     return false if issued_at.nil?
 
-    issued_at < (overdue_rollover - 1.day)
+    issued_at < (Device.overdue_rollover - 1.day)
   end
 
   def issued_before?(time)
