@@ -2,8 +2,10 @@
 %ul.menu
   %li= link_to 'Back', issuers_url
   %li= link_to 'Edit', edit_issuer_url(@issuer)
+  %li= link_to 'Delete', issuer_url(@issuer), method: :delete, confirm: 'Are you sure?'
 %p= @issuer.email
 %pre= @issuer.barcode
+%p Allowance: #{@issuer.devices.count}/#{@issuer.allowance || 'Unlimited'}
 - if @issuer.devices.empty?
   %p No devices issued
 - else

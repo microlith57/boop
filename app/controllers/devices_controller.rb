@@ -51,7 +51,7 @@ class DevicesController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     @device = find_device params[:id]
     @device.delete
     redirect_to devices_path
@@ -68,6 +68,6 @@ class DevicesController < ApplicationController
   end
 
   def device_params
-    params.require(:device).permit(:name, :description)
+    params.require(:device).permit(:name, :description, :barcode)
   end
 end

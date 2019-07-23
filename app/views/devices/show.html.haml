@@ -1,7 +1,11 @@
-%h1= @device.name
+- if @device.overdue?
+  %h1.overdue #{@device.name} (#{pluralize(@device.days_overdue, 'day')} overdue)
+- else
+  %h1= @device.name
 %ul.menu
   %li= link_to 'Back', devices_url
   %li= link_to 'Edit', edit_device_url(@device)
+  %li= link_to 'Delete', device_url(@device), method: :delete, confirm: 'Are you sure?'
 %pre= @device.barcode
 %p= @device.description
 - if @device.issuer.nil?

@@ -7,6 +7,8 @@ $background: #fff;
 $on-background: #ededed;
 $foreground: #000;
 $on-foreground: #333;
+$red: red;
+$green: green;
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Overpass', sans-serif;
@@ -54,7 +56,7 @@ body {
       }
 
       li::marker {
-        color: red;
+        color: $red;
         font-style: normal;
         margin-right: 5px;
       }
@@ -62,11 +64,11 @@ body {
   }
 
   form.success {
-    border-color: green;
+    border-color: $green;
   }
 
   form.error {
-    border-color: red;
+    border-color: $red;
   }
 }
 
@@ -110,4 +112,8 @@ body {
       text-decoration: underline;
     }
   }
+}
+
+h1.overdue {
+  color: $red;
 }
