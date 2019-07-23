@@ -23,6 +23,13 @@ class DevicesController < ApplicationController
     @device = find_device params[:id]
   end
 
+  def barcode
+    @device = find_device params[:id]
+    send_data @device.barcode_png,
+              type: 'image/png',
+              disposition: 'inline'
+  end
+
   def new
     @device = Device.new
   end

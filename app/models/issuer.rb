@@ -36,6 +36,11 @@ class Issuer < ApplicationRecord
     code.parameterize
   end
 
+  def barcode_png
+    barcode = Barby::Code128.new(self.barcode)
+    Barby::PngOutputter.new(barcode).to_png
+  end
+
   private
 
   # TODO: Generate valid barcodes
@@ -43,6 +48,7 @@ class Issuer < ApplicationRecord
     return unless barcode.nil? || salt.nil?
 
     self.salt = SecureRandom.base64(20)
-    self.barcode = Digest::SHA256.hexdigest name + salt
+    hash = Digest::SHA256.hexdigest name + salt
+    self.barcode = hash[0...10]
   end
 end
