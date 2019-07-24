@@ -45,8 +45,7 @@ export default class extends Controller {
   }
 
   clear() {
+    this.element.reset()
     this.issuerFieldTarget.focus()
-    this.issuerFieldTarget.value = ''
-    this.deviceFieldTarget.value = ''
   }
 }
