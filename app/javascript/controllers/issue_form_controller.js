@@ -21,6 +21,7 @@ export default class extends Controller {
 
     this.element.className = "success"
     this.errorDetailTarget.innerHTML = ""
+    this.clear()
   }
 
   on_error(event) {
@@ -40,5 +41,12 @@ export default class extends Controller {
         this.errorDetailTarget.innerHTML += `<li>${json[err]}</li>`
       }
     }
+    this.clear()
+  }
+
+  clear() {
+    this.issuerFieldTarget.focus()
+    this.issuerFieldTarget.value = ''
+    this.deviceFieldTarget.value = ''
   }
 }
