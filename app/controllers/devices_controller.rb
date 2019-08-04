@@ -5,7 +5,7 @@ class DevicesController < ApplicationController
 
   def index
     page = params[:page]
-    devices = Device.order(:name).page(page)
+    devices = Device.order(sort_type => sort_direction).page(page)
 
     limit_value = params[:limit] || devices.limit_value
     @devices = devices.per(limit_value)
@@ -13,7 +13,7 @@ class DevicesController < ApplicationController
 
   def overdue
     page = params[:page]
-    devices = Device.overdue.order(:name).page(page)
+    devices = Device.overdue.order(sort_type => sort_direction).page(page)
 
     limit_value = params[:limit] || devices.limit_value
     @devices = devices.per(limit_value)
@@ -76,5 +76,19 @@ class DevicesController < ApplicationController
 
   def device_params
     params.require(:device).permit(:name, :description, :barcode)
+  end
+
+  def sort_type
+    type = (params[:sort] || 'name').strip
+    type = 'name' unless type.in? %w[name description barcode created_at issued_at]
+
+    type.to_sym
+  end
+
+  def sort_direction
+    dir = (params[:sort_dir] || 'asc').strip
+    dir = 'asc' unless dir.in? %w[asc desc]
+
+    dir.to_sym
   end
 end
