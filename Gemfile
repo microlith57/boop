@@ -92,3 +92,6 @@ gem 'webpacker', '~> 4.x'
 # Barcode to PNG
 gem 'barby'
 gem 'chunky_png'
+
+# Detect N+1 queries
+gem 'bullet', group: 'development'
