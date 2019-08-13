@@ -95,3 +95,6 @@ gem 'chunky_png'
 
 # Detect N+1 queries
 gem 'bullet', group: 'development'
+
+# Sortable tables
+gem 'ransack', github: 'activerecord-hackery/ransack'

@@ -5,7 +5,8 @@ class IssuersController < ApplicationController
 
   def index
     page = params[:page]
-    issuers = Issuer.order(sort_type => sort_direction).page(page)
+    @q = Issuer.ransack(params[:q])
+    issuers = @q.result.page(page)
 
     limit_value = params[:limit] || issuers.limit_value
     @issuers = issuers.per(limit_value)
@@ -68,19 +69,5 @@ class IssuersController < ApplicationController
 
   def issuer_params
     params.require(:issuer).permit(:name, :email, :code, :allowance, :barcode)
-  end
-
-  def sort_type
-    type = (params[:sort] || 'name').strip
-    type = 'name' unless type.in? %w[name email code description barcode allowance created_at]
-
-    type.to_sym
-  end
-
-  def sort_direction
-    dir = (params[:sort_dir] || 'asc').strip
-    dir = 'asc' unless dir.in? %w[asc desc]
-
-    dir.to_sym
   end
 end
