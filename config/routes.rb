@@ -7,9 +7,6 @@ Rails.application.routes.draw do
   post 'return', to: 'home#return'
 
   resources :devices do
-    collection do
-      get 'overdue'
-    end
     member do
       get 'barcode'
     end

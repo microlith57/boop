@@ -1,8 +1,19 @@
 %h1 Issuers
 = render 'home/menu'
 = paginate @issuers
-%ul
-  - @issuers.each do |issuer|
-    %li
-      = link_to issuer.name, issuer
+
+%table
+  %thead
+    %tr
+      %th= sort_link @q, :name
+      %th= sort_link @q, :barcode
+      %th= sort_link @q, :created_at, 'Time Created'
+  %tbody
+    - @issuers.each do |issuer|
+      %tr
+        %td= link_to issuer.name, issuer
+        %td
+          %pre= issuer.barcode
+        %td= issuer.created_at
+
 = paginate @issuers

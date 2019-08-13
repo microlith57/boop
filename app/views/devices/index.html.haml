@@ -1,8 +1,24 @@
 %h1 Devices
 = render 'home/menu'
 = paginate @devices
-%ul
-  - @devices.each do |device|
-    %li
-      = link_to device.name, device
+%table
+  %thead
+    %tr
+      %th= sort_link @q, :name
+      %th= sort_link @q, :barcode
+      %th= sort_link @q, :created_at, 'Time Created'
+      %th= sort_link @q, :issued_at, 'Time Issued'
+      %th= sort_link @q, :days_overdue, 'Days Overdue'
+  %tbody
+    - @devices.each do |device|
+      %tr
+        %td= link_to device.name, device
+        %td
+          %pre= device.barcode
+        %td= device.created_at
+        %td= device.issued_at || '-'
+        - if device.overdue?
+          %td= device.days_overdue
+        - else
+          %td -
 = paginate @devices
