@@ -98,3 +98,6 @@ gem 'bullet', group: 'development'
 
 # Sortable tables
 gem 'ransack', github: 'activerecord-hackery/ransack'
+
+# Config YML file
+gem "figaro"
