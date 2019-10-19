@@ -114,6 +114,11 @@ body {
   }
 }
 
-h1.overdue {
+.overdue {
   color: $red;
+}
+
+a.sort_link {
+  text-decoration: none;
+  color: blue;
 }
