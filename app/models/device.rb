@@ -6,6 +6,8 @@ require 'barby/barcode/code_128'
 require 'barby/outputter/png_outputter'
 
 class Device < ApplicationRecord
+  DEFAULT_ROLLOVER_TIME = Time.parse(ENV['ROLLOVER_TIME'] || '4:30 pm')
+
   belongs_to :issuer,
              optional: true
 
@@ -20,6 +22,12 @@ class Device < ApplicationRecord
             presence: true
 
   before_validation :generate_barcode
+
+  # Scope for overdue devices.
+  scope :overdue, -> { where.not(issued_at: nil).where('issued_at < ?', overdue_rollover - 1.day) }
+
+  # Scope for devices issued before a given time.
+  scope :issued_before, ->(time) { where.not(issued_at: nil).where('issued_at < ?', time) }  
 
   def to_param
     name.parameterize
@@ -59,26 +67,20 @@ class Device < ApplicationRecord
     []
   end
 
-  # TODO: Add timezone to config?
-  # TODO: Configurable rollover time
-  def self.overdue_rollover(time = DateTime.current)
-    # Time.parse('4:30 pm NZST').utc - 1.day
-    time.at_noon.advance(hours: 4, minutes: 30)
-  end
-
-  # Scope for overdue devices.
-  def self.overdue
-    where.not(issued_at: nil).where('issued_at < ?', overdue_rollover - 1.day)
-  end
-
-  def self.issued_before(time)
-    where.not(issued_at: nil).where('issued_at < ?', time)
+  # Find the overdue rollover time for today.
+  def self.overdue_rollover(date = DateTime.current)
+    today_date_hash = {
+      year:  date.year,
+      month: date.month,
+      day:   date.day,
+    }
+    DEFAULT_ROLLOVER_TIME.change(today_date_hash)
   end
 
   def overdue?
     return false if issued_at.nil?
 
-    issued_at < (Device.overdue_rollover - 1.day)
+    issued_at < Device.overdue_rollover
   end
 
   def issued_before?(time)
@@ -88,6 +90,7 @@ class Device < ApplicationRecord
   end
 
   def days_overdue
+    return 0 if !overdue?
     date_today  = Internal.adjust_by_rollover DateTime.current
     date_issued = Internal.adjust_by_rollover issued_at
 

@@ -8,11 +8,14 @@
       %th= sort_link @q, :barcode
       %th= sort_link @q, :created_at, 'Time Created'
       %th= sort_link @q, :issued_at, 'Time Issued'
-      %th= sort_link @q, :days_overdue, 'Days Overdue'
+      %th Days Overdue
   %tbody
     - @devices.each do |device|
       %tr
-        %td= link_to device.name, device
+        - if device.overdue?
+          %td= link_to device.name, device, class: 'overdue'
+        - else
+          %td= link_to device.name, device
         %td
           %pre= device.barcode
         %td= device.created_at
