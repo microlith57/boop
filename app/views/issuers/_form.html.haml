@@ -1,8 +1,8 @@
-= form_for issuer do |form|
+= form_for issuer, data: { controller: 'issuer-form' } do |form|
   - if issuer.errors.any?
     #error_explanation
       %h2
-        = pluralize(issuer.errors.count, "error")
+        = pluralize(issuer.errors.count, 'error')
         prohibited
         this issuer from being saved:
       %ul
@@ -11,21 +11,29 @@
   %p
     = form.label :name
     %br/
-    = form.text_field :name
+    = form.text_field :name,
+                      data: { target: 'issuer-form.nameField',
+                              action: 'change->issuer-form#nameEdited' }
   %p
     = form.label :code
     %br/
-    = form.text_field :code
+    = form.text_field :code,
+                      data: { target: 'issuer-form.codeField',
+                              action: 'change->issuer-form#codeEdited' }
   %p
     = form.label :email
     %br/
-    = form.text_field :email
+    = form.text_field :email,
+                      data: { target: 'issuer-form.emailField' }
   %p
-    = form.label :allowance, "Allowance (leave empty for unlimited)"
+    = form.label :allowance, 'Allowance (leave empty for unlimited)'
     %br/
     = form.number_field :allowance, step: 1
   %p
-    = form.label :barcode
+    - if new_issuer
+      = form.label :barcode, 'Barcode (leave empty for automatic)'
+    - else
+      = form.label :barcode
     %br/
     = form.text_field :barcode
   %p
