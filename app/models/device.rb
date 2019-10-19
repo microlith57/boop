@@ -36,7 +36,7 @@ class Device < ApplicationRecord
   # Issues the device *to* an Issuer.
   # Returns an Array of errors (can be empty).
   # TODO: Use exceptions instead of these silly Arrays
-  def issue(to: nil)
+  def issue(to: nil, override_allowance: false)
     errors = []
 
     raise 'cannot issue without an issuer' if to.nil?
@@ -46,7 +46,7 @@ class Device < ApplicationRecord
       return errors
     end
 
-    if to.allowance && to.devices.length + 1 > to.allowance
+    if !override_allowance && to.allowance && to.devices.length + 1 > to.allowance
       errors << 'allowance must not be exceeded'
       return errors
     end
