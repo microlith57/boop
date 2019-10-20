@@ -9,7 +9,9 @@ class HomeController < ApplicationController
     @device = Device.find_by barcode: params[:issue_device]
     @issuer = Issuer.find_by barcode: params[:issue_issuer]
 
-    return render json: ['invalid device or issuer'], status: :bad_request unless @device && @issuer
+    unless @device && @issuer
+      return render json: ['invalid device or issuer'], status: :bad_request
+    end
 
     @errors = @device.issue to: @issuer
 
