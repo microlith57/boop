@@ -84,6 +84,7 @@ end
 gem 'hamlit-rails'
 group :development do
   gem 'html2haml'
+  gem 'haml_lint', require: false
 end
 
 # Webpacker to pack JS files

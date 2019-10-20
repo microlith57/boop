@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %meta{ :content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }/
+    %meta{ :content => 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type' }/
     %title Boop
     / Cross-Site Request Forgery
     = csrf_meta_tags
@@ -10,7 +10,8 @@
     / Fonts
     = render 'home/fonts'
     / Stylesheets
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag 'application', media: 'all',
+                          'data-turbolinks-track': 'reload'
     / Javascript
     = javascript_pack_tag 'application'
   %body
