@@ -4,23 +4,12 @@ require:
 
 AllCops:
   Exclude:
-    - 'db/**/*'
-    - 'config/**/*'
-    - 'script/**/*'
-    - 'bin/**/*'
-
-Metrics/LineLength:
-  Enabled: false
-
-Metrics/AbcSize:
-  Max: 30
-
-Metrics/MethodLength:
-  Max: 30
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - '.git/**/*'
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'bin/*'
 
 Style/Documentation:
   Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-  EnforcedStyle: compact

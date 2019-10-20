@@ -100,4 +100,4 @@ gem 'bullet', group: 'development'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 
 # Config YML file
-gem "figaro"
+gem 'figaro'

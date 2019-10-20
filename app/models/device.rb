@@ -6,7 +6,7 @@ require 'barby/barcode/code_128'
 require 'barby/outputter/png_outputter'
 
 class Device < ApplicationRecord
-  DEFAULT_ROLLOVER_TIME = Time.parse(ENV['ROLLOVER_TIME'] || '4:30 pm')
+  DEFAULT_ROLLOVER_TIME = Time.zone.parse(ENV['ROLLOVER_TIME'] || '4:30 pm')
 
   belongs_to :issuer,
              optional: true
@@ -24,10 +24,14 @@ class Device < ApplicationRecord
   before_validation :generate_barcode
 
   # Scope for overdue devices.
-  scope :overdue, -> { where.not(issued_at: nil).where('issued_at < ?', overdue_rollover - 1.day) }
+  scope :overdue, lambda {
+    where.not(issued_at: nil).where('issued_at < ?', overdue_rollover - 1.day)
+  }
 
   # Scope for devices issued before a given time.
-  scope :issued_before, ->(time) { where.not(issued_at: nil).where('issued_at < ?', time) }  
+  scope :issued_before, lambda { |time|
+    where.not(issued_at: nil).where('issued_at < ?', time)
+  }
 
   def to_param
     name.parameterize
@@ -46,10 +50,12 @@ class Device < ApplicationRecord
       return errors
     end
 
+    # rubocop:todo Metrics/LineLength
     if !override_allowance && to.allowance && to.devices.length + 1 > to.allowance
       errors << 'allowance must not be exceeded'
       return errors
     end
+    # rubocop:enable Metrics/LineLength
 
     self.issuer = to
     self.issued_at = Time.current
@@ -70,9 +76,9 @@ class Device < ApplicationRecord
   # Find the overdue rollover time for today.
   def self.overdue_rollover(date = DateTime.current)
     today_date_hash = {
-      year:  date.year,
+      year: date.year,
       month: date.month,
-      day:   date.day,
+      day: date.day
     }
     DEFAULT_ROLLOVER_TIME.change(today_date_hash)
   end
@@ -90,7 +96,8 @@ class Device < ApplicationRecord
   end
 
   def days_overdue
-    return 0 if !overdue?
+    return 0 unless overdue?
+
     date_today  = Internal.adjust_by_rollover DateTime.current
     date_issued = Internal.adjust_by_rollover issued_at
 

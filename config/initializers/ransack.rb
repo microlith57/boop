@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Ransack.configure do |c|
   c.custom_arrows = {
     up_arrow: '▴',
@@ -5,4 +7,3 @@ Ransack.configure do |c|
     default_arrow: ''
   }
 end
-
