@@ -5,8 +5,8 @@ class IssuersController < ApplicationController
 
   def index
     page = params[:page]
-    @q = Issuer.ransack(params[:q])
-    issuers = @q.result.page(page)
+    @query = Issuer.ransack(params[:q])
+    issuers = @query.result.page(page)
 
     limit_value = params[:limit] || issuers.limit_value
     @issuers = issuers.per(limit_value)
@@ -61,10 +61,7 @@ class IssuersController < ApplicationController
   private
 
   def find_issuer(search_code)
-    issuer = Issuer.find_by code: search_code.downcase
-    raise ActiveRecord::RecordNotFound if issuer.nil?
-
-    issuer
+    Issuer.find_by! code: search_code.downcase
   end
 
   def issuer_params

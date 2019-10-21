@@ -40,6 +40,9 @@ class Device < ApplicationRecord
   # Issues the device *to* an Issuer.
   # Returns an Array of errors (can be empty).
   # TODO: Use exceptions instead of these silly Arrays
+  # TODO: Refactor
+  # :reek:BooleanParameter
+  # :reek:TooManyStatements
   def issue(to: nil, override_allowance: false)
     errors = []
 

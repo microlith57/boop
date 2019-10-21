@@ -5,8 +5,8 @@ class DevicesController < ApplicationController
 
   def index
     page = params[:page]
-    @q = Device.ransack(params[:q])
-    devices = @q.result(distinct: true).page(page)
+    @query = Device.ransack(params[:q])
+    devices = @query.result(distinct: true).page(page)
 
     limit_value = params[:limit] || devices.limit_value
     @devices = devices.per(limit_value)
@@ -61,10 +61,7 @@ class DevicesController < ApplicationController
 
   def find_device(search_name)
     table = Device.arel_table
-    devices = Device.where(table[:name].matches(search_name))
-    raise ActiveRecord::RecordNotFound if devices.blank?
-
-    devices.first
+    Device.find_by!(table[:name].matches(search_name))
   end
 
   def device_params

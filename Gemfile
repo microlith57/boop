@@ -80,11 +80,16 @@ group :development do
   gem 'rubocop-rails'
 end
 
+# Reek
+group :development do
+  gem 'reek'
+end
+
 # Fast HAML implementation for views
 gem 'hamlit-rails'
 group :development do
-  gem 'html2haml'
   gem 'haml_lint', require: false
+  gem 'html2haml'
 end
 
 # Webpacker to pack JS files
