@@ -4,10 +4,10 @@
 %table
   %thead
     %tr
-      %th= sort_link @q, :name
-      %th= sort_link @q, :barcode
-      %th= sort_link @q, :created_at, 'Time Created'
-      %th= sort_link @q, :issued_at, 'Time Issued'
+      %th= sort_link @query, :name
+      %th= sort_link @query, :barcode
+      %th= sort_link @query, :created_at, 'Time Created'
+      %th= sort_link @query, :issued_at, 'Time Issued'
       %th Days Overdue
   %tbody
     - @devices.each do |device|

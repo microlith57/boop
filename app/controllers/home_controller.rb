@@ -5,6 +5,8 @@ class HomeController < ApplicationController
 
   def index; end
 
+  # TODO: Refactor!
+  # :reek:TooManyStatements
   def issue
     @device = Device.find_by barcode: params[:issue_device]
     @issuer = Issuer.find_by barcode: params[:issue_issuer]
@@ -24,6 +26,8 @@ class HomeController < ApplicationController
     end
   end
 
+  # TODO: Refactor!
+  # :reek:TooManyStatements
   def return
     @device = Device.find_by barcode: params[:return_device]
     return render json: ['invalid device'], status: :bad_request unless @device
