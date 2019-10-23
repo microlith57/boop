@@ -13,18 +13,20 @@
     %br/
     = form.text_field :name,
                       data: { target: 'issuer-form.nameField',
-                              action: 'change->issuer-form#nameEdited' }
+                              action: 'input->issuer-form#nameEdited' }
   %p
     = form.label :code
     %br/
     = form.text_field :code,
                       data: { target: 'issuer-form.codeField',
-                              action: 'change->issuer-form#codeEdited' }
+                              action: 'input->issuer-form#codeEdited' }
   %p
     = form.label :email
     %br/
     = form.text_field :email,
                       data: { target: 'issuer-form.emailField' }
+    = hidden_field_tag :default_email_suffix, default_email_suffix,
+                       data: { target: 'issuer-form.defaultEmailSuffix' }
   %p
     = form.label :allowance, 'Allowance (leave empty for unlimited)'
     %br/
