@@ -5,47 +5,31 @@ class HomeController < ApplicationController
 
   def index; end
 
-  # TODO: Refactor!
-  # :reek:TooManyStatements
   def issue
-    @device = Device.find_by barcode: params[:issue_device]
-    @issuer = Issuer.find_by barcode: params[:issue_issuer]
+    @device = Device.find_by! barcode: params[:issue_device]
+    @issuer = Issuer.find_by! barcode: params[:issue_issuer]
+    validate_allowance
 
-    unless @device && @issuer
-      return render json: ['invalid device or issuer'], status: :bad_request
-    end
+    @device.issue @issuer
+    return if @device.save
 
-    @errors = @device.issue to: @issuer
-
-    if @device.save && @errors.empty?
-      render json: []
-    else
-      @errors += @device.errors.full_messages
-      render json: @errors,
-             status: :bad_request
-    end
+    render json: @device.errors.full_messages, status: :bad_request
   end
 
-  # TODO: Refactor!
-  # :reek:TooManyStatements
   def return
-    @device = Device.find_by barcode: params[:return_device]
-    return render json: ['invalid device'], status: :bad_request unless @device
+    @device = Device.find_by! barcode: params[:return_device]
+    @device.return
+    return if @device.save
 
-    if @device
-      @errors = @device.return
+    render json: @device.errors, status: :bad_request
+  end
 
-      if @device.save && @errors.empty?
-        render json: []
-      else
-        @errors += @device.errors.full_messages
-        render json: @errors,
-               status: :bad_request
+  private
 
-      end
-    else
-      render json: ['no such device'],
-             status: :not_found
-    end
+  def validate_allowance
+    override = params[:override_allowance]
+    return if override || @issuer.allowance >= (@issuer.devices.length + 1)
+
+    @device.errors.add(:issuer, "can't have a full allowance")
   end
 end

@@ -44,6 +44,7 @@ class Issuer < ApplicationRecord
   private
 
   # TODO: Generate valid barcodes
+  # :reek:NilCheck
   def generate_barcode
     return unless barcode.nil? || salt.nil?
 

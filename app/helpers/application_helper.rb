@@ -2,16 +2,16 @@
 
 module ApplicationHelper
   def notice_p
-    n = notice
-    return '' unless n
+    text = notice
+    return '' unless text
 
-    "<p class='notice'>#{n}</p>"
+    "<p class='notice'>#{text}</p>"
   end
 
   def alert_p
-    a = alert
-    return '' unless a
+    text = alert
+    return '' unless text
 
-    "<p class='alert'>#{a}</p>"
+    "<p class='alert'>#{text}</p>"
   end
 end

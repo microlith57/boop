@@ -59,6 +59,8 @@ class DevicesController < ApplicationController
 
   private
 
+  # TODO: Move into Device class?
+  # :reek:UtilityFunction
   def find_device(search_name)
     table = Device.arel_table
     Device.find_by!(table[:name].matches(search_name))
