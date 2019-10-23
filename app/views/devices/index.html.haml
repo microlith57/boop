@@ -16,10 +16,17 @@
           %td= link_to device.name, device, class: 'overdue'
         - else
           %td= link_to device.name, device
+
         %td
           %pre= device.barcode
-        %td= device.created_at
-        %td= device.issued_at || '-'
+
+        %td= local_time device.created_at
+
+        - if device.issued?
+          %td= local_time device.issued_at
+        - else
+          %td -
+
         - if device.overdue?
           %td= device.days_overdue
         - else

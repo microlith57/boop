@@ -95,6 +95,9 @@ end
 # Webpacker to pack JS files
 gem 'webpacker', '~> 4.x'
 
+# Human-readable local time
+gem 'local_time'
+
 # Barcode to PNG
 gem 'barby'
 gem 'chunky_png'
