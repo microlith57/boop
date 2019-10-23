@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/activerecord-hackery/ransack.git
-  revision: 2c0df02091819d58c52539ca962ed8070f2d2e47
+  revision: ad781be0d95a95138cb55ba296401d220b1f7169
   specs:
     polyamorous (2.3.0)
       activerecord (>= 5.0)
@@ -168,8 +168,11 @@ GEM
     kaminari-core (1.1.1)
     kwalify (0.7.2)
     listen (3.1.5)
+      rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    loofah (2.3.0)
+      ruby_dep (~> 1.2)
+    local_time (2.1.0)
+    loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -225,6 +228,7 @@ GEM
       thor (>= 0.20.3, < 2.0)
     rainbow (3.0.0)
     rake (13.0.0)
+    rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     reek (5.4.0)
@@ -250,6 +254,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 0.72.0)
     ruby-progressbar (1.10.1)
+    ruby_dep (1.5.0)
     ruby_parser (3.14.0)
       sexp_processor (~> 4.9)
     rubyzip (2.0.0)
@@ -339,6 +344,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   kaminari
   listen (>= 3.0.5, < 3.2)
+  local_time
   puma (~> 3.11)
   rails (~> 6.0.0)
   ransack!
@@ -362,4 +368,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.17.2
+   2.0.2
