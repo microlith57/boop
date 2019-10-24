@@ -14,6 +14,6 @@
         %td= link_to issuer.name, issuer
         %td
           %pre= issuer.barcode
-        %td= issuer.created_at
+        %td= local_time issuer.created_at
 
 = paginate @issuers
