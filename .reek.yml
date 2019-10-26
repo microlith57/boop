@@ -14,3 +14,7 @@ detectors:
   
   TooManyStatements:
     max_statements: 8
+
+  UtilityFunction:
+    exclude:
+      - "/Helper/"
