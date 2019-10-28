@@ -18,7 +18,7 @@ class IssuersController < ApplicationController
 
   def barcode
     @issuer = find_issuer params[:id]
-    send_data @issuer.barcode_png,
+    send_data @issuer.barcode.png,
               type: 'image/png',
               disposition: 'inline'
   end
@@ -34,8 +34,10 @@ class IssuersController < ApplicationController
 
   def create
     @issuer = Issuer.new(issuer_params)
+    @barcode = Barcode.new barcode_param.merge(owner: @issuer)
+    @barcode.generate_code
 
-    if @issuer.save
+    if @issuer.save && @barcode.save
       redirect_to @issuer
     else
       render 'new'
@@ -44,8 +46,9 @@ class IssuersController < ApplicationController
 
   def update
     @issuer = find_issuer params[:id]
+    @barcode = @issuer.barcode
 
-    if @issuer.update issuer_params
+    if @issuer.update(issuer_params) && @barcode.update(barcode_param)
       redirect_to @issuer
     else
       render 'edit'
@@ -67,6 +70,11 @@ class IssuersController < ApplicationController
   end
 
   def issuer_params
-    params.require(:issuer).permit(:name, :email, :code, :allowance, :barcode)
+    params.require(:issuer).permit(:name, :email, :code, :allowance)
+  end
+
+  def barcode_param
+    code = params.require(:issuer).permit(:barcode)[:barcode]
+    ActionController::Parameters.new(code: code).permit!
   end
 end

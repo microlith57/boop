@@ -6,8 +6,10 @@ class HomeController < ApplicationController
   def index; end
 
   def issue
-    @device = Device.find_by! barcode: params[:issue_device]
-    @issuer = Issuer.find_by! barcode: params[:issue_issuer]
+    # @type [Device]
+    @device = Barcode.find_by!(code: params[:issue_device]).device!
+    # @type [Issuer]
+    @issuer = Barcode.find_by!(code: params[:issue_issuer]).issuer!
     validate_allowance
 
     @device.issue @issuer
@@ -17,7 +19,8 @@ class HomeController < ApplicationController
   end
 
   def return
-    @device = Device.find_by! barcode: params[:return_device]
+    # @type [Device]
+    @device = Barcode.find_by!(code: params[:return_device]).device!
     @device.return
     return if @device.save
 
