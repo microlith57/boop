@@ -1,30 +1,68 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Rails server",
-            "type": "Ruby",
-            "request": "launch",
-            "program": "${workspaceRoot}/bin/rails",
-            "args": [
-                "server"
-            ]
-        },
-        {
-            "name": "Launch localhost",
-            "type": "firefox",
-            "request": "launch",
-            "reAttach": true,
-            "url": "http://localhost:3000/",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "name": "Attach",
-            "type": "firefox",
-            "request": "attach"
-        }
-    ]
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "server",
+			"type": "Ruby",
+			"request": "launch",
+			"program": "${workspaceRoot}/bin/rails",
+			"args": [
+				"server"
+			],
+			"env": {
+				// Change these to whatever works on your system (check `env`)
+				"GEM_HOME"       : "/home/microlith57/.rvm/gems/ruby-2.5.1",
+				"GEM_PATH"       : "/home/microlith57/.rvm/gems/ruby-2.5.1:/home/microlith57/.rvm/gems/ruby-2.5.1@global",
+				"PATH"           : "/home/microlith57/.rvm/gems/ruby-2.5.1/bin:/home/microlith57/.rvm/gems/ruby-2.5.1@global/bin:/home/microlith57/.rvm/rubies/ruby-2.5.1/bin:/home/microlith57/.rvm/bin:/bin:/home/microlith57/.fzf/bin:/home/microlith57/.local/bin:/home/microlith57/bin:/opt/texbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/microlith57/.cargo/bin:/home/microlith57/.cargo/bin/",
+				"rvm_bin_path"   : "/home/microlith57/.rvm/bin",
+				"rvm_delete_flag": "0",
+				"rvm_path"       : "/home/microlith57/.rvm",
+				"rvm_prefix"     : "/home/microlith57",
+				"rvm_ruby_string": "ruby-2.5.1",
+				"rvm_version"    : "1.29.9 latest",
+			},
+		},
+		{
+			"name": "spec",
+			"type": "Ruby",
+			"request": "launch",
+			"cwd": "${workspaceRoot}",
+			// Change these to `which rspec`
+			"program": "/home/microlith57/.rvm/gems/ruby-2.5.1/bin/rspec",
+			"args":[
+        "${workspaceRoot}/spec",
+				"--format", "documentation",
+				"--colour"
+			],
+			"debuggerPort": "1235",
+			"env": {
+				// Same as above
+				"GEM_HOME"       : "/home/microlith57/.rvm/gems/ruby-2.5.1",
+				"GEM_PATH"       : "/home/microlith57/.rvm/gems/ruby-2.5.1:/home/microlith57/.rvm/gems/ruby-2.5.1@global",
+				"PATH"           : "/home/microlith57/.rvm/gems/ruby-2.5.1/bin:/home/microlith57/.rvm/gems/ruby-2.5.1@global/bin:/home/microlith57/.rvm/rubies/ruby-2.5.1/bin:/home/microlith57/.rvm/bin:/bin:/home/microlith57/.fzf/bin:/home/microlith57/.local/bin:/home/microlith57/bin:/opt/texbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/microlith57/.cargo/bin:/home/microlith57/.cargo/bin/",
+				"rvm_bin_path"   : "/home/microlith57/.rvm/bin",
+				"rvm_delete_flag": "0",
+				"rvm_path"       : "/home/microlith57/.rvm",
+				"rvm_prefix"     : "/home/microlith57",
+				"rvm_ruby_string": "ruby-2.5.1",
+				"rvm_version"    : "1.29.9 latest",
+			},
+		},
+		{
+			"name": "firefox",
+			"type": "firefox",
+			"request": "launch",
+			"reAttach": true,
+			"url": "http://localhost:3000/",
+			"webRoot": "${workspaceFolder}"
+		},
+		{
+			"name": "firefox attach",
+			"type": "firefox",
+			"request": "attach"
+		}
+	]
 }
