@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2019_10_27_050220) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -27,17 +30,17 @@ ActiveRecord::Schema.define(version: 2019_10_27_050220) do
   create_table "barcodes", force: :cascade do |t|
     t.string "code"
     t.string "owner_type"
-    t.integer "owner_id"
+    t.bigint "owner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_barcodes_on_code", unique: true
-    t.index ["owner_type", "owner_id"], name: "index_barcodes_on_owner_type_and_owner_id"
+    t.index ["owner_type", "owner_id"], name: "index_barcodes_on_owner_type_and_owner_id", unique: true
   end
 
   create_table "devices", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.integer "issuer_id"
+    t.bigint "issuer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "issued_at"

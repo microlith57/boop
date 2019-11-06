@@ -83,7 +83,7 @@ class Device < ApplicationRecord
   #
   # @return [true, false]
   def issued?
-    (issuer && issued_at)
+    issuer.present?
   end
 
   # Is the device overdue?
@@ -92,7 +92,7 @@ class Device < ApplicationRecord
   def overdue?
     return false unless issued?
 
-    issued_at < Device.overdue_rollover
+    issued_at.before? Device.overdue_rollover(1.day.ago)
   end
 
   # Was the device issued before a given time?

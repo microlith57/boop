@@ -75,12 +75,23 @@ class Barcode < ApplicationRecord
     raise ActiveRecord::RecordNotFound
   end
 
-  # Generate a {#code} for this barcode.
+  # Generate a {#code} for this barcode, if one does not already exist.
   #
   # REVIEW: Should this be done differently?
   def generate_code
     return if code.present?
 
-    self.code = SecureRandom.base58(DEFAULT_BARCODE_LENGTH)
+    generate_code!
+  end
+
+  # Generate a {#code} for this barcode.
+  def generate_code!
+    self.code = Barcode.generate_code
+  end
+
+  # @param length [Integer] The length of code to generate
+  # @return [String] A base 58 code of given length
+  def self.generate_code(length = DEFAULT_BARCODE_LENGTH)
+    SecureRandom.base58(length)
   end
 end

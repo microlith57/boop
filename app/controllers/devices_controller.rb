@@ -33,8 +33,10 @@ class DevicesController < ApplicationController
 
   def create
     @device = Device.new(device_params)
+    @barcode = Barcode.new barcode_param.merge(owner: @device)
+    @barcode.generate_code
 
-    if @device.save
+    if @device.save && @barcode.save
       redirect_to @device
     else
       render 'new'
@@ -43,8 +45,9 @@ class DevicesController < ApplicationController
 
   def update
     @device = find_device params[:id]
+    @barcode = @device.barcode
 
-    if @device.update device_params
+    if @device.update(device_params) && @barcode.update(barcode_param)
       redirect_to @device
     else
       render 'edit'
@@ -67,6 +70,11 @@ class DevicesController < ApplicationController
   end
 
   def device_params
-    params.require(:device).permit(:name, :description, :barcode)
+    params.require(:device).permit(:name, :description)
+  end
+
+  def barcode_param
+    code = params.require(:device).permit(:barcode)[:barcode]
+    ActionController::Parameters.new(code: code).permit!
   end
 end
