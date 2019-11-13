@@ -63,7 +63,7 @@ class IssuersController < ApplicationController
 
   private
 
-  # TODO: Move into Issuer class?
+  # @todo move into {Issuer} class?
   # :reek:UtilityFunction
   def find_issuer(search_code)
     Issuer.find_by! code: search_code.downcase

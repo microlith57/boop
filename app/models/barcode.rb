@@ -12,7 +12,8 @@ class Barcode < ApplicationRecord
 
   # @!attribute owner
   #   @return [Device, Issuer] The owner of the barcode.
-  #   FIXME: Validate uniqueness
+  #   @todo
+  #     FIXME: Validate uniqueness
   belongs_to :owner, polymorphic: true
 
   # @!attribute code
@@ -77,7 +78,8 @@ class Barcode < ApplicationRecord
 
   # Generate a {#code} for this barcode, if one does not already exist.
   #
-  # REVIEW: Should this be done differently?
+  # @todo
+  #   REVIEW: Should this be done differently?
   def generate_code
     return if code.present?
 

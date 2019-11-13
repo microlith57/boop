@@ -62,7 +62,7 @@ class DevicesController < ApplicationController
 
   private
 
-  # TODO: Move into Device class?
+  # @todo move into {Device} class?
   # :reek:UtilityFunction
   def find_device(search_name)
     table = Device.arel_table
