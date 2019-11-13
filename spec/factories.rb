@@ -20,7 +20,7 @@ FactoryBot.define do
 
   factory :issuer do
     name  { 'John Smith' }
-    code  { 'jsm' }
+    code  { Issuer::Internal.generate_code name }
     email { "#{code}@example.org" }
     association :barcode
   end

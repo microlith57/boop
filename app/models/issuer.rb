@@ -56,4 +56,18 @@ class Issuer < ApplicationRecord
       allowance || infinity_sign
     ].join('/')
   end
+
+  module Internal
+    # @param name [String] The issuer's full name
+    # @return [String] A 3-letter issuer code for the issuer
+    def self.generate_code(name)
+      parts = name.downcase.split
+      first = parts.first
+      last = parts.last
+      return '' if parts.empty?
+      return first[0..3] if parts.length == 1
+
+      first[0] + last[0..1]
+    end
+  end
 end
