@@ -20,7 +20,8 @@ class Device < ApplicationRecord
 
   # @!attribute barcode
   #   @return [Barcode]
-  #   REVIEW: Should old barcodes be preserved?
+  #   @todo
+  #     REVIEW: Should old barcodes be preserved?
   has_one :barcode, as: :owner, dependent: :destroy
 
   # @!parse
@@ -126,7 +127,7 @@ class Device < ApplicationRecord
     # @param time [DateTime] the time to be converted.
     # @return [Date] the date obtained.
     #
-    # TODO: Refactor
+    # @todo refactor
     # :reek:DuplicateMethodCall
     def self.adjust_by_rollover(time)
       rollover = Device.overdue_rollover time

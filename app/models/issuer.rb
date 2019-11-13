@@ -11,7 +11,7 @@ class Issuer < ApplicationRecord
   validates :name,
             presence: true
 
-  # TODO: Custom validation classes
+  # @todo custom validation classes
   # @!attribute code
   #   @return [String]
   validates :code,
@@ -19,7 +19,7 @@ class Issuer < ApplicationRecord
             uniqueness: { case_insensitive: true },
             format: { with: /\A[a-z0-9]+\z/ } # Alphanumeric
 
-  # TODO: Custom validation classes
+  # @todo custom validation classes
   # @!attribute email
   #   @return [String]
   validates :email,
@@ -31,9 +31,10 @@ class Issuer < ApplicationRecord
   validates :allowance,
             numericality: { only_integer: true, allow_nil: true }
 
-  # REVIEW: Should old barcodes be preserved?
   # @!attribute barcode
   #   @return [Barcode] The issuer's barcode
+  #   @todo
+  #     REVIEW: Should old barcodes be preserved?
   has_one :barcode, as: :owner, dependent: :destroy
 
   # @return [String] the URL-safe {#code} of this Issuer.
