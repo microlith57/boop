@@ -1,6 +1,6 @@
 %h1 Devices
 = render 'home/menu'
-= paginate @devices
+= pagy_nav @pagy
 %table
   %thead
     %tr
@@ -31,4 +31,4 @@
           %td= device.days_overdue
         - else
           %td -
-= paginate @devices
+= pagy_nav @pagy

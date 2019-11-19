@@ -11,7 +11,11 @@ detectors:
   InstanceVariableAssumption:
     exclude:
       - "/Controller$/"
-  
+
+  TooManyInstanceVariables:
+    exclude:
+      - "/Controller$/"
+
   TooManyStatements:
     max_statements: 8
 

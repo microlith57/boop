@@ -1,6 +1,6 @@
 %h1 Issuers
 = render 'home/menu'
-= paginate @issuers
+= pagy_nav @pagy
 
 %table
   %thead
@@ -16,4 +16,4 @@
           %pre= issuer.barcode
         %td= local_time issuer.created_at
 
-= paginate @issuers
+= pagy_nav @pagy
