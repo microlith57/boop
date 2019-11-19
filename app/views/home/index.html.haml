@@ -1,6 +1,6 @@
 %h1 Home
 = render 'home/menu'
-%section#home_forms
+%section#home-forms
   = form_tag({ controller: 'home', action: 'issue' },
              remote: true,
              data: { type: 'json',

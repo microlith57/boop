@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 class IssuersController < ApplicationController
+  include Pagy::Backend
+
   before_action :authenticate_admin!
 
   def index
-    page = params[:page]
     @query = Issuer.ransack(params[:q])
-    issuers = @query.result.page(page)
 
-    limit_value = params[:limit] || issuers.limit_value
-    @issuers = issuers.per(limit_value)
+    @pagy, @records = pagy(
+      @query.result(distinct: true),
+      items: params[:limit] || Pagy::VARS[:items]
+    )
   end
 
   def show

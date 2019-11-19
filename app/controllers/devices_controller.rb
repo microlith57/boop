@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 class DevicesController < ApplicationController
+  include Pagy::Backend
+
   before_action :authenticate_admin!
 
   def index
-    page = params[:page]
     @query = Device.ransack(params[:q])
-    devices = @query.result(distinct: true).page(page)
 
-    limit_value = params[:limit] || devices.limit_value
-    @devices = devices.per(limit_value)
+    @pagy, @records = pagy(
+      @query.result(distinct: true),
+      items: params[:limit] || Pagy::VARS[:items]
+    )
   end
 
   def show

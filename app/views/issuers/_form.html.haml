@@ -1,6 +1,6 @@
 = form_for issuer, data: { controller: 'issuer-form' } do |form|
   - if issuer.errors.any?
-    #error_explanation
+    #error-explanation
       %h2
         = pluralize(issuer.errors.count, 'error')
         prohibited
