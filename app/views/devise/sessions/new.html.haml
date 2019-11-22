@@ -5,7 +5,7 @@
     = form_with(model: resource,
       url: session_path(resource_name),
       class: 'card-section') do |f|
-      = devise_error_messages! # TODO: Not working?
+      = render 'devise/shared/error_messages', resource: resource
       = f.label :email
       = f.email_field :email, autofocus: true, autocomplete: 'email'
       = f.label :password
