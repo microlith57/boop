@@ -1,13 +1,13 @@
 %h1 Devices
-= render 'home/menu'
-= pagy_nav @pagy
+= render 'general/menu'
+!= pagy_foundation_nav_js @pagy
 %table
   %thead
     %tr
       %th= sort_link @query, :name
       %th= sort_link @query, :barcode
-      %th= sort_link @query, :created_at, 'Time Created'
-      %th= sort_link @query, :issued_at, 'Time Issued'
+      %th= sort_link @query, :created_at, 'Created'
+      %th= sort_link @query, :issued_at, 'Issued'
       %th Days Overdue
   %tbody
     - @devices.each do |device|
@@ -31,4 +31,4 @@
           %td= device.days_overdue
         - else
           %td -
-= pagy_nav @pagy
+!= pagy_foundation_nav_js @pagy

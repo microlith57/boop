@@ -1,0 +1,6 @@
+#boop-logo {
+  @include horizontal-center;
+  font-size: 40px;
+  margin-top: 15px;
+  text-shadow: 0px 1px 1.5px $dark-gray;
+}

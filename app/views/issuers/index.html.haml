@@ -1,13 +1,13 @@
 %h1 Issuers
-= render 'home/menu'
-= pagy_nav @pagy
+= render 'general/menu'
+!= pagy_foundation_nav_js @pagy
 
 %table
   %thead
     %tr
       %th= sort_link @query, :name
       %th= sort_link @query, :barcode
-      %th= sort_link @query, :created_at, 'Time Created'
+      %th= sort_link @query, :created_at, 'Created'
   %tbody
     - @issuers.each do |issuer|
       %tr
@@ -16,4 +16,4 @@
           %pre= issuer.barcode
         %td= local_time issuer.created_at
 
-= pagy_nav @pagy
+!= pagy_foundation_nav_js @pagy
