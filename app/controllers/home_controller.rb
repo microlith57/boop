@@ -2,8 +2,11 @@
 
 class HomeController < ApplicationController
   before_action :authenticate_admin!
+  skip_before_action :authenticate_admin!, only: :index
 
-  def index; end
+  def index
+    redirect_to new_session_path(Admin) unless admin_signed_in?
+  end
 
   def issue
     # @type [Device]
