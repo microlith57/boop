@@ -82,6 +82,10 @@ gem 'devise'
 # Pagination
 gem 'pagy'
 
+# Decent UI framework
+gem 'autoprefixer-rails'
+gem 'foundation-rails'
+
 # Rubocop
 group :development do
   gem 'rubocop'

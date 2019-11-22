@@ -1,12 +1,12 @@
 %h1 Home
-= render 'home/menu'
+= render 'general/menu'
 %section#home-forms
   = form_tag({ controller: 'home', action: 'issue' },
              remote: true,
              data: { type: 'json',
                      controller: 'issue-form',
                      action: 'ajax:success->issue-form#on_success ajax:error->issue-form#on_error' },
-             class: 'success') do
+             class: 'card') do
     = text_field_tag :issue_issuer,
                      nil,
                      data: { target: 'issue-form.issuerField' },
@@ -26,7 +26,7 @@
                data: { type: 'json',
                        controller: 'return-form',
                        action: 'ajax:success->return-form#on_success ajax:error->return-form#on_error' },
-               class: 'success') do
+               class: 'card') do
     = text_field_tag :return_device,
                      nil,
                      data: { target: 'return-form.deviceField' },

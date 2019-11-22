@@ -1,17 +1,23 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def notice_p
+  include Pagy::Frontend
+
+  def notice_callout
     text = notice
     return '' unless text
 
-    "<p class='notice'>#{text}</p>"
+    render 'general/callout', type: 'primary' do
+      text
+    end
   end
 
-  def alert_p
+  def alert_callout
     text = alert
     return '' unless text
 
-    "<p class='alert'>#{text}</p>"
+    render 'general/callout', type: 'alert' do
+      text
+    end
   end
 end

@@ -8,7 +8,7 @@ class DevicesController < ApplicationController
   def index
     @query = Device.ransack(params[:q])
 
-    @pagy, @records = pagy(
+    @pagy, @devices = pagy(
       @query.result(distinct: true),
       items: params[:limit] || Pagy::VARS[:items]
     )

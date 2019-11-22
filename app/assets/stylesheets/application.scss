@@ -1,0 +1,93 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_self
+ */
+
+// Import Foundation assets
+@import 'foundation/foundation_and_overrides';
+@import 'typography';
+
+.turbolinks-progress-bar {
+  background-color: map-get($foundation-palette, 'primary');
+}
+
+main.central {
+  @include horizontal-center;
+  width: 350px;
+  margin-top: 90px;
+
+  .links > a {
+    color: darken($dark-gray, 10%);
+    font-size: 0.8em;
+  }
+
+  .links > a:hover, a:focus {
+    color: darken($dark-gray, 20%);
+  }
+
+  .links {
+    margin-bottom: 10px;
+  }
+}
+
+.card {
+  @include subtle-shadow;
+}
+
+#callout_box {
+  max-width: 50%;
+  min-width: 400px;
+  z-index: 50;
+
+  position: absolute;
+  margin: none;
+  right: 0;
+
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.callout {
+  @include subtle-shadow;
+
+  $border-width: 2px;
+
+  width: 100%;
+  border: 0;
+  border-left: $border-width solid $dark-gray;
+  padding-right: 3rem;
+
+  background: $light-gray;
+  color: $dark-gray;
+
+  &.success {
+    border-left-color: $success-color;
+  }
+
+  &.alert {
+    border-left-color: $alert-color;
+  }
+
+  &.warning {
+    border-left-color: $warning-color;
+  }
+
+  &.primary {
+    border-left-color: $primary-color;
+  }
+
+  .close-button {
+    font-size: 2rem;
+    @include vertical-center;
+  }
+}

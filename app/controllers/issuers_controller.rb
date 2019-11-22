@@ -8,7 +8,7 @@ class IssuersController < ApplicationController
   def index
     @query = Issuer.ransack(params[:q])
 
-    @pagy, @records = pagy(
+    @pagy, @issuers = pagy(
       @query.result(distinct: true),
       items: params[:limit] || Pagy::VARS[:items]
     )
