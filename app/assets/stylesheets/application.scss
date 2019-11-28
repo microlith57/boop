@@ -15,7 +15,6 @@
 
 // Import Foundation assets
 @import 'foundation/foundation_and_overrides';
-@import 'typography';
 
 .turbolinks-progress-bar {
   background-color: map-get($foundation-palette, 'primary');
@@ -42,6 +41,13 @@ main.central {
 
 .card {
   @include subtle-shadow;
+}
+
+#boop-logo {
+  @include horizontal-center;
+  font-size: 40px;
+  margin-top: 15px;
+  text-shadow: 0px 1px 1.5px $dark-gray;
 }
 
 #callout_box {
