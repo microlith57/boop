@@ -5,6 +5,7 @@
     "@rails/actioncable": "^6.0.1",
     "@rails/ujs": "^6.0.0-alpha",
     "@rails/webpacker": "^4.0.7",
+    "babel-loader": "^8.0.6",
     "core-js": "2",
     "foundation-sites": "^6.5.3",
     "jquery": "^3.4.1",
@@ -16,6 +17,7 @@
     "what-input": "^5.2.6"
   },
   "devDependencies": {
+    "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.7.2"
   }
 }
