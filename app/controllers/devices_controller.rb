@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class DevicesController < ApplicationController
-  include Pagy::Backend
-
   before_action :authenticate_admin!
 
   def index
