@@ -1,7 +1,7 @@
-%p{class: [type, 'callout'], 'data-closable' => true}
+%p{ class: [type, 'callout'], 'data-closable' => true }
   = yield
-  %button.close-button{'aria-label' => 'Dismiss',
+  %button.close-button{ 'aria-label' => 'Dismiss',
     type: 'button',
     'data-close' => true}
-    %span{'aria-hidden' => 'true'} ×
+    %span{'aria-hidden' => 'true' } ×
 
