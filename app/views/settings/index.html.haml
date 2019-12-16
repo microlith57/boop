@@ -1,0 +1,14 @@
+%h1 Settings
+= render 'general/menu'
+!= pagy_foundation_nav_js @pagy
+%table
+  %thead
+    %tr
+      %th= sort_link @query, :email
+      %th= sort_link @query, :created_at, 'Created'
+  %tbody
+    - @admins.each do |admin|
+      %tr
+        %td= link_to admin.email, edit_setting_path(admin)
+        %td= local_time admin.created_at
+!= pagy_foundation_nav_js @pagy

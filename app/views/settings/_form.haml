@@ -1,0 +1,15 @@
+= form_with model: admin, url: setting_url(admin) do |form|
+  - if admin.errors.any?
+    #error-explanation
+      %h2
+        = pluralize(admin.errors.count, 'error')
+        prevented
+        this admin from being saved:
+      %ul
+        - admin.errors.full_messages.each do |msg|
+          %li= msg
+  %p
+    = form.label :email
+    = form.text_field :email
+  %p
+    = form.submit
