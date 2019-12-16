@@ -19,4 +19,6 @@ Rails.application.routes.draw do
       get 'barcode'
     end
   end
+
+  resources :settings, except: :show
 end
