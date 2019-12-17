@@ -16,6 +16,8 @@ class DevicesController < ApplicationController
     @device = find_device params[:id]
   end
 
+  # BUG: Loading without turbolinks works; loading with turbolinks (eg. from
+  # other page) replaces the body with raw PNG data and ruins the display
   def barcode
     @device = find_device params[:id]
     send_data @device.barcode.png,
