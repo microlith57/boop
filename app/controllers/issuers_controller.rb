@@ -16,6 +16,8 @@ class IssuersController < ApplicationController
     @issuer = find_issuer params[:id]
   end
 
+  # BUG: Loading without turbolinks works; loading with turbolinks (eg. from
+  # other page) replaces the body with raw PNG data and ruins the display
   def barcode
     @issuer = find_issuer params[:id]
     send_data @issuer.barcode.png,
