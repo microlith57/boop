@@ -14,22 +14,22 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import { Application } from "stimulus"
-import { definitionsFromContext } from "stimulus/webpack-helpers"
+import { Application } from 'stimulus'
+import { definitionsFromContext } from 'stimulus/webpack-helpers'
 
 const application = Application.start()
-const context = require.context("controllers", true, /.js$/)
+const context = require.context('controllers', true, /.js$/)
 application.load(definitionsFromContext(context))
 
-require("@rails/ujs").start()
+require('@rails/ujs').start()
 
-var Turbolinks = require("turbolinks")
+var Turbolinks = require('turbolinks')
 Turbolinks.start()
 
-require("foundation-sites")
+require('foundation-sites')
 $(document).on('turbolinks:load', function() {
-  $(function(){ $(document).foundation(); });
-});
+  $(function(){ $(document).foundation() })
+})
 
-import LocalTime from "local-time"
+import LocalTime from 'local-time'
 LocalTime.start()

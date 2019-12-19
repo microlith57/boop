@@ -20,4 +20,16 @@ module ApplicationHelper
       text
     end
   end
+
+  def menu_link_to(name = nil, options = nil, html_options = nil, &block)
+    options ||= {}
+    html_options ||= {}
+
+    if current_page? options
+      classes = (html_options['class'] || '') + ' current-page'
+      html_options['class'] = classes.strip
+    end
+
+    link_to name, options, html_options, &block
+  end
 end

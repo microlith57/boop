@@ -52,8 +52,11 @@ class Device < ApplicationRecord
   #
   # @param new_issuer [Issuer] the issuer that the device will belong to.
   # @return [nil]
+  # @raise [ActiveRecord::RecordNotSaved] if the device is already issued
   def issue(new_issuer)
-    raise 'Device is already issued' if issuer
+    if issuer.present?
+      raise ActiveRecord::RecordNotSaved, 'Device is already issued'
+    end
 
     self.issuer = new_issuer
     self.issued_at = Time.current
@@ -126,15 +129,14 @@ class Device < ApplicationRecord
     #
     # @param time [DateTime] the time to be converted.
     # @return [Date] the date obtained.
-    #
-    # @todo refactor
-    # :reek:DuplicateMethodCall
     def self.adjust_by_rollover(time)
       rollover = Device.overdue_rollover time
+      date = time.to_date
+
       if time < rollover
-        time.to_date
+        date
       else
-        time.to_date + 1.day
+        date + 1.day
       end
     end
   end

@@ -1,9 +1,21 @@
-%ul.menu
-  %li= link_to 'Home', root_url
-  %li= link_to 'Sign Out', destroy_admin_session_url, method: :delete
-  %li= link_to 'Issuers', issuers_url
-  %li= link_to 'Devices', devices_url
-  %li= link_to 'Settings', settings_url
+%header
+  %a#boop-logo{ href: root_url }<
+    Boop
 
-%nav{ 'aria-label' => 'You are here:', :role => 'navigation' }
-  %ul.breadcrumbs
+  %ul.menu
+    %li= menu_link_to 'Home', root_url
+    %li= menu_link_to 'Issuers', issuers_url
+    %li= menu_link_to 'Devices', devices_url
+    %li= menu_link_to 'Settings', settings_url
+    %li.spacer
+    %li= menu_link_to 'Sign Out', destroy_admin_session_url, method: :delete
+
+  -#
+    %nav{ 'aria-label' => 'You are here:', :role => 'navigation' }
+      %ul.breadcrumbs
+        %li= link_to 'Boop', root_url
+
+  - if block_given?
+    -# FIXME: Why is the <hr> appearing even when no block is given?
+    %hr
+    %ul.menu= yield

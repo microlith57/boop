@@ -57,7 +57,13 @@
 			"request": "launch",
 			"reAttach": true,
 			"url": "http://localhost:3000/",
-			"webRoot": "${workspaceFolder}"
+      "webRoot": "${workspaceFolder}",
+      "pathMappings": [
+        {
+          "url": "webpack:///app/webpack/",
+          "path": "${workspaceFolder}/app/webpack/"
+        }
+      ]
 		},
 		{
 			"name": "firefox attach",
