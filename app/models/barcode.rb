@@ -60,20 +60,20 @@ class Barcode < ApplicationRecord
 
   # @return [Issuer] The {#owner} of the barcode, but only if they are
   #   an {Issuer}
-  # @raise [ActiveRecord::RecordNotFound] if the owner is not an device
+  # @raise [ActiveRecord::RecordNotFound] if the owner is not an issuer
   def issuer!
     return issuer if represents_issuer?
 
-    raise ActiveRecord::RecordNotFound
+    raise ActiveRecord::RecordNotFound, 'Barcode not for an issuer'
   end
 
   # @return [Device] The {#owner} of the barcode, but only if they are
   #   a {Device}
-  # @raise [ActiveRecord::RecordNotFound] if the owner is not an issuer
+  # @raise [ActiveRecord::RecordNotFound] if the owner is not a device
   def device!
     return device if represents_device?
 
-    raise ActiveRecord::RecordNotFound
+    raise ActiveRecord::RecordNotFound, 'Barcode not for a device'
   end
 
   # Generate a {#code} for this barcode, if one does not already exist.

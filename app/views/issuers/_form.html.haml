@@ -8,35 +8,30 @@
       %ul
         - issuer.errors.full_messages.each do |msg|
           %li= msg
-  %p
-    = form.label :name
-    %br/
-    = form.text_field :name,
-                      data: { target: 'issuer-form.nameField',
-                              action: 'input->issuer-form#nameEdited' }
-  %p
-    = form.label :code
-    %br/
-    = form.text_field :code,
-                      data: { target: 'issuer-form.codeField',
-                              action: 'input->issuer-form#codeEdited' }
-  %p
-    = form.label :email
-    %br/
-    = form.text_field :email,
-                      data: { target: 'issuer-form.emailField' }
-    = hidden_field_tag :default_email_suffix, default_email_suffix,
-                       data: { target: 'issuer-form.defaultEmailSuffix' }
-  %p
-    = form.label :allowance, 'Allowance (leave empty for unlimited)'
-    %br/
-    = form.number_field :allowance, step: 1
-  %p
-    - if new_issuer
-      = form.label :barcode, 'Barcode (leave empty for automatic)'
-    - else
-      = form.label :barcode
-    %br/
-    = form.text_field :barcode
-  %p
-    = form.submit
+  = form.label :name
+  = form.text_field :name,
+                    data: { target: 'issuer-form.nameField',
+                            action: 'input->issuer-form#nameEdited' }
+
+  = form.label :code
+  = form.text_field :code,
+                    data: { target: 'issuer-form.codeField',
+                            action: 'input->issuer-form#codeEdited' },
+                    class: 'monospace'
+
+  = form.label :email
+  = form.text_field :email,
+                    data: { target: 'issuer-form.emailField' }
+  = hidden_field_tag :default_email_suffix, default_email_suffix,
+                      data: { target: 'issuer-form.defaultEmailSuffix' }
+
+  = form.label :allowance, 'Allowance (leave empty for unlimited)'
+  = form.number_field :allowance, step: 1
+
+  - if new_issuer
+    = form.label :barcode, 'Barcode (leave empty for automatic)'
+  - else
+    = form.label :barcode
+  = form.text_field :barcode, class: 'monospace'
+
+  = form.submit

@@ -1,19 +1,30 @@
-%h1 Issuers
-= render 'general/menu'
-!= pagy_foundation_nav_js @pagy
+= render 'general/menu' do
+  %li
+    %span.header Issuers
+  -# TODO: Search form
+  %li.spacer
+  %li= link_to 'New', new_issuer_url
+%main
+  != pagy_foundation_nav_js @pagy
 
-%table
-  %thead
-    %tr
-      %th= sort_link @query, :name
-      %th= sort_link @query, :barcode
-      %th= sort_link @query, :created_at, 'Created'
-  %tbody
-    - @issuers.each do |issuer|
+  %table
+    %thead
       %tr
-        %td= link_to issuer.name, issuer
-        %td
-          %pre= issuer.barcode
-        %td= local_time issuer.created_at
+        %th= sort_link @query, :name
+        %th= sort_link @query, :barcode
+        %th= sort_link @query, :created_at, 'Created'
+        %th= sort_link @query, :allowance
+        -# TODO: Sort link for this
+        %th Overdues
+    %tbody
+      - @issuers.each do |issuer|
+        %tr
+          %td= link_to issuer.name, issuer
+          %td
+            %pre= issuer.barcode
+          %td= local_time issuer.created_at
+          %td= issuer.allowance || '∞'
+          %td= issuer.overdues.count
 
-!= pagy_foundation_nav_js @pagy
+
+  != pagy_foundation_nav_js @pagy

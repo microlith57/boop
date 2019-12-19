@@ -16,8 +16,7 @@ default: &default
   ]
 
   # Reload manifest.json on all requests so we reload latest compiled packs
-  # REVIEW: Does having `false` work?
-  cache_manifest: true # false
+  cache_manifest: false
 
   # Extract and emit a css file
   extract_css: false
