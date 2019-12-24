@@ -17,6 +17,7 @@
     "what-input": "^5.2.6"
   },
   "devDependencies": {
+    "prettier": "1.19.1",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.7.2"
   }
