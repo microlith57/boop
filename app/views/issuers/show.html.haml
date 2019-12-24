@@ -17,3 +17,6 @@
     %ul
       - @issuer.devices.each do |device|
         %li= link_to device.name, device_path(device)
+
+  %p
+    = @issuer.notes

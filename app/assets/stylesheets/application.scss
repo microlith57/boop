@@ -1,6 +1,8 @@
 // Import Foundation assets
 @import "foundation/foundation_and_overrides";
 
+@import "./actiontext.scss";
+
 .turbolinks-progress-bar {
   background-color: map-get($foundation-palette, "primary");
 }
@@ -59,6 +61,16 @@ ul.menu li {
 
     &.header {
       font-weight: bold;
+    }
+  }
+
+  &.search > form.input-group {
+    margin: 0;
+
+    input, button {
+      height: 2rem;
+      padding: 0.3rem 0.6rem;
+      margin: calc((40px - 2rem) / 2) 0;
     }
   }
 }

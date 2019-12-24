@@ -18,6 +18,8 @@ class Device < ApplicationRecord
             presence: true,
             uniqueness: { case_insensitive: true }
 
+  has_rich_text :notes
+
   # @!attribute barcode
   #   @return [Barcode]
   #   @todo

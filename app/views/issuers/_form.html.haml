@@ -13,6 +13,9 @@
                     data: { target: 'issuer-form.nameField',
                             action: 'input->issuer-form#nameEdited' }
 
+  = form.label :notes
+  = form.rich_text_area :notes
+
   = form.label :code
   = form.text_field :code,
                     data: { target: 'issuer-form.codeField',

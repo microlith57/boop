@@ -17,3 +17,4 @@
       Issued by
       = link_to @device.issuer.name, issuer_path(@device.issuer)
       = local_time_ago @device.issued_at
+  %p!= @device.notes
