@@ -13,8 +13,8 @@ class HomeController < ApplicationController
     @issuer = Barcode.find_by!(code: params[:issue_to]).issuer!
 
     render 'home/issuer_info', layout: false
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
-    show_text_errors(e)
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => exc
+    show_text_errors(exc)
   end
 
   def issue
@@ -29,8 +29,8 @@ class HomeController < ApplicationController
     @device.save!
 
     render plain: "Issued #{@device.to_param} to #{@issuer.to_param}"
-  rescue ActiveRecord::ActiveRecordError => ex
-    show_text_errors(ex)
+  rescue ActiveRecord::ActiveRecordError => exc
+    show_text_errors(exc)
   end
 
   def return
@@ -40,8 +40,8 @@ class HomeController < ApplicationController
     @device.save!
 
     render plain: "Returned #{@device.to_param}"
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => ex
-    show_text_errors(ex)
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => exc
+    show_text_errors(exc)
   end
 
   private

@@ -1,27 +1,27 @@
-import { Controller } from "stimulus";
+import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ["form", "field"];
+  static targets = ['form', 'field']
 
   connect() {
-    this.reset();
+    this.reset()
   }
 
   success(event) {
-    let [data, status, xhr] = event.detail;
+    let [data, status, xhr] = event.detail
 
-    this.reset();
+    this.reset()
   }
 
   error(event) {
-    let [data, status, xhr] = event.detail;
+    let [data, status, xhr] = event.detail
 
-    console.log(xhr.status + " " + status, data);
+    console.log(xhr.status + ' ' + status, data)
   }
 
   reset() {
-    this.fieldTarget.value = "";
+    this.fieldTarget.value = ''
 
-    this.fieldTarget.focus();
+    this.fieldTarget.focus()
   }
 }

@@ -1,7 +1,16 @@
 = render 'general/menu' do
   %li
     %span.header Devices
-  -# TODO: Search form
+  %li.search
+    = search_form_for @q, role: 'search', class: 'input-group' do |f|
+      = f.search_field :name_cont,
+        class: 'small input-group-field', placeholder: 'Search devices...'
+
+      .input-group-button
+        %button.button{ type: 'submit' }
+          %span.show-for-sr Search
+          %span{ 'aria-hidden' => 'true' }
+            %i.fi-magnifying-glass
   %li.spacer
   %li= link_to 'New', new_device_url
 %main
@@ -9,10 +18,10 @@
   %table
     %thead
       %tr
-        %th= sort_link @query, :name
-        %th= sort_link @query, :barcode
-        %th= sort_link @query, :created_at, 'Created'
-        %th= sort_link @query, :issued_at, 'Issued'
+        %th= sort_link @q, :name
+        %th= sort_link @q, :barcode
+        %th= sort_link @q, :created_at, 'Created'
+        %th= sort_link @q, :issued_at, 'Issued'
         %th Days Overdue
     %tbody
       - @devices.each do |device|
