@@ -63,7 +63,8 @@
           "url": "webpack:///app/webpack/",
           "path": "${workspaceFolder}/app/webpack/"
         }
-      ]
+      ],
+      "skipFiles": [ "**/*.rb" ]
 		},
 		{
 			"name": "firefox attach",

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   post 'issue',  to: 'home#issue'
   post 'return', to: 'home#return'
 
+  resources :barcodes, only: %i[index show]
+
   resources :devices do
     member do
       get 'barcode'
