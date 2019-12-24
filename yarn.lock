@@ -685,6 +685,20 @@
   resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.0.1.tgz#43adf86c2ad6e6a076259b7ea02ba747e4f8bb6f"
   integrity sha512-JTOPnusNMuZjmJGoyL+IWrwGxP5UwqiffJYBHkhipIbVRSUN6RYjUspShshmRsRziSD2bQywKePPRR5pl1HXXg==
 
+"@rails/actiontext@^6.0.2-1":
+  version "6.0.2-1"
+  resolved "https://registry.yarnpkg.com/@rails/actiontext/-/actiontext-6.0.2-1.tgz#6ca7750f98b5321ea6ec0cd81c1a3d3c2c9046e5"
+  integrity sha512-Eh+AKDK+v9vMREcBDfK5grbmhXH4WInCD/WR/ooGpv/nbQLlIvw/+FYznALONcNqA7v2YgwoiCCR08NPJCxxgw==
+  dependencies:
+    "@rails/activestorage" "^6.0.0-alpha"
+
+"@rails/activestorage@^6.0.0-alpha":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@rails/activestorage/-/activestorage-6.0.2.tgz#3882da2716d1f21091840fc52b71091d406a9c43"
+  integrity sha512-X0uGBLNsSKvVw5n93rH7k+7rbxc3Cq7p0ShiQbrk1cN0xflGjElzEJRY3okZZHsKkCV+h6rFCk0BOBVrLSrJ0A==
+  dependencies:
+    spark-md5 "^3.0.0"
+
 "@rails/ujs@^6.0.0-alpha":
   version "6.0.0-alpha"
   resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-6.0.0-alpha.tgz#d5761d93e19215f5f342229f934d5ca8f6dd22a5"
@@ -6333,6 +6347,11 @@ source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
 
+spark-md5@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/spark-md5/-/spark-md5-3.0.0.tgz#3722227c54e2faf24b1dc6d933cc144e6f71bfef"
+  integrity sha1-NyIifFTi+vJLHcbZM8wUTm9xv+8=
+
 spdx-correct@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/spdx-correct/-/spdx-correct-3.1.0.tgz#fb83e504445268f154b074e218c87c003cd31df4"
@@ -6785,6 +6804,11 @@ trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
   integrity sha1-yy4SAwZ+DI3h9hQJS5/kVwTqYAM=
+
+trix@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-1.2.2.tgz#bb2afacb981df9a6edb49bc66f57427b9728909d"
+  integrity sha512-xNWwKDa1PG5do/qV3FRESXjM17U5ACB9Ih+x4mylLYfAgmYYTA17ExVdrrA7vCJ5J9nS1tVZFyhVTPgPTtIFVg==
 
 "true-case-path@^1.0.2":
   version "1.0.3"

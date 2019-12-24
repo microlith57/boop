@@ -26,9 +26,14 @@ require('@rails/ujs').start()
 var Turbolinks = require('turbolinks')
 Turbolinks.start()
 
+require('trix')
+require('@rails/actiontext')
+
 require('foundation-sites')
 $(document).on('turbolinks:load', function() {
-  $(function(){ $(document).foundation() })
+  $(function() {
+    $(document).foundation()
+  })
 })
 
 import LocalTime from 'local-time'

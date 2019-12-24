@@ -11,6 +11,8 @@ class Issuer < ApplicationRecord
   validates :name,
             presence: true
 
+  has_rich_text :notes
+
   # @todo custom validation classes
   # @!attribute code
   #   @return [String]
@@ -70,7 +72,8 @@ class Issuer < ApplicationRecord
     devices.count < allowance
   end
 
-  # @return ['exceeded', 'reached', 'not reached'] Human friendly allowance state.
+  # @return ['exceeded', 'reached', 'not reached'] Human friendly allowance
+  #   state.
   #   Used like 'This issuer has already *exceeded* their allowance'.
   # :reek:NilCheck
   def allowance_state

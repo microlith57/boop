@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.1",
+    "@rails/actiontext": "^6.0.2-1",
     "@rails/ujs": "^6.0.0-alpha",
     "@rails/webpacker": "^4.0.7",
     "babel-loader": "^8.0.6",
@@ -12,6 +13,7 @@
     "local-time": "^2.1.0",
     "node-sass": "^4.13.0",
     "stimulus": "^1.1.1",
+    "trix": "^1.2.2",
     "turbolinks": "^5.2.0",
     "webpack": "^4.41.2",
     "what-input": "^5.2.6"
