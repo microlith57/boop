@@ -4,10 +4,17 @@ class DevicesController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @query = Device.ransack(params[:q])
+    query = params[:q]
+
+    if query && (bar = Barcode.find_by code: query[:name_cont]) && bar.device?
+      redirect_to bar.device
+      return
+    end
+
+    @q = Device.ransack query
 
     @pagy, @devices = pagy(
-      @query.result(distinct: true),
+      @q.result(distinct: true),
       items: params[:limit] || Pagy::VARS[:items]
     )
   end
@@ -72,7 +79,7 @@ class DevicesController < ApplicationController
   end
 
   def device_params
-    params.require(:device).permit(:name, :description)
+    params.require(:device).permit(:name, :description, :notes)
   end
 
   def barcode_param

@@ -4,10 +4,17 @@ class IssuersController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @query = Issuer.ransack(params[:q])
+    query = params[:q]
+
+    if query && (bar = Barcode.find_by code: query[:name_or_code_or_email_cont]) && bar.issuer?
+      redirect_to bar.issuer
+      return
+    end
+
+    @q = Issuer.ransack query
 
     @pagy, @issuers = pagy(
-      @query.result(distinct: true),
+      @q.result(distinct: true),
       items: params[:limit] || Pagy::VARS[:items]
     )
   end
