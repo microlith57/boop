@@ -17,5 +17,6 @@
 
   - if block_given?
     -# FIXME: Why is the <hr> appearing even when no block is given?
-    %hr
+    - if local_assigns[:hr] != false
+      %hr
     %ul.menu= yield

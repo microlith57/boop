@@ -21,6 +21,10 @@ class Barcode < ApplicationRecord
   validates :code, presence: true,
                    uniqueness: true
 
+  def to_param
+    code
+  end
+
   # BUG: Doesn't run?
   before_save :generate_code
 

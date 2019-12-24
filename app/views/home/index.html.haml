@@ -1,4 +1,15 @@
-= render 'general/menu'
+= render 'general/menu' do
+  %li.search
+    = form_with url: barcodes_path, local: true, method: :get, role: 'search',
+      class: 'input-group' do |f|
+      = f.text_field :id,
+        class: 'small input-group-field', placeholder: 'Look up a barcode...'
+
+      .input-group-button
+        %button.button{ type: 'submit' }
+          %span.show-for-sr Look Up
+          %span{ 'aria-hidden' => 'true' }
+            %i.fi-arrow-right
 -# TODO: Show error messages
 %main.card
   -# Tab buttons

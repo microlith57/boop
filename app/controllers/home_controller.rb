@@ -6,6 +6,8 @@ class HomeController < ApplicationController
 
   def index
     redirect_to new_session_path(Admin) unless admin_signed_in?
+
+    @q = Barcode.ransack
   end
 
   def issuer_info
