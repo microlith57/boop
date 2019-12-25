@@ -18,9 +18,10 @@
     %li.tabs-title= link_to('Return', '#returning-panel')
 
   -# Tab contents
-  .tabs-content{ 'data-tabs-content' => 'home-forms-tabs' }
+  #home-forms-content.tabs-content{ 'data-tabs-content' => 'home-forms-tabs' }
     -# Issuing forms
     %section.tabs-panel.is-active#issuing-panel{ 'data-controller' => 'issuing-panel' }
+      %p.status{ 'data-target': 'issuing-panel.status' } Waiting
       = form_with url: issuer_info_path,
         format: :json,
         method: :get,
@@ -49,6 +50,8 @@
     -# Returning forms
     -# TODO: Reset field on success
     %section.tabs-panel#returning-panel{ 'data-controller' => 'returning-panel' }
+      %p.status{ 'data-target': 'returning-panel.status' } Waiting
+
       = form_with url: return_path,
         format: :json,
         data: { target: 'returning-panel.form',
