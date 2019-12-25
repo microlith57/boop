@@ -19,9 +19,9 @@ abbr.hoverable {
 body {
   padding: 0px 16px;
 
-  & > main,
-  & > header,
-  & > footer {
+  > main,
+  > header,
+  > footer {
     // Only take up max. of 800px in the middle of the screen
     max-width: 800px;
     margin: 0px auto;

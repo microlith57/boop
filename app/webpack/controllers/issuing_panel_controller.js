@@ -13,7 +13,7 @@ export default class extends Controller {
   inProgress = false
 
   connect() {
-    this.reset()
+    this.reset(true)
   }
 
   issuer_success(event) {
@@ -54,7 +54,7 @@ export default class extends Controller {
     console.log(xhr.status + ' ' + status, data)
   }
 
-  reset() {
+  reset(initial = false) {
     this.inProgress = false
 
     this.submitTarget.disabled = true
@@ -65,6 +65,8 @@ export default class extends Controller {
     this.issuerFieldTarget.value = ''
     this.deviceFieldTarget.value = ''
 
-    this.issuerFieldTarget.focus()
+    if (!initial) {
+      this.issuerFieldTarget.focus()
+    }
   }
 }
