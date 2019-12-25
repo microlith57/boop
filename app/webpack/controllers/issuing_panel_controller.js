@@ -8,6 +8,7 @@ export default class extends Controller {
     'issuerField',
     'deviceField',
     'submit',
+    'status',
   ]
 
   inProgress = false
@@ -25,12 +26,16 @@ export default class extends Controller {
     this.deviceFieldTarget.focus()
     this.submitTarget.disabled = false
     this.inProgress = true
+
+    this.statusTarget.innerText = 'Found Issuer'
+    this.statusTarget.classList.remove('error')
   }
 
   issuer_error(event) {
     let [data, status, xhr] = event.detail
 
-    console.log(xhr.status + ' ' + status, data)
+    this.statusTarget.innerText = `${xhr.status} ${status}: ${data}`
+    this.statusTarget.classList.add('error')
   }
 
   issuer_edited(event) {
@@ -51,7 +56,8 @@ export default class extends Controller {
   device_error(event) {
     let [data, status, xhr] = event.detail
 
-    console.log(xhr.status + ' ' + status, data)
+    this.statusTarget.innerText = `${xhr.status} ${status}: ${data}`
+    this.statusTarget.classList.add('error')
   }
 
   reset(initial = false) {
@@ -67,6 +73,8 @@ export default class extends Controller {
 
     if (!initial) {
       this.issuerFieldTarget.focus()
+      this.statusTarget.innerText = 'Success'
+      this.statusTarget.classList.remove('error')
     }
   }
 }

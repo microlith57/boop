@@ -193,7 +193,7 @@ form .flex-row {
   }
 }
 
-section#issuing-panel {
+#home-forms-content > section {
   $padding: 1rem;
 
   padding: 0;
@@ -205,6 +205,25 @@ section#issuing-panel {
 
   form > *:last-child {
     margin-bottom: 0;
+  }
+
+  p.status {
+    @include label;
+
+    margin: {
+      left: 0;
+      right: 1rem;
+      top: 0.5rem;
+      bottom: 0.5rem;
+    };
+    float: right;
+
+    background: map_get($foundation-palette, 'success');
+
+    &.error {
+      background: map_get($foundation-palette, 'alert');
+      color: $white;
+    }
   }
 
   // TODO: Animate open/close
