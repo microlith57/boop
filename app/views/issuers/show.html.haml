@@ -1,10 +1,11 @@
+= render 'general/menu' do
+  %li
+    %span.header #{@issuer.name}
+  %li.spacer
+  %li= link_to 'Barcode', barcode_issuer_url(@issuer)
+  %li= link_to 'Edit', edit_issuer_url(@issuer)
+  %li= link_to 'Delete', issuer_url(@issuer), method: :delete, confirm: 'Are you sure?'
 %main
-  %h1= @issuer.name
-  %ul.menu
-    %li= link_to 'Back', issuers_url
-    %li= link_to 'Barcode', barcode_issuer_url(@issuer)
-    %li= link_to 'Edit', edit_issuer_url(@issuer)
-    %li= link_to 'Delete', issuer_url(@issuer), method: :delete, confirm: 'Are you sure?'
   %p= @issuer.email
   %pre= @issuer.barcode
   %p

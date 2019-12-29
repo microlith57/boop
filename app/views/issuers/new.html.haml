@@ -1,5 +1,7 @@
+= render 'general/menu' do
+  %li
+    %span.header Creating Issuer
+  %li.spacer
+  %li= link_to 'Back', @issuer
 %main
-  %h1 New Issuer
-  %ul.menu
-    %li= link_to 'Back', issuers_url
   = render 'form', issuer: @issuer, new_issuer: true

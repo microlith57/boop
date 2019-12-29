@@ -46,7 +46,7 @@ ul.menu li {
 
   // Make the links the right size
   > span,
-  a {
+  > a {
     padding: 0px;
     line-height: 40px;
 
@@ -72,6 +72,11 @@ ul.menu li {
       padding: 0.3rem 0.6rem;
       margin: calc((40px - 2rem) / 2) 0;
     }
+  }
+
+  .label {
+    // BUG: Other things can overlap this
+    @include vertical-center;
   }
 }
 
