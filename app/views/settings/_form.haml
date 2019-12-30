@@ -1,6 +1,10 @@
-= form_with model: admin, url: setting_url(admin) do |form|
+- if admin.id.present?
+  - url = setting_url(admin)
+- else
+  - url = settings_url
+= form_with model: admin, url: url, local: true do |form|
   - if admin.errors.any?
-    #error-explanation
+    #error-explanation.alert.callout
       %h2
         = pluralize(admin.errors.count, 'error')
         prevented

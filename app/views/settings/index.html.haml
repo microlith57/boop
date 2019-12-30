@@ -2,7 +2,8 @@
   %li
     %span.header Admin Settings
   -# TODO: Search form
-  -# TODO: New admin link
+  %li.spacer
+  %li= link_to 'New', new_setting_url
 %main
   != pagy_foundation_nav_js @pagy
   %table

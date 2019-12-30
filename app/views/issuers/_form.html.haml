@@ -1,6 +1,6 @@
-= form_with model: issuer, data: { controller: 'issuer-form' } do |form|
+= form_with model: issuer, local: true, data: { controller: 'issuer-form' } do |form|
   - if issuer.errors.any?
-    #error-explanation
+    #error-explanation.alert.callout
       %h2
         = pluralize(issuer.errors.count, 'error')
         prevented
