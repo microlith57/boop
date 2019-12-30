@@ -1,6 +1,6 @@
-= form_with model: device do |form|
+= form_with model: device, local: true do |form|
   - if device.errors.any?
-    #error-explanation
+    #error-explanation.alert.callout
       %h2
         = pluralize(device.errors.count, 'error')
         prevented
