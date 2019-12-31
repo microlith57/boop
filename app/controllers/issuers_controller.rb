@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 class IssuersController < ApplicationController
   before_action :authenticate_admin!
 
@@ -17,6 +19,25 @@ class IssuersController < ApplicationController
       @q.result(distinct: true),
       items: params[:limit] || Pagy::VARS[:items]
     )
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        data = CSV.generate(headers: true) do |csv|
+          csv << %w[barcode name code email allowance]
+          @issuers.each do |issuer|
+            csv << [
+              issuer.barcode.code,
+              issuer.name,
+              issuer.code,
+              issuer.email,
+              issuer.allowance || 'unlimited'
+            ]
+          end
+        end
+        send_data data, filename: 'issuers.csv'
+      end
+    end
   end
 
   def show
