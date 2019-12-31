@@ -17,6 +17,22 @@ class DevicesController < ApplicationController
       @q.result(distinct: true),
       items: params[:limit] || Pagy::VARS[:items]
     )
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        data = CSV.generate(headers: true) do |csv|
+          csv << %w[barcode name]
+          @devices.each do |device|
+            csv << [
+              device.barcode.code,
+              device.name
+            ]
+          end
+        end
+        send_data data, filename: 'devices.csv'
+      end
+    end
   end
 
   def show
