@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 class DevicesController < ApplicationController
   before_action :authenticate_admin!
 
@@ -12,6 +14,7 @@ class DevicesController < ApplicationController
     end
 
     @q = Device.ransack query
+    @q.sorts = 'name asc' if @q.sorts.empty?
 
     @pagy, @devices = pagy(
       @q.result(distinct: true),
@@ -65,6 +68,30 @@ class DevicesController < ApplicationController
       redirect_to @device
     else
       render 'new'
+    end
+  end
+
+  # TODO: Refactor
+  def upload
+    params[:files].each do |file|
+      csv = CSV.new file.tempfile, headers: true
+      Device.transaction do
+        csv.each do |line|
+          code = line['barcode']
+          line_params = ActionController::Parameters.new(line.to_hash).permit(:name)
+
+          if code.present? && (barcode = Barcode.find_by code: code)
+            device = barcode.device!
+            device.update! line_params
+          else
+            device = Device.new(line_params)
+            barcode = Barcode.new code: code, owner: device
+            barcode.generate_code
+            device.save!
+            barcode.save!
+          end
+        end
+      end
     end
   end
 
