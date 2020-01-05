@@ -1,23 +1,52 @@
 # frozen_string_literal: true
 
-class IssuersController < ApplicationController
-  include Pagy::Backend
+require 'csv'
 
+class IssuersController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @query = Issuer.ransack(params[:q])
+    query = params[:q]
 
-    @pagy, @records = pagy(
-      @query.result(distinct: true),
+    if query && (bar = Barcode.find_by code: query[:name_or_code_or_email_cont]) && bar.issuer?
+      redirect_to bar.issuer
+      return
+    end
+
+    @q = Issuer.ransack query
+    @q.sorts = 'name asc' if @q.sorts.empty?
+
+    @pagy, @issuers = pagy(
+      @q.result(distinct: true),
       items: params[:limit] || Pagy::VARS[:items]
     )
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        data = CSV.generate(headers: true) do |csv|
+          csv << %w[barcode name code email allowance]
+          @issuers.each do |issuer|
+            csv << [
+              issuer.barcode.code,
+              issuer.name,
+              issuer.code,
+              issuer.email,
+              issuer.allowance || 'unlimited'
+            ]
+          end
+        end
+        send_data data, filename: 'issuers.csv'
+      end
+    end
   end
 
   def show
     @issuer = find_issuer params[:id]
   end
 
+  # BUG: Loading without turbolinks works; loading with turbolinks (eg. from
+  # other page) replaces the body with raw PNG data and ruins the display
   def barcode
     @issuer = find_issuer params[:id]
     send_data @issuer.barcode.png,
@@ -43,6 +72,39 @@ class IssuersController < ApplicationController
       redirect_to @issuer
     else
       render 'new'
+    end
+  end
+
+  # TODO: Refactor
+  def upload
+    params[:files].each do |file|
+      csv = CSV.new file.tempfile, headers: true
+      Issuer.transaction do
+        csv.each do |line|
+          code = line['barcode']
+          line_params = ActionController::Parameters
+                        .new(line.to_hash)
+                        .permit(:name, :email, :code, :allowance)
+                        .to_h
+
+          if line_params[:allowance].strip.downcase.in? ['unlimited', '∞']
+            line_params[:allowance] = nil
+          elsif line_params[:allowance].nil?
+            line_params[:allowance] = 1
+          end
+
+          if code.present? && (barcode = Barcode.find_by code: code)
+            issuer = barcode.issuer!
+            issuer.update! line_params
+          else
+            issuer = Issuer.new(line_params)
+            barcode = Barcode.new code: code, owner: issuer
+            barcode.generate_code
+            issuer.save!
+            barcode.save!
+          end
+        end
+      end
     end
   end
 

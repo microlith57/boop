@@ -7,7 +7,6 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
@@ -15,14 +14,27 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import { Application } from "stimulus"
-import { definitionsFromContext } from "stimulus/webpack-helpers"
+import { Application } from 'stimulus'
+import { definitionsFromContext } from 'stimulus/webpack-helpers'
 
 const application = Application.start()
-const context = require.context("controllers", true, /.js$/)
+const context = require.context('controllers', true, /.js$/)
 application.load(definitionsFromContext(context))
 
-require("@rails/ujs").start()
+require('@rails/ujs').start()
 
-import LocalTime from "local-time"
+var Turbolinks = require('turbolinks')
+Turbolinks.start()
+
+require('trix')
+require('@rails/actiontext')
+
+require('foundation-sites')
+$(document).on('turbolinks:load', function() {
+  $(function() {
+    $(document).foundation()
+  })
+})
+
+import LocalTime from 'local-time'
 LocalTime.start()

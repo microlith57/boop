@@ -1,4 +1,7 @@
-%h1 New Device
-%ul.menu
+= render 'general/menu' do
+  %li
+    %span.header Creating Device
+  %li.spacer
   %li= link_to 'Back', devices_url
-= render 'form', device: @device
+%main
+  = render 'form', device: @device

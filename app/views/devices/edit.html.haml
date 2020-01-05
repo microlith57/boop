@@ -1,5 +1,12 @@
-%h1 Edit Device
-%ul.menu
-  %li= link_to 'Back', @device
-%p Find me in app/views/devices/edit.html.erb
-= render 'form', device: @device
+= render 'general/menu' do
+  %li
+    %span.header Editing #{@device.name}
+  - if @device.overdue?
+    %li
+      .label.alert
+        = pluralize(@device.days_overdue, 'day') + ' overdue'
+        3 days overdue
+  %li.spacer
+  %li= link_to 'Back', devices_url
+%main
+  = render 'form', device: @device

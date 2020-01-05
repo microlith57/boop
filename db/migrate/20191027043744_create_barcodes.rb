@@ -1,6 +1,4 @@
 class CreateBarcodes < ActiveRecord::Migration[6.0]
-  # :reek:FeatureEnvy
-  # :reek:UncommunicativeVariableName
   def change
     create_table :barcodes do |t|
       t.string :code

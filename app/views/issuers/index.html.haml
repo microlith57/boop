@@ -1,19 +1,42 @@
-%h1 Issuers
-= render 'home/menu'
-= pagy_nav @pagy
+= render 'general/menu' do
+  %li
+    %span.header Issuers
+  %li.search
+    = search_form_for @q, role: 'search', class: 'input-group' do |f|
+      = f.search_field :name_or_code_or_email_cont,
+        class: 'small input-group-field', placeholder: 'Search issuers...'
 
-%table
-  %thead
-    %tr
-      %th= sort_link @query, :name
-      %th= sort_link @query, :barcode
-      %th= sort_link @query, :created_at, 'Time Created'
-  %tbody
-    - @issuers.each do |issuer|
+      .input-group-button
+        %button.button{ type: 'submit' }
+          %span.show-for-sr Search
+          %span{ 'aria-hidden' => 'true' }
+            %i.fi-magnifying-glass
+  %li.spacer
+  %li= link_to 'New', new_issuer_url
+  %li= link_to 'Download CSV', issuers_url(format: :csv)
+  %li{ 'data-controller' => 'uppy' }
+    %input{ type: :hidden, value: upload_issuers_url,
+            'data-target' => 'uppy.url' }
+    %a{ 'data-target' => 'uppy.trigger' } Upload CSV
+%main
+  %table
+    %thead
       %tr
-        %td= link_to issuer.name, issuer
-        %td
-          %pre= issuer.barcode
-        %td= local_time issuer.created_at
+        %th= sort_link @q, :name
+        %th= sort_link @q, :barcode
+        %th= sort_link @q, :created_at, 'Created'
+        %th= sort_link @q, :allowance
+        -# TODO: Sort link for this
+        %th Overdues
+    %tbody
+      - @issuers.each do |issuer|
+        %tr
+          %td= link_to issuer.name, issuer
+          %td
+            %pre= issuer.barcode
+          %td= local_time issuer.created_at
+          %td= issuer.allowance || '∞'
+          %td= issuer.overdues.count
 
-= pagy_nav @pagy
+
+  != pagy_foundation_nav @pagy

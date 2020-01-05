@@ -1,24 +1,23 @@
-= form_for device do |form|
+= form_with model: device, local: true do |form|
   - if device.errors.any?
-    #error-explanation
+    #error-explanation.alert.callout
       %h2
         = pluralize(device.errors.count, 'error')
-        prohibited
+        prevented
         this device from being saved:
       %ul
         - device.errors.full_messages.each do |msg|
           %li= msg
-  %p
-    = form.label :name
-    %br/
-    = form.text_field :name
-  %p
-    = form.label :description
-    %br/
-    = form.text_area :description
-  %p
-    = form.label :barcode
-    %br/
-    = form.text_field :barcode
-  %p
-    = form.submit
+  = form.label :name
+  = form.text_field :name
+
+  = form.label :description
+  = form.text_area :description
+
+  = form.label :notes
+  = form.rich_text_area :notes
+
+  = form.label :barcode
+  = form.text_field :barcode, class: 'monospace'
+
+  = form.submit
