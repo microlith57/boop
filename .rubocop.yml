@@ -17,3 +17,6 @@ Style/Documentation:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: exc

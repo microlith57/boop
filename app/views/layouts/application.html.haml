@@ -1,21 +1,22 @@
-!!!
-%html
+!!! 5
+%html{ lang: 'en' }
   %head
-    %meta{ :content => 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type' }/
-    %title Boop
-    / Cross-Site Request Forgery
-    = csrf_meta_tags
-    / Content Security Policy
-    = csp_meta_tag
-    / Fonts
-    = render 'home/fonts'
+    %meta{ charset: 'utf-8' }
+
+    %meta{ name: 'viewport',
+           content: 'width=device-width, initial-scale=1.0' }
+
+    %title= content_for?(:title) ? yield(:title) : 'Boop'
+
     / Stylesheets
-    = stylesheet_link_tag 'application', media: 'all',
-                          'data-turbolinks-track': 'reload'
-    / Javascript
+    = stylesheet_link_tag 'application'
+    / Webpacker Javascript
     = javascript_pack_tag 'application'
+    / Cross Site Request Forgery tag
+    = csrf_meta_tag
+
   %body
-    %section#notices
-      != notice_p
-      != alert_p
+    #callout-box
+      != notice_callout
+      != alert_callout
     = yield

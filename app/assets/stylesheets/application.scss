@@ -1,0 +1,282 @@
+// Import Foundation assets
+@import "foundation/foundation_and_overrides";
+
+@import "./actiontext.scss";
+
+@import '@uppy/core/dist/style.css';
+@import '@uppy/dashboard/dist/style.css';
+
+.turbolinks-progress-bar {
+  background-color: map-get($foundation-palette, "primary");
+}
+
+.monospace {
+  font-family: monospace;
+}
+
+abbr.hoverable {
+  cursor: help;
+  text-decoration: 1px dashed $light-gray underline;
+}
+
+body {
+  padding: 0px 16px;
+
+  > main,
+  > header,
+  > footer {
+    // Only take up max. of 800px in the middle of the screen
+    max-width: 800px;
+    margin: 0px auto;
+  }
+}
+
+header > hr {
+  margin: 0;
+}
+
+ul.menu li {
+  // Space between items, except at the end
+  margin-right: 15px;
+  &:last-of-type {
+    margin-right: 0px;
+  }
+
+  // Spacer elements should grow
+  &.spacer {
+    flex-grow: 1;
+  }
+
+  // Make the links the right size
+  > span,
+  > a {
+    padding: 0px;
+    line-height: 40px;
+
+    &.current-page {
+      $anchor-color-current: darken($anchor-color, 15%);
+      color: $anchor-color-current;
+
+      &:hover {
+        color: scale-color($anchor-color-current, $lightness: -14%);
+      }
+    }
+
+    &.header {
+      font-weight: bold;
+    }
+  }
+
+  &.search > form.input-group {
+    margin: 0;
+
+    input, button {
+      height: 2rem;
+      padding: 0.3rem 0.6rem;
+      margin: calc((40px - 2rem) / 2) 0;
+    }
+  }
+
+  .label {
+    // BUG: Other things can overlap this
+    @include vertical-center;
+  }
+}
+
+main.central {
+  @include horizontal-center;
+  width: 350px;
+  margin-top: 90px;
+
+  .links > a {
+    color: darken($dark-gray, 10%);
+    font-size: 0.8em;
+  }
+
+  .links > a:hover,
+  a:focus {
+    color: darken($dark-gray, 20%);
+  }
+
+  .links {
+    margin-bottom: 10px;
+  }
+}
+
+.card {
+  @include subtle-shadow;
+}
+
+#boop-logo {
+  &.central-card {
+    @include horizontal-center;
+  }
+
+  display: block;
+  margin-top: 15px;
+  text-align: center;
+
+  font-size: 40px;
+  color: $black;
+  text-shadow: 0px 1px 1.5px $dark-gray;
+}
+
+#callout-box {
+  max-width: 50%;
+  min-width: 400px;
+  z-index: 50;
+
+  position: absolute;
+  margin: none;
+  right: 0;
+
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.callout {
+  @include subtle-shadow;
+
+  $border-width: 2px;
+
+  $button-size: 1.5rem;
+  $button-margin: 0.5rem;
+
+  width: 100%;
+  border: 0;
+  border-left: $border-width solid $dark-gray;
+  padding-right: $button-size + (2 * $button-margin);
+
+  background: $light-gray;
+  color: $dark-gray;
+
+  @each $color in success, alert, warning, primary {
+    &.#{$color} {
+      border-left-color: map-get($foundation-palette, $color);
+    }
+  }
+
+  &:not(.primary, .secondary, .success, .alert, .warning) {
+    color: $black;
+  }
+
+  .close-button {
+    box-shadow: none;
+    position: absolute;
+    padding: 0;
+    top: $button-margin;
+    right: $button-margin;
+
+    &:active {
+      box-shadow: none;
+    }
+
+    span {
+      font-size: 2rem;
+      display: block;
+      width: $button-size;
+      height: $button-size;
+      line-height: $button-size;
+    }
+  }
+}
+
+#error-explanation h2 {
+  font-size: large;
+}
+
+form .flex-row {
+  $padding: 1rem;
+
+  display: flex;
+  flex-direction: row;
+
+  & > * {
+    margin: {
+      bottom: 0;
+      top: 0;
+      left: 0;
+      right: $padding;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+#home-forms-content > section {
+  $padding: 1rem;
+
+  padding: 0;
+
+  form {
+    margin: 0 $padding;
+    padding: $padding 0;
+  }
+
+  form > *:last-child {
+    margin-bottom: 0;
+  }
+
+  p.status {
+    @include label;
+
+    margin: {
+      left: 0;
+      right: 1rem;
+      top: 0.5rem;
+      bottom: 0.5rem;
+    };
+    float: right;
+
+    background: map_get($foundation-palette, 'success');
+
+    &.error {
+      background: map_get($foundation-palette, 'alert');
+      color: $white;
+    }
+  }
+
+  // TODO: Animate open/close
+  article.issuer-info {
+    background-color: $light-gray;
+
+    border: {
+      top: 1px solid $medium-gray;
+      bottom: 1px solid $medium-gray;
+    }
+
+    overflow-y: hidden;
+
+    &.hidden {
+      height: 0px;
+      padding: 0px;
+      border-bottom: 0px;
+    }
+
+    padding: $padding;
+
+    h1 {
+      font-size: large;
+      display: inline;
+    }
+
+    .summary {
+      font-size: large;
+      float: right;
+      font-weight: bold;
+    }
+
+    // TODO: Improve styling
+    .allowance_full {
+      font-weight: bold;
+
+      background-color: map-get($foundation-palette, "warning");
+      border: 1px solid darken(map-get($foundation-palette, "warning"), 5%);
+
+      margin: ($padding / 2) 0;
+      padding: 0px 5px;
+    }
+  }
+}

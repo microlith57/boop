@@ -1,34 +1,52 @@
-%h1 Devices
-= render 'home/menu'
-= pagy_nav @pagy
-%table
-  %thead
-    %tr
-      %th= sort_link @query, :name
-      %th= sort_link @query, :barcode
-      %th= sort_link @query, :created_at, 'Time Created'
-      %th= sort_link @query, :issued_at, 'Time Issued'
-      %th Days Overdue
-  %tbody
-    - @devices.each do |device|
+= render 'general/menu' do
+  %li
+    %span.header Devices
+  %li.search
+    = search_form_for @q, role: 'search', class: 'input-group' do |f|
+      = f.search_field :name_cont,
+        class: 'small input-group-field', placeholder: 'Search devices...'
+
+      .input-group-button
+        %button.button{ type: 'submit' }
+          %span.show-for-sr Search
+          %span{ 'aria-hidden' => 'true' }
+            %i.fi-magnifying-glass
+  %li.spacer
+  %li= link_to 'New', new_device_url
+  %li= link_to 'Download CSV', devices_url(format: :csv)
+  %li{ 'data-controller' => 'uppy' }
+    %input{ type: :hidden, value: upload_devices_url,
+            'data-target' => 'uppy.url' }
+    %a{ 'data-target' => 'uppy.trigger' } Upload CSV
+%main
+  %table
+    %thead
       %tr
-        - if device.overdue?
-          %td= link_to device.name, device, class: 'overdue'
-        - else
-          %td= link_to device.name, device
+        %th= sort_link @q, :name
+        %th= sort_link @q, :barcode
+        %th= sort_link @q, :created_at, 'Created'
+        %th= sort_link @q, :issued_at, 'Issued'
+        %th Days Overdue
+    %tbody
+      - @devices.each do |device|
+        %tr
+          - if device.overdue?
+            %td= link_to device.name, device, class: 'overdue'
+          - else
+            %td= link_to device.name, device
 
-        %td
-          %pre= device.barcode
+          %td
+            %pre= device.barcode
 
-        %td= local_time device.created_at
+          %td= local_time device.created_at
 
-        - if device.issued?
-          %td= local_time device.issued_at
-        - else
-          %td -
+          - if device.issued?
+            %td= local_time device.issued_at
+          - else
+            %td -
 
-        - if device.overdue?
-          %td= device.days_overdue
-        - else
-          %td -
-= pagy_nav @pagy
+          - if device.overdue?
+            %td= device.days_overdue
+          - else
+            %td -
+  != pagy_foundation_nav @pagy

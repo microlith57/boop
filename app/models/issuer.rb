@@ -11,6 +11,8 @@ class Issuer < ApplicationRecord
   validates :name,
             presence: true
 
+  has_rich_text :notes
+
   # @todo custom validation classes
   # @!attribute code
   #   @return [String]
@@ -37,6 +39,11 @@ class Issuer < ApplicationRecord
   #     REVIEW: Should old barcodes be preserved?
   has_one :barcode, as: :owner, dependent: :destroy
 
+  # @return [Array(Device)] this issuer's overdue devices.
+  def overdues
+    devices.overdue
+  end
+
   # @return [String] the URL-safe {#code} of this Issuer.
   def to_param
     code.parameterize
@@ -51,10 +58,35 @@ class Issuer < ApplicationRecord
   # @return [String] The summary string.
   def device_summary(infinity_sign: '∞')
     [
-      devices.overdue.length,
-      devices.length,
+      overdues.count,
+      devices.count,
       allowance || infinity_sign
     ].join('/')
+  end
+
+  # @return [true, false] Is the issuer allowed another device?
+  # :reek:NilCheck
+  def allowed_another_device?
+    return true if allowance.blank?
+
+    devices.count < allowance
+  end
+
+  # @return ['exceeded', 'reached', 'not reached'] Human friendly allowance
+  #   state.
+  #   Used like 'This issuer has already *exceeded* their allowance'.
+  # :reek:NilCheck
+  def allowance_state
+    return 'not met' if allowance.blank?
+
+    case devices.count <=> allowance
+    when 1
+      'exceeded'
+    when 0
+      'reached'
+    when -1
+      'not reached'
+    end
   end
 
   module Internal

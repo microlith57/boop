@@ -1,0 +1,15 @@
+%figure{ class: ["attachment",
+                "attachment--#{blob.representable? ? "preview" : "file"}",
+                "attachment--#{blob.filename.extension}"] }
+  - if blob.representable?
+    - if local_assigns[:in_gallery]
+      - size_limit = [ 800, 600 ]
+    - else
+      - size_limit = [ 1024, 768 ]
+    = image_tag blob.representation(resize_to_limit: size_limit)
+  %figcaption.attachment__caption
+    - if caption = blob.try(:caption)
+      = caption
+    - else
+      %span.attachment__name= blob.filename
+      %span.attachment__size= number_to_human_size blob.byte_size

@@ -1,0 +1,7 @@
+= render 'general/menu' do
+  %li
+    %span.header Creating Admin
+  %li.spacer
+  %li= link_to 'Back', settings_url
+%main
+  = render 'form', admin: @admin
