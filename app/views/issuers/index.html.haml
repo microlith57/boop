@@ -13,9 +13,12 @@
             %i.fi-magnifying-glass
   %li.spacer
   %li= link_to 'New', new_issuer_url
+  %li= link_to 'Download CSV', issuers_url(format: :csv)
+  %li{ 'data-controller' => 'uppy' }
+    %input{ type: :hidden, value: upload_issuers_url,
+            'data-target' => 'uppy.url' }
+    %a{ 'data-target' => 'uppy.trigger' } Upload CSV
 %main
-  != pagy_foundation_nav_js @pagy
-
   %table
     %thead
       %tr
@@ -36,4 +39,4 @@
           %td= issuer.overdues.count
 
 
-  != pagy_foundation_nav_js @pagy
+  != pagy_foundation_nav @pagy

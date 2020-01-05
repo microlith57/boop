@@ -14,6 +14,7 @@ class IssuersController < ApplicationController
     end
 
     @q = Issuer.ransack query
+    @q.sorts = 'name asc' if @q.sorts.empty?
 
     @pagy, @issuers = pagy(
       @q.result(distinct: true),
@@ -71,6 +72,39 @@ class IssuersController < ApplicationController
       redirect_to @issuer
     else
       render 'new'
+    end
+  end
+
+  # TODO: Refactor
+  def upload
+    params[:files].each do |file|
+      csv = CSV.new file.tempfile, headers: true
+      Issuer.transaction do
+        csv.each do |line|
+          code = line['barcode']
+          line_params = ActionController::Parameters
+                        .new(line.to_hash)
+                        .permit(:name, :email, :code, :allowance)
+                        .to_h
+
+          if line_params[:allowance].strip.downcase.in? ['unlimited', '∞']
+            line_params[:allowance] = nil
+          elsif line_params[:allowance].nil?
+            line_params[:allowance] = 1
+          end
+
+          if code.present? && (barcode = Barcode.find_by code: code)
+            issuer = barcode.issuer!
+            issuer.update! line_params
+          else
+            issuer = Issuer.new(line_params)
+            barcode = Barcode.new code: code, owner: issuer
+            barcode.generate_code
+            issuer.save!
+            barcode.save!
+          end
+        end
+      end
     end
   end
 

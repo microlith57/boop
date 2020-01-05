@@ -40,3 +40,14 @@ cla_b = Barcode.new owner: cla
 cla_b.generate_code
 cla.save!
 cla_b.save!
+
+%w[W X Y Z].each do |l|
+  1.upto 40 do |i|
+    i = format '%<number>02d', number: i
+    device = Device.new name: "CB-#{l}-#{i}"
+    barcode = Barcode.new owner: device
+    barcode.generate_code!
+    device.save!
+    barcode.save!
+  end
+end

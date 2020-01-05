@@ -13,15 +13,15 @@ Rails.application.routes.draw do
   resources :barcodes, only: %i[index show]
 
   resources :devices do
-    member do
-      get 'barcode'
-    end
+    get 'barcode', on: :member
+
+    post 'upload', on: :collection
   end
 
   resources :issuers do
-    member do
-      get 'barcode'
-    end
+    get 'barcode', on: :member
+
+    post 'upload', on: :collection
   end
 
   resources :settings, except: :show
