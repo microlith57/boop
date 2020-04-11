@@ -105,6 +105,9 @@ group :development do
   gem 'html2haml'
 end
 
+# Environment variable file for local development & testing
+gem 'dotenv-rails', groups: %i[development test]
+
 # Webpacker to pack JS files
 gem 'webpacker', '~> 4.x'
 
