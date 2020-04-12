@@ -71,28 +71,25 @@ class DevicesController < ApplicationController
     end
   end
 
-  # TODO: Refactor
   def upload
     params[:files].each do |file|
       csv = CSV.new file.tempfile, headers: true
-      Device.transaction do
-        csv.each do |line|
-          code = line['barcode']
-          line_params = ActionController::Parameters.new(line.to_hash).permit(:name)
 
-          if code.present? && (barcode = Barcode.find_by code: code)
-            device = barcode.device!
-            device.update! line_params
-          else
-            device = Device.new(line_params)
-            barcode = Barcode.new code: code, owner: device
-            barcode.generate_code
-            device.save!
-            barcode.save!
-          end
+      Device.transaction do
+        csv.each.with_index do |line, lineno|
+          hash = ActionController::Parameters.new(line.to_h).permit(
+            :name, :description, :notes
+          )
+
+          Device.perform_upload lineno + 1,
+                                line['operation'],
+                                line['barcode'],
+                                hash
         end
       end
     end
+  rescue UploadHelper::UploadException => exc
+    render plain: exc.render, status: :bad_request
   end
 
   def update

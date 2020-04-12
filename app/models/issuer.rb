@@ -89,6 +89,51 @@ class Issuer < ApplicationRecord
     end
   end
 
+  def self.perform_upload(line, operation, barcode, hash)
+    if operation.nil?
+      raise UploadHelper::UploadException line,
+                                          'operation column must be present'
+    end
+
+    op = operation.downcase.to_sym
+
+    case op
+    when :create
+      issuer = Issuer.new hash
+      barcode = Barcode.new code: barcode, owner: issuer
+      barcode.generate_code
+
+      issuer.save!
+      barcode.save!
+    when :edit
+      if barcode.blank?
+        raise UploadHelper::UploadException.new line, 'barcode must be present'
+      end
+
+      barcode = Barcode.find_by! code: barcode
+      issuer = Barcode.issuer!
+
+      issuer.update! hash
+    when :delete
+      if barcode.blank?
+        raise UploadHelper::UploadException.new line, 'barcode must be present'
+      end
+
+      barcode = Barcode.find_by! code: barcode
+      issuer = Barcode.issuer!
+
+      issuer.delete!
+    else
+      raise UploadHelper::UploadException line,
+                                          "operation must be 'create', " \
+                                          "'edit', or 'delete'"
+    end
+  rescue ActiveRecord::RecordNotFound,
+         ActiveRecord::RecordInvalid,
+         ActiveRecord::RecordNotSaved => exc
+    raise UploadHelper::UploadException line, exc.message
+  end
+
   module Internal
     # @param name [String] The issuer's full name
     # @return [String] A 3-letter issuer code for the issuer
