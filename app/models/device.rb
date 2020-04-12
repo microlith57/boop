@@ -123,6 +123,51 @@ class Device < ApplicationRecord
     (date_today - date_issued).to_i
   end
 
+  def self.perform_upload(line, operation, barcode, hash)
+    if operation.blank?
+      raise UploadHelper::UploadException.new line,
+                                              'operation must be present'
+    end
+
+    op = operation.downcase.to_sym
+
+    case op
+    when :create
+      device = Device.new hash
+      barcode = Barcode.new code: barcode, owner: device
+      barcode.generate_code
+
+      device.save!
+      barcode.save!
+    when :edit
+      if barcode.blank?
+        raise UploadHelper::UploadException.new line, 'barcode must be present'
+      end
+
+      barcode = Barcode.find_by! code: barcode
+      device = barcode.device!
+
+      device.update! hash
+    when :delete
+      if barcode.blank?
+        raise UploadHelper::UploadException.new line, 'barcode must be present'
+      end
+
+      barcode = Barcode.find_by! code: barcode
+      device = barcode.device!
+
+      device.delete
+    else
+      raise UploadHelper::UploadException.new line,
+                                              "operation must be 'create', " \
+                                              "'edit', or 'delete'"
+    end
+  rescue ActiveRecord::RecordNotFound,
+         ActiveRecord::RecordInvalid,
+         ActiveRecord::RecordNotSaved => exc
+    raise UploadHelper::UploadException.new line, exc.message
+  end
+
   # @private
   module Internal
     # Convert a datetime into a date, but the 'rollover' between one day and the

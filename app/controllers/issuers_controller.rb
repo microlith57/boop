@@ -8,7 +8,9 @@ class IssuersController < ApplicationController
   def index
     query = params[:q]
 
-    if query && (bar = Barcode.find_by code: query[:name_or_code_or_email_cont]) && bar.issuer?
+    if query && (
+      bar = Barcode.find_by code: query[:name_or_code_or_email_cont]
+    ) && bar.issuer?
       redirect_to bar.issuer
       return
     end
@@ -75,37 +77,25 @@ class IssuersController < ApplicationController
     end
   end
 
-  # TODO: Refactor
   def upload
     params[:files].each do |file|
       csv = CSV.new file.tempfile, headers: true
+
       Issuer.transaction do
-        csv.each do |line|
-          code = line['barcode']
-          line_params = ActionController::Parameters
-                        .new(line.to_hash)
-                        .permit(:name, :email, :code, :allowance)
-                        .to_h
+        csv.each.with_index do |line, lineno|
+          hash = ActionController::Parameters.new(line.to_h).permit(
+            :name, :email, :code, :allowance
+          )
 
-          if line_params[:allowance].strip.downcase.in? ['unlimited', '∞']
-            line_params[:allowance] = nil
-          elsif line_params[:allowance].nil?
-            line_params[:allowance] = 1
-          end
-
-          if code.present? && (barcode = Barcode.find_by code: code)
-            issuer = barcode.issuer!
-            issuer.update! line_params
-          else
-            issuer = Issuer.new(line_params)
-            barcode = Barcode.new code: code, owner: issuer
-            barcode.generate_code
-            issuer.save!
-            barcode.save!
-          end
+          Issuer.perform_upload lineno + 1,
+                                line[:operation],
+                                line[:barcode],
+                                hash
         end
       end
     end
+  rescue UploadHelper::UploadException => exc
+    render plain: exc.render, status: :bad_request
   end
 
   def update
