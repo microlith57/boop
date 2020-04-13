@@ -86,6 +86,9 @@ gem 'pagy'
 gem 'autoprefixer-rails'
 gem 'foundation-rails'
 
+# Solargraph language server
+gem 'solargraph', group: :development
+
 # Rubocop
 group :development do
   gem 'rubocop'
