@@ -91,8 +91,8 @@ class Issuer < ApplicationRecord
 
   def self.perform_upload(line, operation, barcode, hash)
     if operation.nil?
-      raise UploadHelper::UploadException line,
-                                          'operation column must be present'
+      raise UploadHelper::UploadException.new line,
+                                              'operation column must be present'
     end
 
     op = operation.downcase.to_sym
@@ -124,9 +124,9 @@ class Issuer < ApplicationRecord
 
       issuer.delete!
     else
-      raise UploadHelper::UploadException line,
-                                          "operation must be 'create', " \
-                                          "'edit', or 'delete'"
+      raise UploadHelper::UploadException.new line,
+                                              "operation must be 'create', " \
+                                              "'edit', or 'delete'"
     end
   rescue ActiveRecord::RecordNotFound,
          ActiveRecord::RecordInvalid,

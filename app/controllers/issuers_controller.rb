@@ -88,8 +88,8 @@ class IssuersController < ApplicationController
           )
 
           Issuer.perform_upload lineno + 1,
-                                line[:operation],
-                                line[:barcode],
+                                line['operation'],
+                                line['barcode'],
                                 hash
         end
       end
