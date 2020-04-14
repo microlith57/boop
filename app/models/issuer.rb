@@ -90,7 +90,7 @@ class Issuer < ApplicationRecord
   end
 
   def self.perform_upload(line, operation, barcode, hash)
-    if operation.nil?
+    if operation.blank?
       raise UploadHelper::UploadException.new line,
                                               'operation column must be present'
     end
@@ -111,7 +111,7 @@ class Issuer < ApplicationRecord
       end
 
       barcode = Barcode.find_by! code: barcode
-      issuer = Barcode.issuer!
+      issuer = barcode.issuer!
 
       issuer.update! hash
     when :delete
@@ -120,7 +120,7 @@ class Issuer < ApplicationRecord
       end
 
       barcode = Barcode.find_by! code: barcode
-      issuer = Barcode.issuer!
+      issuer = barcode.issuer!
 
       issuer.delete!
     else
@@ -131,7 +131,7 @@ class Issuer < ApplicationRecord
   rescue ActiveRecord::RecordNotFound,
          ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => exc
-    raise UploadHelper::UploadException line, exc.message
+    raise UploadHelper::UploadException.new line, exc.message
   end
 
   module Internal

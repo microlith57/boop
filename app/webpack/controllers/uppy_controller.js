@@ -37,10 +37,19 @@ export default class extends Controller {
         headers: {
           'X-CSRF-Token': csrf_token,
         },
+        getResponseError: function (response, xhr) {
+          if (xhr.status == 400) {
+            return response
+          } else {
+            return `An unexpected error occurred (${xhr.status}); please report it!`
+          }
+        }
       })
-    // uppy.on('complete', result => {
-    //   console.log('successful files:', result.successful)
-    //   console.log('failed files:', result.failed)
-    // })
+    uppy.on('complete', result => {
+      if (result.failed.length == 0) {
+        location.reload()
+      }
+    })
+
   }
 }
