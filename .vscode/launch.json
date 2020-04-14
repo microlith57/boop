@@ -16,14 +16,15 @@
 				// Change these to whatever works on your system (check `env`)
 				"GEM_HOME"       : "/home/microlith57/.rvm/gems/ruby-2.5.1",
 				"GEM_PATH"       : "/home/microlith57/.rvm/gems/ruby-2.5.1:/home/microlith57/.rvm/gems/ruby-2.5.1@global",
-				"PATH"           : "/home/microlith57/.rvm/gems/ruby-2.5.1/bin:/home/microlith57/.rvm/gems/ruby-2.5.1@global/bin:/home/microlith57/.rvm/rubies/ruby-2.5.1/bin:/home/microlith57/.rvm/bin:/bin:/home/microlith57/.fzf/bin:/home/microlith57/.local/bin:/home/microlith57/bin:/opt/texbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/microlith57/.cargo/bin:/home/microlith57/.cargo/bin/",
+				"PATH"           : "/home/microlith57/.rvm/gems/ruby-2.5.1/bin:/home/microlith57/.rvm/gems/ruby-2.5.1@global/bin:/usr/share/rvm/rubies/ruby-2.5.1/bin:/usr/share/rvm/bin:/home/microlith57/anaconda3/bin:/home/microlith57/anaconda3/condabin:/home/microlith57/.yarn/bin:/home/microlith57/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
 				"rvm_bin_path"   : "/home/microlith57/.rvm/bin",
 				"rvm_delete_flag": "0",
 				"rvm_path"       : "/home/microlith57/.rvm",
 				"rvm_prefix"     : "/home/microlith57",
 				"rvm_ruby_string": "ruby-2.5.1",
 				"rvm_version"    : "1.29.9 latest",
-			},
+      },
+      "pathToBundler": "bundle"
 		},
 		{
 			"name": "spec",
