@@ -23,6 +23,4 @@ Rails.application.routes.draw do
 
     post 'upload', on: :collection
   end
-
-  resources :settings, except: :show
 end
