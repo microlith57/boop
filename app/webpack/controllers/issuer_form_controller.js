@@ -1,12 +1,7 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = [
-    'nameField',
-    'codeField',
-    'emailField',
-    'defaultEmailSuffix',
-  ]
+  static targets = ['nameField', 'codeField', 'emailField']
 
   connect() {}
 
@@ -18,7 +13,7 @@ export default class extends Controller {
 
     this.codeFieldTarget.defaultValue = value
     this.emailFieldTarget.defaultValue =
-      (this.codeFieldTarget.value || value) + this.emailSuffix()
+      (this.codeFieldTarget.value || value) + this.data.get('emailSuffix')
   }
 
   // TODO: Refactor
@@ -27,11 +22,6 @@ export default class extends Controller {
       .toLowerCase()
       .replace(/[^a-z]/g, '')
 
-    this.emailFieldTarget.defaultValue = value + this.emailSuffix()
-  }
-
-  // Obtain the email suffix from the form.
-  emailSuffix() {
-    return this.defaultEmailSuffixTarget.value
+    this.emailFieldTarget.defaultValue = value + this.data.get('emailSuffix')
   }
 }

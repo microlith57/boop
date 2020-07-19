@@ -13,12 +13,12 @@
 -# TODO: Show error messages
 %main.card
   -# Tab buttons
-  %ul.tabs#home-forms-tabs{ 'data-tabs' => true }
+  %ul.tabs#home-forms-tabs{ 'data-tabs' => true, 'data-deep-link' => 'true' }
     %li.tabs-title.is-active= link_to('Issue', '#issuing-panel')
     %li.tabs-title= link_to('Return', '#returning-panel')
 
   -# Tab contents
-  #home-forms-content.tabs-content{ 'data-tabs-content' => 'home-forms-tabs' }
+  .tabs-content#home-forms-content{ 'data-tabs-content' => 'home-forms-tabs' }
     -# Issuing forms
     %section.tabs-panel.is-active#issuing-panel{ 'data-controller' => 'issuing-panel' }
       %p.status{ 'data-target': 'issuing-panel.status' } Waiting
@@ -48,7 +48,6 @@
           = f.submit 'Issue', class: 'button small', disabled: true, 'data-target': 'issuing-panel.submit'
 
     -# Returning forms
-    -# TODO: Reset field on success
     %section.tabs-panel#returning-panel{ 'data-controller' => 'returning-panel' }
       %p.status{ 'data-target': 'returning-panel.status' } Waiting
 

@@ -1,11 +1,11 @@
 %h1= @issuer.name
 %span.summary.hoverable{ title: 'Overdues/Issues/Allowance' }= @issuer.device_summary
 - unless @issuer.allowed_another_device?
-  %p.allowance_full
-    This issuer has already #{@issuer.allowance_state} their allowance.
-  .input-group
-    = check_box_tag :override_allowance, 'override',
-      checked = false, required: true, form: 'issuing-device-form',
-      style: 'margin: 0'
-    = label_tag :override_allowance
+  .input-group.allowance_full
+    %label.middle
+      This issuer has already #{@issuer.allowance_state} their allowance!
+    .spacer
+    = label_tag :"override-allowance", 'Override', class: 'middle'
+    %input.middle#override-allowance{ type: :checkbox, name: :override,
+                                required: true, form: 'issuing-device-form' }
 = hidden_field_tag :issuer, @issuer.barcode, required: true, form: 'issuing-device-form'

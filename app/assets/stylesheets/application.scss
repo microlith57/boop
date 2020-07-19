@@ -1,13 +1,13 @@
 // Import Foundation assets
-@import "foundation/foundation_and_overrides";
+@import 'foundation/foundation_and_overrides';
 
-@import "./actiontext.scss";
+@import './actiontext.scss';
 
 @import '@uppy/core/dist/style.css';
 @import '@uppy/dashboard/dist/style.css';
 
 .turbolinks-progress-bar {
-  background-color: map-get($foundation-palette, "primary");
+  background-color: map-get($foundation-palette, 'primary');
 }
 
 .monospace {
@@ -22,12 +22,16 @@ abbr.hoverable {
 body {
   padding: 0px 16px;
 
-  > main,
   > header,
   > footer {
     // Only take up max. of 800px in the middle of the screen
     max-width: 800px;
-    margin: 0px auto;
+    margin: 0 auto;
+  }
+
+  main {
+    max-width: 800px;
+    margin: 1rem auto;
   }
 }
 
@@ -70,7 +74,8 @@ ul.menu li {
   &.search > form.input-group {
     margin: 0;
 
-    input, button {
+    input,
+    button {
       height: 2rem;
       padding: 0.3rem 0.6rem;
       margin: calc((40px - 2rem) / 2) 0;
@@ -227,18 +232,20 @@ form .flex-row {
       right: 1rem;
       top: 0.5rem;
       bottom: 0.5rem;
-    };
+    }
     float: right;
 
-    background: map_get($foundation-palette, 'success');
+    // REVIEW: Centralised as variables?
+    background: #d2fbe1;
 
     &.error {
-      background: map_get($foundation-palette, 'alert');
+      // REVIEW: Centralised as variables?
+      background: #a67a74;
       color: $white;
     }
   }
 
-  // TODO: Animate open/close
+  // TODO: Animate open/close?
   article.issuer-info {
     background-color: $light-gray;
 
@@ -270,13 +277,24 @@ form .flex-row {
 
     // TODO: Improve styling
     .allowance_full {
-      font-weight: bold;
-
-      background-color: map-get($foundation-palette, "warning");
-      border: 1px solid darken(map-get($foundation-palette, "warning"), 5%);
+      background-color: map-get($foundation-palette, 'warning');
+      border: 1px solid darken(map-get($foundation-palette, 'warning'), 5%);
 
       margin: ($padding / 2) 0;
-      padding: 0px 5px;
+      padding: 0 0.7rem;
+
+      .spacer {
+        flex-grow: 1;
+      }
+
+      label.middle,
+      input.middle {
+        margin-bottom: 0px;
+      }
+
+      #override-allowance {
+        margin-left: 0.5rem;
+      }
     }
   }
 }

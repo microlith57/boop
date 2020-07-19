@@ -12,5 +12,7 @@ class BarcodesController < ApplicationController
 
   def show
     @barcode = Barcode.find_by! code: params[:id]
+
+    redirect_to @barcode.owner
   end
 end
