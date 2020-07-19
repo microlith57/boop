@@ -2,9 +2,13 @@
 
 # Represents a person who can issue devices.
 class Issuer < ApplicationRecord
+  # @!attribute loans
+  #   @return [Array<Loan>]
+  has_many :loans, dependent: :nullify
+
   # @!attribute devices
   #   @return [Array<Device>]
-  has_many :devices, dependent: :nullify
+  has_many :devices, through: :loans
 
   # @!attribute name
   #   @return [String]
@@ -39,9 +43,9 @@ class Issuer < ApplicationRecord
   #     REVIEW: Should old barcodes be preserved?
   has_one :barcode, as: :owner, dependent: :destroy
 
-  # @return [Array(Device)] this issuer's overdue devices.
+  # @return [Array(Loan)] this issuer's overdue loans.
   def overdues
-    devices.overdue
+    loans.overdue
   end
 
   # @return [String] the URL-safe {#code} of this Issuer.
@@ -49,17 +53,17 @@ class Issuer < ApplicationRecord
     code.parameterize
   end
 
-  # Generates a string formatted like `overdues/issues/allowance`, where
-  # 'overdues' is the number of overdue devices, 'issues' is the total issued
-  # devices, and 'allowance' is the issuer's allowance (or infinity).
+  # Generates a string formatted like `overdues/loans/allowance`, where
+  # 'overdues' is the number of overdue devices, 'loans' is the total loans,
+  # and 'allowance' is the issuer's allowance (or infinity).
   #
   # @param infinity_sign [String] The infinity sign to use for issuers without
-  #   allowances. Defaults to U+221E.
+  #   allowances. Defaults to U+221E INFINITY.
   # @return [String] The summary string.
   def device_summary(infinity_sign: '∞')
     [
       overdues.count,
-      devices.count,
+      loans.active.count,
       allowance || infinity_sign
     ].join('/')
   end
@@ -69,17 +73,17 @@ class Issuer < ApplicationRecord
   def allowed_another_device?
     return true if allowance.blank?
 
-    devices.count < allowance
+    loans.active.count < allowance
   end
 
   # @return ['exceeded', 'reached', 'not reached'] Human friendly allowance
   #   state.
-  #   Used like 'This issuer has already *exceeded* their allowance'.
+  #   Used like 'This issuer has *exceeded* their allowance'.
   # :reek:NilCheck
   def allowance_state
     return 'not met' if allowance.blank?
 
-    case devices.count <=> allowance
+    case loans.active.count <=> allowance
     when 1
       'exceeded'
     when 0

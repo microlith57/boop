@@ -25,7 +25,7 @@ class HomeController < ApplicationController
     # @type [Device]
     @device = Barcode.find_by!(code: params[:issue_with]).device!
 
-    validate_allowance unless params[:override_allowance] == 'override'
+    validate_allowance unless params[:"override-allowance"] == 'override'
 
     @device.issue @issuer
     @device.save!
@@ -35,16 +35,34 @@ class HomeController < ApplicationController
     show_text_errors(exc)
   end
 
+  # :reek:TooManyStatements
+  # :reek:DuplicateMethodCall
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def return
-    # @type [Device]
-    @device = Barcode.find_by!(code: params[:device]).device!
-    @device.return
-    @device.save!
+    # @type [Loan]
+    @loan = Barcode.find_by!(code: params[:device]).device!.current_loan
+    if @loan.blank?
+      raise ActiveRecord::RecordNotFound, 'Device already returned'
+    end
 
-    render plain: "Returned #{@device.to_param}"
+    response = 'Success'
+    if @loan.overdue?
+      # TODO: Use `pluralize` instead
+      response += if @loan.days_overdue == 1
+                    " (#{@loan.days_overdue} day overdue)"
+                  else
+                    " (#{@loan.days_overdue} days overdue)"
+                  end
+    end
+
+    @loan.return
+    @loan.save!
+
+    render plain: response
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => exc
     show_text_errors(exc)
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   private
 
@@ -56,6 +74,7 @@ class HomeController < ApplicationController
   end
 
   # @param exception [Exception]
+  # REVIEW: Should we send whole stack trace?
   def show_text_errors(exception)
     status = case exception
              when ActiveRecord::RecordNotFound    then :not_found

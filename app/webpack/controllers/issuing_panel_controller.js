@@ -11,6 +11,14 @@ export default class extends Controller {
     'status',
   ]
 
+  // [from, to]; ensure application.scss default colours match these the 'to'
+  // colors here to avoid 'popping'!
+  anim_keyframes = {
+    success: { background: ['#2bff79', '#d2fbe1'] },
+    error: { background: ['#cc4b37', '#a67a74'] },
+  }
+  anim_options = { duration: 1300, easing: 'ease' }
+
   inProgress = false
 
   connect() {
@@ -20,7 +28,7 @@ export default class extends Controller {
   issuer_success(event) {
     let [data, status, xhr] = event.detail
 
-    this.summaryPaneTarget.innerHTML = data
+    this.summaryPaneTarget.innerHTML = data.body.innerHTML
     this.summaryPaneTarget.classList.remove('hidden')
 
     this.deviceFieldTarget.focus()
@@ -29,6 +37,8 @@ export default class extends Controller {
 
     this.statusTarget.innerText = 'Found Issuer'
     this.statusTarget.classList.remove('error')
+
+    this.statusTarget.animate(this.anim_keyframes.success, this.anim_options)
   }
 
   issuer_error(event) {
@@ -36,6 +46,10 @@ export default class extends Controller {
 
     this.statusTarget.innerText = `${xhr.status} ${status}: ${data}`
     this.statusTarget.classList.add('error')
+
+    this.issuerFieldTarget.select()
+
+    this.statusTarget.animate(this.anim_keyframes.error, this.anim_options)
   }
 
   issuer_edited(event) {
@@ -51,6 +65,8 @@ export default class extends Controller {
     let [data, status, xhr] = event.detail
 
     this.reset()
+
+    this.statusTarget.animate(this.anim_keyframes.success, this.anim_options)
   }
 
   device_error(event) {
@@ -58,6 +74,10 @@ export default class extends Controller {
 
     this.statusTarget.innerText = `${xhr.status} ${status}: ${data}`
     this.statusTarget.classList.add('error')
+
+    this.deviceFieldTarget.select()
+
+    this.statusTarget.animate(this.anim_keyframes.error, this.anim_options)
   }
 
   reset(initial = false) {

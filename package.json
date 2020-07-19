@@ -10,7 +10,7 @@
     "@uppy/dashboard": "^1.5.1",
     "@uppy/xhr-upload": "^1.4.1",
     "babel-loader": "^8.0.6",
-    "core-js": "2",
+    "core-js": "3",
     "foundation-sites": "^6.5.3",
     "jquery": "^3.4.1",
     "local-time": "^2.1.0",

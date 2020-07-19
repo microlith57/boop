@@ -7,17 +7,18 @@
       .label.alert
         = pluralize(@device.days_overdue, 'day') + ' overdue'
   %li.spacer
-  %li= link_to 'Barcode', barcode_device_url(@device)
+  %li= link_to 'Barcode', barcode_device_url(@device), 'data-turbolinks': false
   %li= link_to 'Edit', edit_device_url(@device)
   %li= link_to 'Delete', device_url(@device), method: :delete, confirm: 'Are you sure?'
 %main
   %pre= @device.barcode
   %p= @device.description
-  - if @device.issuer.nil?
-    %p Not currently issued
-  - else
+  - if @device.issued?
     %p
       Issued by
-      = link_to @device.issuer.name, issuer_path(@device.issuer)
+      = link_to @device.current_loan.issuer.name,
+                issuer_path(@device.current_loan.issuer)
       = local_time_ago @device.issued_at
+  - else
+    %p Not currently issued
   %p!= @device.notes

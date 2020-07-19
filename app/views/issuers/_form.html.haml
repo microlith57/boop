@@ -1,6 +1,8 @@
-= form_with model: issuer, local: true, data: { controller: 'issuer-form' } do |form|
+= form_with model: issuer, local: true,
+            data: { controller: 'issuer-form',
+                    'issuer-form-email-suffix' => default_email_suffix } do |form|
   - if issuer.errors.any?
-    #error-explanation.alert.callout
+    .alert.callout#error-explanation
       %h2
         = pluralize(issuer.errors.count, 'error')
         prevented
@@ -25,8 +27,6 @@
   = form.label :email
   = form.text_field :email,
                     data: { target: 'issuer-form.emailField' }
-  = hidden_field_tag :default_email_suffix, default_email_suffix,
-                      data: { target: 'issuer-form.defaultEmailSuffix' }
 
   = form.label :allowance, 'Allowance (leave empty for unlimited)'
   = form.number_field :allowance, step: 1
