@@ -1,0 +1,7 @@
+= render 'general/menu' do
+  %li
+    %span.header Editing #{@issuer.name}
+  %li.spacer
+  %li= link_to 'Back', issuers_url
+%main
+  = render 'form', issuer: @issuer, new_issuer: false

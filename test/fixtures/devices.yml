@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+cb_y_01:
+  name: CB-Y-01
+  barcode: 1234567890
+
+cb_y_02:
+  name: CB-Y-02
+  barcode: 2345678901

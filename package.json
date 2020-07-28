@@ -1,0 +1,35 @@
+{
+  "name": "boop",
+  "private": true,
+  "dependencies": {
+    "@rails/actioncable": "^6.0.1",
+    "@rails/actiontext": "^6.0.2-1",
+    "@rails/ujs": "^6.0.0-alpha",
+    "@rails/webpacker": "^4.0.7",
+    "@uppy/core": "^1.7.0",
+    "@uppy/dashboard": "^1.5.1",
+    "@uppy/xhr-upload": "^1.4.1",
+    "babel-loader": "^8.0.6",
+    "core-js": "3",
+    "foundation-sites": "^6.5.3",
+    "jquery": "^3.4.1",
+    "local-time": "^2.1.0",
+    "node-sass": "^4.13.0",
+    "stimulus": "^1.1.1",
+    "trix": "^1.2.2",
+    "turbolinks": "^5.2.0",
+    "webpack": "^4.41.2",
+    "what-input": "^5.2.6"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.1.0",
+    "prettier": "1.19.1",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.7.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

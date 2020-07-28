@@ -1,0 +1,23 @@
+%main.central
+  %section.card
+    %header.card-divider Change your password
+    = form_with(model: resource,
+      url: password_path(resource_name),
+      html: { method: :put },
+      class: 'card-section') do |f|
+      = render 'devise/shared/error_messages', resource: resource
+      = f.hidden_field :reset_password_token
+
+      = f.label :password, 'New password'
+      - if @minimum_password_length
+        = f.password_field :password, autofocus: true, autocomplete: 'new-password', 'aria-describedby': 'password-min-chars'
+        %p.help-text#password-min-chars
+          Your password must be at least #{@minimum_password_length} characters long.
+      - else
+        = f.password_field :password, autofocus: true, autocomplete: 'new-password'
+
+      = f.label :password_confirmation, 'Confirm new password'
+      = f.password_field :password_confirmation, autocomplete: 'off'
+
+      = f.submit 'Change my password'
+  %nav.links= render 'devise/shared/links'

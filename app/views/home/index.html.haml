@@ -1,0 +1,61 @@
+= render 'general/menu' do
+  %li.search
+    = form_with url: barcodes_path, local: true, method: :get, role: 'search',
+      class: 'input-group' do |f|
+      = f.text_field :id,
+        class: 'small input-group-field', placeholder: 'Look up a barcode...'
+
+      .input-group-button
+        %button.button{ type: 'submit' }
+          %span.show-for-sr Look Up
+          %span{ 'aria-hidden' => 'true' }
+            %i.fi-arrow-right
+-# TODO: Show error messages
+%main.card
+  -# Tab buttons
+  %ul.tabs#home-forms-tabs{ 'data-tabs' => true, 'data-deep-link' => 'true' }
+    %li.tabs-title.is-active= link_to('Issue', '#issuing-panel')
+    %li.tabs-title= link_to('Return', '#returning-panel')
+
+  -# Tab contents
+  .tabs-content#home-forms-content{ 'data-tabs-content' => 'home-forms-tabs' }
+    -# Issuing forms
+    %section.tabs-panel.is-active#issuing-panel{ 'data-controller' => 'issuing-panel' }
+      %p.status{ 'data-target': 'issuing-panel.status' } Waiting
+      = form_with url: issuer_info_path,
+        format: :json,
+        method: :get,
+        data: { target: 'issuing-panel.issuerForm',
+                action: 'ajax:success->issuing-panel#issuer_success ajax:error->issuing-panel#issuer_error' } do |f|
+        = f.label :issue_to, 'Issuer'
+        %span.flex-row
+          = f.text_field :issue_to, required: true, class: 'monospace',
+            data: { target: 'issuing-panel.issuerField',
+                    action: 'input->issuing-panel#issuer_edited' }
+          = f.submit 'Next', class: 'button small'
+
+      = hidden_field_tag :override_allowance, 0, id: nil, form: 'issuing-device-form'
+      %article.issuer-info{ 'data-target' => 'issuing-panel.summaryPane' }
+
+      = form_with url: issue_path,
+        format: :json,
+        id: 'issuing-device-form',
+        data: { target: 'issuing-panel.deviceForm',
+                action: 'ajax:success->issuing-panel#device_success ajax:error->issuing-panel#device_error' } do |f|
+        = f.label :issue_with, 'Device'
+        %span.flex-row
+          = f.text_field :issue_with, class: 'monospace', required: true, 'data-target': 'issuing-panel.deviceField'
+          = f.submit 'Issue', class: 'button small', disabled: true, 'data-target': 'issuing-panel.submit'
+
+    -# Returning forms
+    %section.tabs-panel#returning-panel{ 'data-controller' => 'returning-panel' }
+      %p.status{ 'data-target': 'returning-panel.status' } Waiting
+
+      = form_with url: return_path,
+        format: :json,
+        data: { target: 'returning-panel.form',
+        action: 'ajax:success->returning-panel#success ajax:error->returning-panel#error' } do |f|
+        = f.label :device
+        %span.flex-row
+          = f.text_field :device, class: 'monospace', required: true, 'data-target' => 'returning-panel.field'
+          = f.submit 'Return', class: 'button small'
