@@ -1,0 +1,24 @@
+exclude_paths:
+  - node_modules
+  - db/schema.rb
+  - db/migrate
+  - bin
+
+detectors:
+  IrresponsibleModule:
+    enabled: false
+
+  InstanceVariableAssumption:
+    exclude:
+      - "/Controller$/"
+
+  TooManyInstanceVariables:
+    exclude:
+      - "/Controller$/"
+
+  TooManyStatements:
+    max_statements: 8
+
+  UtilityFunction:
+    exclude:
+      - "/Helper/"

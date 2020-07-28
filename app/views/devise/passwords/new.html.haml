@@ -1,0 +1,14 @@
+= render 'general/logo', central_card: true
+%main.central
+  %section.card
+    %header.card-divider Forgot your password?
+    = form_with(model: resource,
+      url: password_path(resource_name),
+      html: { method: :post },
+      class: 'card-section') do |f|
+      = render 'devise/shared/error_messages', resource: resource
+      = f.label :email
+      = f.email_field :email, autofocus: true, autocomplete: 'email'
+      = f.submit 'Send password reset email', class: 'button'
+  %nav.links
+    = link_to 'Back to login page', new_session_path(resource_name)

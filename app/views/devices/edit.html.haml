@@ -1,0 +1,12 @@
+= render 'general/menu' do
+  %li
+    %span.header Editing #{@device.name}
+  - if @device.overdue?
+    %li
+      .label.alert
+        = pluralize(@device.days_overdue, 'day') + ' overdue'
+        3 days overdue
+  %li.spacer
+  %li= link_to 'Back', devices_url
+%main
+  = render 'form', device: @device

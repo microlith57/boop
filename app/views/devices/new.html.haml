@@ -1,0 +1,7 @@
+= render 'general/menu' do
+  %li
+    %span.header Creating Device
+  %li.spacer
+  %li= link_to 'Back', devices_url
+%main
+  = render 'form', device: @device
