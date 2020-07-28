@@ -206,7 +206,7 @@ GEM
     pg (1.1.4)
     psych (3.1.0)
     public_suffix (4.0.1)
-    puma (3.12.1)
+    puma (3.12.6)
     rack (2.2.3)
     rack-proxy (0.6.5)
       rack
@@ -401,7 +401,7 @@ DEPENDENCIES
   local_time
   pagy
   pg
-  puma (~> 3.11)
+  puma (~> 3.12)
   rails (~> 6.0.0)
   ransack!
   reek
