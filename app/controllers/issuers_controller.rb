@@ -76,7 +76,7 @@ class IssuersController < ApplicationController
   end
 
   def upload
-    csv = CSV.new file.tempfile, headers: true
+    csv = CSV.new params[:file].tempfile, headers: true
 
     Issuer.transaction do
       csv.each.with_index do |line, lineno|
