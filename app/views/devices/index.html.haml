@@ -12,12 +12,17 @@
           %span{ 'aria-hidden' => 'true' }
             %i.fi-magnifying-glass
   %li.spacer
-  %li= link_to 'New', new_device_url
-  %li= link_to 'Download CSV', devices_url(format: :csv)
-  %li{ 'data-controller' => 'uppy' }
-    %input{ type: :hidden, value: upload_devices_url,
-            'data-target' => 'uppy.url' }
-    %a{ 'data-target' => 'uppy.trigger' } Upload CSV
+  %li= link_to 'New', new_device_url, class: 'clear button'
+  %li= link_to 'Download CSV', devices_url(format: :csv), class: 'clear button'
+  %li
+    = form_with url: upload_devices_path, multipart: true,
+      data: { controller: 'upload-form' } do
+      %label.clear.button{for: 'device-upload'}
+        Upload CSV
+      %input.show-for-sr#device-upload{name: :file,
+                                       type: :file,
+                                       accept: '.csv',
+                                       'data-action': 'upload-form#upload'}
 %main
   %table
     %thead
