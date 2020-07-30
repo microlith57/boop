@@ -14,15 +14,15 @@
   %li.spacer
   %li= link_to 'New', new_issuer_url, class: 'clear button'
   %li= link_to 'Download CSV', issuers_url(format: :csv), class: 'clear button'
-    %li
+  %li
     = form_with url: upload_issuers_path, multipart: true,
       data: { controller: 'upload-form' } do
       %label.clear.button{for: 'issuer-upload'}
         Upload CSV
       %input.show-for-sr#issuer-upload{name: :file,
-                                       type: :file,
-                                       accept: '.csv',
-                                       'data-action': 'upload-form#upload'}
+                                      type: :file,
+                                      accept: '.csv',
+                                      'data-action': 'upload-form#upload'}
 %main
   %table
     %thead
