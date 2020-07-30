@@ -76,24 +76,22 @@ class IssuersController < ApplicationController
   end
 
   def upload
-    params[:files].each do |file|
-      csv = CSV.new file.tempfile, headers: true
+    csv = CSV.new params[:file].tempfile, headers: true
 
-      Issuer.transaction do
-        csv.each.with_index do |line, lineno|
-          hash = ActionController::Parameters.new(line.to_h).permit(
-            :name, :email, :code, :allowance
-          )
+    Issuer.transaction do
+      csv.each.with_index do |line, lineno|
+        hash = line.to_h.slice 'name', 'email', 'code', 'allowance'
 
-          Issuer.perform_upload lineno + 1,
-                                line['operation'],
-                                line['barcode'],
-                                hash
-        end
+        Issuer.perform_upload lineno + 1,
+                              line['operation'],
+                              line['barcode'],
+                              hash
       end
     end
+
+    redirect_to issuers_path, notice: 'Upload successful!'
   rescue UploadHelper::UploadException => exc
-    render plain: exc.render, status: :bad_request
+    redirect_to issuers_path, alert: exc.render
   end
 
   def update

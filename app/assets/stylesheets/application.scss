@@ -3,9 +3,6 @@
 
 @import './actiontext.scss';
 
-@import '@uppy/core/dist/style.css';
-@import '@uppy/dashboard/dist/style.css';
-
 .turbolinks-progress-bar {
   background-color: map-get($foundation-palette, 'primary');
 }
@@ -68,6 +65,15 @@ ul.menu li {
 
     &.header {
       font-weight: bold;
+    }
+  }
+
+  .button {
+    margin: 0;
+
+    &.clear {
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 

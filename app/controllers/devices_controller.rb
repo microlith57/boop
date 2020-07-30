@@ -70,24 +70,22 @@ class DevicesController < ApplicationController
   end
 
   def upload
-    params[:files].each do |file|
-      csv = CSV.new file.tempfile, headers: true
+    csv = CSV.new params[:file].tempfile, headers: true
 
-      Device.transaction do
-        csv.each.with_index do |line, lineno|
-          hash = ActionController::Parameters.new(line.to_h).permit(
-            :name, :description, :notes
-          )
+    Device.transaction do
+      csv.each.with_index do |line, lineno|
+        hash = line.to_h.slice 'name', 'description', 'notes'
 
-          Device.perform_upload lineno + 1,
-                                line['operation'],
-                                line['barcode'],
-                                hash
-        end
+        Device.perform_upload lineno + 1,
+                              line['operation'],
+                              line['barcode'],
+                              hash
       end
     end
+
+    redirect_to devices_path, notice: 'Upload successful!'
   rescue UploadHelper::UploadException => exc
-    render plain: exc.render, status: :bad_request
+    redirect_to devices_path, alert: exc.render
   end
 
   def update
