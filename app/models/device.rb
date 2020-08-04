@@ -5,6 +5,16 @@ class Device < ApplicationRecord
   #   @return [Array<Loan>]
   has_many :loans, dependent: :nullify
 
+  # @!attribute active_loans
+  #   @return [Array<Loan>]
+  has_many :active_loans, -> { where(returned_at: nil) },
+           class_name: 'Loan', inverse_of: :device
+
+  # @!attribute current_loan
+  #   @return [Loan]
+  has_one  :current_loan, -> { where(returned_at: nil).order('created_at') },
+           class_name: 'Loan', inverse_of: :device
+
   # @!attribute issuers
   #   @return [Array<Issuer>]
   has_many :issuers, through: :loans
@@ -28,11 +38,6 @@ class Device < ApplicationRecord
     name.parameterize
   end
 
-  # @return [Loan] the newest active loan on the device.
-  def current_loan
-    loans_by_creation_desc.active.first
-  end
-
   # Issues the device *to* an Issuer, without checking allowance.
   #
   # @param new_issuer [Issuer] the issuer that the device will belong to.
@@ -40,7 +45,7 @@ class Device < ApplicationRecord
   # @raise [ActiveRecord::RecordNotSaved] if the device already has an active
   #   Loan
   def issue(issuer)
-    if loans.active.any?
+    if active_loans.any?
       raise ActiveRecord::RecordNotSaved, 'Device is already issued'
     end
 
@@ -63,7 +68,7 @@ class Device < ApplicationRecord
   #
   # @return [true, false]
   def issued?
-    loans.active.any?
+    active_loans.any?
   end
 
   # Is the device overdue?
@@ -74,7 +79,7 @@ class Device < ApplicationRecord
   end
 
   def issued_at
-    current_loan.created_at if current_loan.present?
+    current_loan&.created_at
   end
 
   # The number of days the device's most overdue loan is overdue.
