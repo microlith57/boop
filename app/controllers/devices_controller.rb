@@ -17,7 +17,7 @@ class DevicesController < ApplicationController
     @q.sorts = 'name asc' if @q.sorts.empty?
 
     @pagy, @devices = pagy(
-      @q.result(distinct: true),
+      @q.result.includes(:barcode, :loans),
       items: params[:limit] || Pagy::VARS[:items]
     )
 

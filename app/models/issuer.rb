@@ -6,6 +6,11 @@ class Issuer < ApplicationRecord
   #   @return [Array<Loan>]
   has_many :loans, dependent: :nullify
 
+  # @!attribute active_loans
+  #   @return [Array<Loan>]
+  has_many :active_loans, -> { where(returned_at: nil) },
+           class_name: 'Loan', inverse_of: :device
+
   # @!attribute devices
   #   @return [Array<Device>]
   has_many :devices, through: :loans
@@ -45,7 +50,7 @@ class Issuer < ApplicationRecord
 
   # @return [Array(Loan)] this issuer's overdue loans.
   def overdues
-    loans.overdue
+    active_loans.overdue
   end
 
   # @return [String] the URL-safe {#code} of this Issuer.
@@ -62,8 +67,8 @@ class Issuer < ApplicationRecord
   # @return [String] The summary string.
   def device_summary(infinity_sign: '∞')
     [
-      overdues.count,
-      loans.active.count,
+      overdues.size,
+      active_loans.size,
       allowance || infinity_sign
     ].join('/')
   end
@@ -73,7 +78,7 @@ class Issuer < ApplicationRecord
   def allowed_another_device?
     return true if allowance.blank?
 
-    loans.active.count < allowance
+    active_loans.size < allowance
   end
 
   # @return ['exceeded', 'reached', 'not reached'] Human friendly allowance
@@ -83,7 +88,7 @@ class Issuer < ApplicationRecord
   def allowance_state
     return 'not met' if allowance.blank?
 
-    case loans.active.count <=> allowance
+    case active_loans.size <=> allowance
     when 1
       'exceeded'
     when 0
