@@ -41,7 +41,7 @@
             %pre= issuer.barcode
           %td= local_time issuer.created_at
           %td= issuer.allowance || '∞'
-          %td= issuer.overdues.count
+          %td= issuer.overdues.size
 
 
   != pagy_foundation_nav @pagy
