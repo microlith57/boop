@@ -11,12 +11,12 @@
   %p
     Device Summary:
     %abbr.hoverable{ title: 'Overdues/Issues/Allowance' }= @issuer.device_summary
-  - if @issuer.active_loans.empty?
+  - if @issuer.loans.active.empty?
     %p No devices issued
   - else
     Currently issuing:
     %ul
-      - @issuer.active_loans.each do |loan|
+      - @issuer.loans.active.each do |loan|
         %li= link_to loan.device.name, device_path(loan.device)
 
   %p
