@@ -45,7 +45,7 @@ class Device < ApplicationRecord
   # @raise [ActiveRecord::RecordNotSaved] if the device already has an active
   #   Loan
   def issue(issuer)
-    if active_loans.any?
+    if loans.active.any?
       raise ActiveRecord::RecordNotSaved, 'Device is already issued'
     end
 
@@ -68,7 +68,7 @@ class Device < ApplicationRecord
   #
   # @return [true, false]
   def issued?
-    active_loans.any?
+    loans.active.any?
   end
 
   # Is the device overdue?
