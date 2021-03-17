@@ -1,5 +1,4 @@
-TODOs
-=====
+# TODOs
 
 - Rename issuers to borrowers
 - Search doesn't work in some cases
@@ -38,7 +37,11 @@ TODOs
   - When allocating individual device, must use ID
   - When allocating in bulk, can use a group — will pick any available device from group (including children).
     - Can visualise group health (how?)
-- Devices
-  - Another state exists now - allocated but still physically in storage (not issued)
-    - Replace `device#issuer : Issuer` with `device#allocator : Issuer | Allocation`
 - Need to make sure all the words used are the right ones!
+
+---
+
+- Issuer has many loans and allocations.
+- Loans have an issuer and a device.
+  - Loans can be 'pending' — not enacted yet.
+- Allocations have an issuer and many loans.
