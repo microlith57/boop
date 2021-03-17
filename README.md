@@ -6,7 +6,7 @@ Its current main goal is to be better than writing on paper.
 
 ## Requirements
 
-Boop requires Ruby 2.5, Bundler, Node 10, Yarn, and preferably a Linux envirdonment.
+Boop requires Ruby 2.7, Bundler, Node 10, Yarn, and preferably a Linux environment.
 It must be connected to a PostgreSQL database.
 
 ## Installation
