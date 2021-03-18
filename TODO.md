@@ -1,7 +1,7 @@
 # TODOs
 
 - Rename issuers to borrowers
-- Search doesn't work in some cases
+- Search doesn't work in some cases (which?)
 - Device CSV download only downloads 1 page
 
 ---
