@@ -41,7 +41,6 @@
 
 ---
 
-- Issuer has many loans and allocations.
-- Loans have an issuer and a device.
-  - Loans can be 'pending' — not enacted yet.
-- Allocations have an issuer and many loans.
+- Issuer has many loans and many allocations.
+- Loan has a recipient (issuer|allocation) and a device.
+- Allocations have one issuer and many loans.
