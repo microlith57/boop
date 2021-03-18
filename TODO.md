@@ -3,6 +3,7 @@
 - Rename issuers to borrowers
 - Search doesn't work in some cases (which?)
 - Device CSV download only downloads 1 page
+- Fix `foundation-rails` using `sass` instead of `sassc`
 
 ---
 
