@@ -83,9 +83,9 @@ class BorrowersController < ApplicationController
         hash = line.to_h.slice 'name', 'email', 'code', 'allowance'
 
         Borrower.perform_upload lineno + 1,
-                              line['operation'],
-                              line['barcode'],
-                              hash
+                                line['operation'],
+                                line['barcode'],
+                                hash
       end
     end
 

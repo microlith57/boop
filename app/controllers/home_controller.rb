@@ -37,13 +37,11 @@ class HomeController < ApplicationController
 
   # :reek:TooManyStatements
   # :reek:DuplicateMethodCall
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
   def return
     # @type [Loan]
     @loan = Barcode.find_by!(code: params[:device]).device!.current_loan
-    if @loan.blank?
-      raise ActiveRecord::RecordNotFound, 'Device already returned'
-    end
+    raise ActiveRecord::RecordNotFound, 'Device already returned' if @loan.blank?
 
     response = 'Success'
     if @loan.overdue?
@@ -62,7 +60,7 @@ class HomeController < ApplicationController
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => exc
     show_text_errors(exc)
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength
 
   private
 
