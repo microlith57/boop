@@ -5,8 +5,6 @@
 # For further information see the following documentation
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 
-# rubocop:disable Metrics/LineLength
-
 # Rails.application.config.content_security_policy do |policy|
 #   policy.default_src :self, :https
 #   policy.font_src    :self, :https, :data

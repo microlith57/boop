@@ -45,9 +45,7 @@ class Device < ApplicationRecord
   # @raise [ActiveRecord::RecordNotSaved] if the device already has an active
   #   Loan
   def issue(borrower)
-    if loans.active.any?
-      raise ActiveRecord::RecordNotSaved, 'Device is already issued'
-    end
+    raise ActiveRecord::RecordNotSaved, 'Device is already issued' if loans.active.any?
 
     borrowers << borrower
   end
@@ -109,18 +107,14 @@ class Device < ApplicationRecord
       device.save!
       barcode.save!
     when :edit
-      if barcode.blank?
-        raise UploadHelper::UploadException.new line, 'barcode must be present'
-      end
+      raise UploadHelper::UploadException.new line, 'barcode must be present' if barcode.blank?
 
       barcode = Barcode.find_by! code: barcode
       device = barcode.device!
 
       device.update! hash
     when :delete
-      if barcode.blank?
-        raise UploadHelper::UploadException.new line, 'barcode must be present'
-      end
+      raise UploadHelper::UploadException.new line, 'barcode must be present' if barcode.blank?
 
       barcode = Barcode.find_by! code: barcode
       device = barcode.device!

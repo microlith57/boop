@@ -110,18 +110,14 @@ class Borrower < ApplicationRecord
       borrower.save!
       barcode.save!
     when :edit
-      if barcode.blank?
-        raise UploadHelper::UploadException.new line, 'barcode must be present'
-      end
+      raise UploadHelper::UploadException.new line, 'barcode must be present' if barcode.blank?
 
       barcode = Barcode.find_by! code: barcode
       borrower = barcode.borrower!
 
       borrower.update! hash
     when :delete
-      if barcode.blank?
-        raise UploadHelper::UploadException.new line, 'barcode must be present'
-      end
+      raise UploadHelper::UploadException.new line, 'barcode must be present' if barcode.blank?
 
       barcode = Barcode.find_by! code: barcode
       borrower = barcode.borrower!
