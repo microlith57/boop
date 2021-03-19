@@ -2,5 +2,5 @@
 
 require 'test_helper'
 
-class IssuersControllerTest < ActionDispatch::IntegrationTest
+class BorrowersControllerTest < ActionDispatch::IntegrationTest
 end

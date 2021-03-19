@@ -2,14 +2,14 @@
 
 class Loan < ApplicationRecord
   # @return [ActiveSupport::TimeWithZone] The time (with zone) that the Boop
-  #   'day' rolls over -- for example, with a rollover of 4:30 pm, if an issuer
+  #   'day' rolls over -- for example, with a rollover of 4:30 pm, if a borrower
   #   takes out a device at 4:00 pm and it is now 5:00 pm *the same day*, it is
   #   deemed the next day, so the device is 1 day overdue.
   DEFAULT_ROLLOVER_TIME = Time.zone.parse(ENV['ROLLOVER_TIME'] || '4:30 pm NZST')
 
-  # @!attribute issuer
-  #   @return [Issuer]
-  belongs_to :issuer
+  # @!attribute borrower
+  #   @return [Borrower]
+  belongs_to :borrower
 
   # @!attribute device
   #   @return [Device]

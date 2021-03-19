@@ -1,0 +1,7 @@
+= render 'general/menu' do
+  %li
+    %span.header Editing #{@borrower.name}
+  %li.spacer
+  %li= link_to 'Back', borrowers_url
+%main
+  = render 'form', borrower: @borrower, new_borrower: false
