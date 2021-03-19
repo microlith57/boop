@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :barcode do
     # for_device
 
-    # trait :for_issuer do
-    #   association :owner, factory: :issuer
+    # trait :for_borrower do
+    #   association :owner, factory: :borrower
     # end
 
     # trait :for_device do
@@ -17,25 +17,25 @@ FactoryBot.define do
     end
   end
 
-  factory :issuer do
+  factory :borrower do
     name  { 'John Smith' }
-    code  { Issuer::Internal.generate_code name }
+    code  { Borrower::Internal.generate_code name }
     email { "#{code}@example.org" }
     association :barcode
 
-    factory :issuer_with_loans do
+    factory :borrower_with_loans do
       transient do
         loans_count { 5 }
       end
 
-      after(:create) do |issuer, evaluator|
+      after(:create) do |borrower, evaluator|
         create_list :loan, evaluator.loans_count,
-                    issuer: issuer, returned_at: 24.hours.ago
+                    borrower: borrower, returned_at: 24.hours.ago
       end
 
-      factory :active_issuer do
-        after(:create) do |issuer|
-          issuer.loans << build(:loan, issuer: issuer)
+      factory :active_borrower do
+        after(:create) do |borrower|
+          borrower.loans << build(:loan, borrower: borrower)
         end
       end
     end
@@ -43,7 +43,7 @@ FactoryBot.define do
 
   factory :loan do
     device
-    issuer
+    borrower
     returned_at { nil }
   end
 

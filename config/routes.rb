@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  get  'issuer_info', to: 'home#issuer_info'
+  get  'borrower_info', to: 'home#borrower_info'
   post 'issue',  to: 'home#issue'
   post 'return', to: 'home#return'
 
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     post 'upload', on: :collection
   end
 
-  resources :issuers do
+  resources :borrowers do
     get 'barcode', on: :member
 
     post 'upload', on: :collection
