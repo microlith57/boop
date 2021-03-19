@@ -1,6 +1,5 @@
 # TODOs
 
-- Rename issuers to borrowers
 - Search doesn't work in some cases (which?)
 - Device CSV download only downloads 1 page
 - Fix `foundation-rails` using `sass` instead of `sassc`
@@ -42,6 +41,6 @@
 
 ---
 
-- Issuer has many loans and many allocations.
-- Loan has a recipient (issuer|allocation) and a device.
-- Allocations have one issuer and many loans.
+- Borrower has many loans and many allocations.
+- Loan has a recipient (borrower|allocation) and a device.
+- Allocations have one borrower and many loans.

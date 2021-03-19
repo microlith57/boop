@@ -2,10 +2,10 @@ import { Controller } from 'stimulus'
 
 export default class extends Controller {
   static targets = [
-    'issuerForm',
+    'borrowerForm',
     'deviceForm',
     'summaryPane',
-    'issuerField',
+    'borrowerField',
     'deviceField',
     'submit',
     'status',
@@ -25,7 +25,7 @@ export default class extends Controller {
     this.reset(true)
   }
 
-  issuer_success(event) {
+  borrower_success(event) {
     let [data, status, xhr] = event.detail
 
     this.summaryPaneTarget.innerHTML = data.body.innerHTML
@@ -35,24 +35,24 @@ export default class extends Controller {
     this.submitTarget.disabled = false
     this.inProgress = true
 
-    this.statusTarget.innerText = 'Found Issuer'
+    this.statusTarget.innerText = 'Found Borrower'
     this.statusTarget.classList.remove('error')
 
     this.statusTarget.animate(this.anim_keyframes.success, this.anim_options)
   }
 
-  issuer_error(event) {
+  borrower_error(event) {
     let [data, status, xhr] = event.detail
 
     this.statusTarget.innerText = `${xhr.status} ${status}: ${data}`
     this.statusTarget.classList.add('error')
 
-    this.issuerFieldTarget.select()
+    this.borrowerFieldTarget.select()
 
     this.statusTarget.animate(this.anim_keyframes.error, this.anim_options)
   }
 
-  issuer_edited(event) {
+  borrower_edited(event) {
     if (this.inProgress) {
       this.submitTarget.disabled = true
 
@@ -88,11 +88,11 @@ export default class extends Controller {
     this.summaryPaneTarget.innerHTML = ''
     this.summaryPaneTarget.classList.add('hidden')
 
-    this.issuerFieldTarget.value = ''
+    this.borrowerFieldTarget.value = ''
     this.deviceFieldTarget.value = ''
 
     if (!initial) {
-      this.issuerFieldTarget.focus()
+      this.borrowerFieldTarget.focus()
       this.statusTarget.innerText = 'Success'
       this.statusTarget.classList.remove('error')
     }

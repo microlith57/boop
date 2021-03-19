@@ -1,10 +1,10 @@
 = render 'general/menu' do
   %li
-    %span.header Issuers
+    %span.header Borrowers
   %li.search
     = search_form_for @q, role: 'search', class: 'input-group' do |f|
       = f.search_field :name_or_code_or_email_cont,
-        class: 'small input-group-field', placeholder: 'Search issuers...'
+        class: 'small input-group-field', placeholder: 'Search borrowers...'
 
       .input-group-button
         %button.button{ type: 'submit' }
@@ -12,14 +12,14 @@
           %span{ 'aria-hidden' => 'true' }
             %i.fi-magnifying-glass
   %li.spacer
-  %li= link_to 'New', new_issuer_url, class: 'clear button'
-  %li= link_to 'Download CSV', issuers_url(format: :csv), class: 'clear button'
+  %li= link_to 'New', new_borrower_url, class: 'clear button'
+  %li= link_to 'Download CSV', borrowers_url(format: :csv), class: 'clear button'
   %li
-    = form_with url: upload_issuers_path, multipart: true,
+    = form_with url: upload_borrowers_path, multipart: true,
       data: { controller: 'upload-form' } do
-      %label.clear.button{for: 'issuer-upload'}
+      %label.clear.button{for: 'borrower-upload'}
         Upload CSV
-      %input.show-for-sr#issuer-upload{name: :file,
+      %input.show-for-sr#borrower-upload{name: :file,
                                       type: :file,
                                       accept: '.csv',
                                       'data-action': 'upload-form#upload'}
@@ -34,14 +34,14 @@
         -# TODO: Sort link for this - by date issued on loan
         %th Overdues
     %tbody
-      - @issuers.each do |issuer|
+      - @borrowers.each do |borrower|
         %tr
-          %td= link_to issuer.name, issuer
+          %td= link_to borrower.name, borrower
           %td
-            %pre= issuer.barcode
-          %td= local_time issuer.created_at
-          %td= issuer.allowance || '∞'
-          %td= issuer.overdues.size
+            %pre= borrower.barcode
+          %td= local_time borrower.created_at
+          %td= borrower.allowance || '∞'
+          %td= borrower.overdues.size
 
 
   != pagy_foundation_nav @pagy

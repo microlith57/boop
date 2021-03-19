@@ -22,20 +22,20 @@
     -# Issuing forms
     %section.tabs-panel.is-active#issuing-panel{ 'data-controller' => 'issuing-panel' }
       %p.status{ 'data-target': 'issuing-panel.status' } Waiting
-      = form_with url: issuer_info_path,
+      = form_with url: borrower_info_path,
         format: :json,
         method: :get,
-        data: { target: 'issuing-panel.issuerForm',
-                action: 'ajax:success->issuing-panel#issuer_success ajax:error->issuing-panel#issuer_error' } do |f|
-        = f.label :issue_to, 'Issuer'
+        data: { target: 'issuing-panel.borrowerForm',
+                action: 'ajax:success->issuing-panel#borrower_success ajax:error->issuing-panel#borrower_error' } do |f|
+        = f.label :issue_to, 'Borrower'
         %span.flex-row
           = f.text_field :issue_to, required: true, class: 'monospace',
-            data: { target: 'issuing-panel.issuerField',
-                    action: 'input->issuing-panel#issuer_edited' }
+            data: { target: 'issuing-panel.borrowerField',
+                    action: 'input->issuing-panel#borrower_edited' }
           = f.submit 'Next', class: 'button small'
 
       = hidden_field_tag :override_allowance, 0, id: nil, form: 'issuing-device-form'
-      %article.issuer-info{ 'data-target' => 'issuing-panel.summaryPane' }
+      %article.borrower-info{ 'data-target' => 'issuing-panel.summaryPane' }
 
       = form_with url: issue_path,
         format: :json,

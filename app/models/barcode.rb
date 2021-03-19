@@ -11,7 +11,7 @@ class Barcode < ApplicationRecord
                            end
 
   # @!attribute owner
-  #   @return [Device, Issuer] The owner of the barcode.
+  #   @return [Device, Borrower] The owner of the barcode.
   #   @todo
   #     FIXME: Validate uniqueness
   belongs_to :owner, polymorphic: true
@@ -39,9 +39,9 @@ class Barcode < ApplicationRecord
     code
   end
 
-  # @return [true, false] Is the owner of this barcode an {Issuer}?
-  def represents_issuer?
-    owner.is_a? Issuer
+  # @return [true, false] Is the owner of this barcode a {Borrower}?
+  def represents_borrower?
+    owner.is_a? Borrower
   end
 
   # @return [true, false] Is the owner of this barcode a {Device}?
@@ -49,10 +49,10 @@ class Barcode < ApplicationRecord
     owner.is_a? Device
   end
 
-  # @return [Issuer, nil] The {#owner} of the barcode, but only if they are an
-  #   {Issuer}.
-  def issuer
-    owner if represents_issuer?
+  # @return [Borrower, nil] The {#owner} of the barcode, but only if they are an
+  #   {Borrower}.
+  def borrower
+    owner if represents_borrower?
   end
 
   # The {#owner} of the barcode, but only if they are a {Device}.
@@ -62,13 +62,13 @@ class Barcode < ApplicationRecord
     owner if represents_device?
   end
 
-  # @return [Issuer] The {#owner} of the barcode, but only if they are
-  #   an {Issuer}
-  # @raise [ActiveRecord::RecordNotFound] if the owner is not an issuer
-  def issuer!
-    return issuer if represents_issuer?
+  # @return [Borrower] The {#owner} of the barcode, but only if they are
+  #   a {Borrower}
+  # @raise [ActiveRecord::RecordNotFound] if the owner is not a borrower
+  def borrower!
+    return borrower if represents_borrower?
 
-    raise ActiveRecord::RecordNotFound, 'Barcode not for an issuer'
+    raise ActiveRecord::RecordNotFound, 'Barcode not for a borrower'
   end
 
   # @return [Device] The {#owner} of the barcode, but only if they are
