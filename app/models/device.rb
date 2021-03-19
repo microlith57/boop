@@ -15,9 +15,9 @@ class Device < ApplicationRecord
   has_one  :current_loan, -> { where(returned_at: nil).order('created_at') },
            class_name: 'Loan', inverse_of: :device
 
-  # @!attribute issuers
-  #   @return [Array<Issuer>]
-  has_many :issuers, through: :loans
+  # @!attribute borrowers
+  #   @return [Array<Borrower>]
+  has_many :borrowers, through: :loans
 
   # @!attribute name
   #   @return [String]
@@ -38,21 +38,21 @@ class Device < ApplicationRecord
     name.parameterize
   end
 
-  # Issues the device *to* an Issuer, without checking allowance.
+  # Issues the device *to* a Borrower, without checking allowance.
   #
-  # @param new_issuer [Issuer] the issuer that the device will belong to.
+  # @param new_borrower [Borrower] the borrower that the device will belong to.
   # @return [nil]
   # @raise [ActiveRecord::RecordNotSaved] if the device already has an active
   #   Loan
-  def issue(issuer)
+  def issue(borrower)
     if loans.active.any?
       raise ActiveRecord::RecordNotSaved, 'Device is already issued'
     end
 
-    issuers << issuer
+    borrowers << borrower
   end
 
-  # Return the device from its issuer.
+  # Return the device from its borrower.
   # This is accomplished by returning the newest active loan on the device,
   # allowing for expansion to a loan stack.
   # :reek:FeatureEnvy

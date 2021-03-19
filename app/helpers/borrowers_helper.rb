@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module IssuersHelper
+module BorrowersHelper
   # @return [String] The default email suffix (part including and after the `@`)
   #   to use in forms etc.
   def default_email_suffix

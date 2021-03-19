@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Represents a person who can issue devices.
-class Issuer < ApplicationRecord
+class Borrower < ApplicationRecord
   # @!attribute loans
   #   @return [Array<Loan>]
   has_many :loans, dependent: :nullify
@@ -38,26 +38,26 @@ class Issuer < ApplicationRecord
             numericality: { only_integer: true, allow_nil: true }
 
   # @!attribute barcode
-  #   @return [Barcode] The issuer's barcode
+  #   @return [Barcode] The borrower's barcode
   #   @todo
   #     REVIEW: Should old barcodes be preserved?
   has_one :barcode, as: :owner, dependent: :destroy
 
-  # @return [Array(Loan)] this issuer's overdue loans.
+  # @return [Array(Loan)] this borrower's overdue loans.
   def overdues
     loans.active.overdue
   end
 
-  # @return [String] the URL-safe {#code} of this Issuer.
+  # @return [String] the URL-safe {#code} of this Borrower.
   def to_param
     code.parameterize
   end
 
   # Generates a string formatted like `overdues/loans/allowance`, where
   # 'overdues' is the number of overdue devices, 'loans' is the total loans,
-  # and 'allowance' is the issuer's allowance (or infinity).
+  # and 'allowance' is the borrower's allowance (or infinity).
   #
-  # @param infinity_sign [String] The infinity sign to use for issuers without
+  # @param infinity_sign [String] The infinity sign to use for borrowers without
   #   allowances. Defaults to U+221E INFINITY.
   # @return [String] The summary string.
   def device_summary(infinity_sign: '∞')
@@ -68,7 +68,7 @@ class Issuer < ApplicationRecord
     ].join('/')
   end
 
-  # @return [true, false] Is the issuer allowed another device?
+  # @return [true, false] Is the borrower allowed another device?
   # :reek:NilCheck
   def allowed_another_device?
     return true if allowance.blank?
@@ -78,7 +78,7 @@ class Issuer < ApplicationRecord
 
   # @return ['exceeded', 'reached', 'not reached'] Human friendly allowance
   #   state.
-  #   Used like 'This issuer has *exceeded* their allowance'.
+  #   Used like 'This borrower has *exceeded* their allowance'.
   # :reek:NilCheck
   def allowance_state
     return 'not met' if allowance.blank?
@@ -103,11 +103,11 @@ class Issuer < ApplicationRecord
 
     case op
     when :create
-      issuer = Issuer.new hash
-      barcode = Barcode.new code: barcode, owner: issuer
+      borrower = Borrower.new hash
+      barcode = Barcode.new code: barcode, owner: borrower
       barcode.generate_code
 
-      issuer.save!
+      borrower.save!
       barcode.save!
     when :edit
       if barcode.blank?
@@ -115,18 +115,18 @@ class Issuer < ApplicationRecord
       end
 
       barcode = Barcode.find_by! code: barcode
-      issuer = barcode.issuer!
+      borrower = barcode.borrower!
 
-      issuer.update! hash
+      borrower.update! hash
     when :delete
       if barcode.blank?
         raise UploadHelper::UploadException.new line, 'barcode must be present'
       end
 
       barcode = Barcode.find_by! code: barcode
-      issuer = barcode.issuer!
+      borrower = barcode.borrower!
 
-      issuer.delete!
+      borrower.delete!
     else
       raise UploadHelper::UploadException.new line,
                                               "operation must be 'create', " \
@@ -139,8 +139,8 @@ class Issuer < ApplicationRecord
   end
 
   module Internal
-    # @param name [String] The issuer's full name
-    # @return [String] A 3-letter issuer code for the issuer
+    # @param name [String] The borrower's full name
+    # @return [String] A 3-letter borrower code for the borrower
     def self.generate_code(name)
       parts = name.downcase.split
       first = parts.first

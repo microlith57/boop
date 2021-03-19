@@ -16,8 +16,8 @@
   - if @device.issued?
     %p
       Issued by
-      = link_to @device.current_loan.issuer.name,
-                issuer_path(@device.current_loan.issuer)
+      = link_to @device.current_loan.borrower.name,
+                borrower_path(@device.current_loan.borrower)
       = local_time_ago @device.issued_at
   - else
     %p Not currently issued

@@ -400,7 +400,7 @@ DEPENDENCIES
   pagy
   pg
   puma (~> 3.12)
-  rails (~> 6.0)
+  rails (~> 6.1)
   ransack!
   reek
   rspec-rails
@@ -421,7 +421,7 @@ DEPENDENCIES
   webpacker (~> 4.x)
 
 RUBY VERSION
-   ruby 2.7.0p0
+   ruby 2.7.2p137
 
 BUNDLED WITH
    2.2.14

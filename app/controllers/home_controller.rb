@@ -10,27 +10,27 @@ class HomeController < ApplicationController
     @q = Barcode.ransack
   end
 
-  def issuer_info
-    # @type [Issuer]
-    @issuer = Barcode.find_by!(code: params[:issue_to]).issuer!
+  def borrower_info
+    # @type [Borrower]
+    @borrower = Barcode.find_by!(code: params[:issue_to]).borrower!
 
-    render 'home/issuer_info', layout: false
+    render 'home/borrower_info', layout: false
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => exc
     show_text_errors(exc)
   end
 
   def issue
-    # @type [Issuer]
-    @issuer = Barcode.find_by!(code: params[:issuer]).issuer!
+    # @type [Borrower]
+    @borrower = Barcode.find_by!(code: params[:borrower]).borrower!
     # @type [Device]
     @device = Barcode.find_by!(code: params[:issue_with]).device!
 
     validate_allowance unless params[:"override-allowance"] == 'override'
 
-    @device.issue @issuer
+    @device.issue @borrower
     @device.save!
 
-    render plain: "Issued #{@device.to_param} to #{@issuer.to_param}"
+    render plain: "Issued #{@device.to_param} to #{@borrower.to_param}"
   rescue ActiveRecord::ActiveRecordError => exc
     show_text_errors(exc)
   end
@@ -67,10 +67,10 @@ class HomeController < ApplicationController
   private
 
   def validate_allowance
-    return if @issuer.allowed_another_device?
+    return if @borrower.allowed_another_device?
 
     raise ActiveRecord::RecordNotSaved,
-          "Issuer allowance already #{@issuer.allowance_state}"
+          "Borrower allowance already #{@borrower.allowance_state}"
   end
 
   # @param exception [Exception]
