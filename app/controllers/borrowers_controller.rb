@@ -107,7 +107,7 @@ class BorrowersController < ApplicationController
 
   def destroy
     @borrower = find_borrower params[:id]
-    @borrower.delete
+    @borrower.destroy
     redirect_to borrowers_path
   end
 

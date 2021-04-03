@@ -4,7 +4,7 @@
 class Borrower < ApplicationRecord
   # @!attribute loans
   #   @return [Array<Loan>]
-  has_many :loans, dependent: :nullify
+  has_many :loans, dependent: :destroy
 
   # @!attribute devices
   #   @return [Array<Device>]
@@ -122,7 +122,7 @@ class Borrower < ApplicationRecord
       barcode = Barcode.find_by! code: barcode
       borrower = barcode.borrower!
 
-      borrower.delete!
+      borrower.destroy!
     else
       raise UploadHelper::UploadException.new line,
                                               "operation must be 'create', " \
