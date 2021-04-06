@@ -23,7 +23,7 @@ class Borrower < ApplicationRecord
   validates :code,
             presence: true,
             uniqueness: { case_insensitive: true },
-            format: { with: /\A[a-z0-9]+\z/ } # Alphanumeric
+            format: { with: /\A[a-z0-9\-_]+\z/ } # Alphanumeric
 
   # @todo custom validation classes
   # @!attribute email

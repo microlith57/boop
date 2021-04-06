@@ -22,8 +22,14 @@ class Device < ApplicationRecord
   # @!attribute name
   #   @return [String]
   validates :name,
+            presence: true
+
+  # @!attribute code
+  #   @return [String]
+  validates :code,
             presence: true,
-            uniqueness: { case_insensitive: true }
+            uniqueness: { case_insensitive: true },
+            format: { with: /\A[a-z0-9\-_]+\z/ } # Alphanumeric
 
   has_rich_text :notes
 
@@ -33,9 +39,9 @@ class Device < ApplicationRecord
   #     REVIEW: Should old barcodes be preserved?
   has_one :barcode, as: :owner, dependent: :destroy
 
-  # @return [String] the URL-safe {#name} of this Device.
+  # @return [String] the URL-safe {#code} of this Device.
   def to_param
-    name.parameterize
+    code
   end
 
   # Issues the device *to* a Borrower, without checking allowance.
