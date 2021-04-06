@@ -15,9 +15,6 @@
                     data: { target: 'borrower-form.nameField',
                             action: 'input->borrower-form#nameEdited' }
 
-  = form.label :notes
-  = form.rich_text_area :notes
-
   = form.label :code
   = form.text_field :code,
                     data: { target: 'borrower-form.codeField',
@@ -27,6 +24,9 @@
   = form.label :email
   = form.text_field :email,
                     data: { target: 'borrower-form.emailField' }
+
+  = form.label :notes
+  = form.rich_text_area :notes
 
   = form.label :allowance, 'Allowance (leave empty for unlimited)'
   = form.number_field :allowance, step: 1

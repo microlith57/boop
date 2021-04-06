@@ -9,7 +9,7 @@ export default class extends Controller {
   nameEdited() {
     const value = this.nameFieldTarget.value
       .toLowerCase()
-      .replace(/[^a-z]/g, '')
+      .replace(/[^a-z0-9\-_]/g, '')
 
     this.codeFieldTarget.defaultValue = value
     this.emailFieldTarget.defaultValue =
@@ -20,7 +20,7 @@ export default class extends Controller {
   codeEdited() {
     const value = this.codeFieldTarget.value
       .toLowerCase()
-      .replace(/[^a-z]/g, '')
+      .replace(/[^a-z0-9\-_]/g, '')
 
     this.emailFieldTarget.defaultValue = value + this.data.get('emailSuffix')
   }

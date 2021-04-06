@@ -1,4 +1,5 @@
-= form_with model: device, local: true do |form|
+= form_with model: device, local: true,
+            data: { controller: 'device-form' }  do |form|
   - if device.errors.any?
     .alert.callout#error-explanation
       %h2
@@ -9,7 +10,14 @@
         - device.errors.full_messages.each do |msg|
           %li= msg
   = form.label :name
-  = form.text_field :name
+  = form.text_field :name,
+                    data: { target: 'device-form.nameField',
+                            action: 'input->device-form#nameEdited' }
+
+  = form.label :code
+  = form.text_field :code,
+                     data: { target: 'device-form.codeField' },
+                     class: 'monospace'
 
   = form.label :description
   = form.text_area :description
