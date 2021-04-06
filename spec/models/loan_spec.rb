@@ -20,7 +20,7 @@ RSpec.describe Loan, type: :model do
       ].each do |time|
         loan = build :loan, created_at: time
 
-        expect(loan.active?).to be_truthy
+        expect(loan).to be_active
         expect(loan.overdue?)
           .to be_truthy,
               "loan created at #{loan.created_at.to_s(:short)} " \
@@ -39,9 +39,9 @@ RSpec.describe Loan, type: :model do
       ].each do |time|
         loan = build :loan, created_at: time
 
-        expect(loan.active?).to be_truthy
+        expect(loan).to be_active
         expect(loan.created_at).to eq time
-        expect(loan.overdue?).to be_falsey
+        expect(loan).not_to be_overdue
         expect(loan.days_overdue).to eq 0
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe Loan, type: :model do
         loan = build :loan, created_at: time
         overdue = days != 0
 
-        expect(loan.active?).to be_truthy
+        expect(loan).to be_active
         expect(loan.overdue?).to eq overdue
         expect(loan.days_overdue).to eq days
       end

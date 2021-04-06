@@ -16,6 +16,10 @@ detectors:
     exclude:
       - "/Controller$/"
 
+  UncommunicativeVariableName:
+    exclude:
+      - "/Controller$/"
+
   TooManyStatements:
     max_statements: 8
 

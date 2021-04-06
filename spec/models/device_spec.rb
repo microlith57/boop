@@ -12,8 +12,8 @@ RSpec.describe Device do
 
     it 'can detect non-issued devices' do
       device = build :device
-      expect(device.issued?).to be_falsy
-      expect(device.overdue?).to be_falsy
+      expect(device).not_to be_issued
+      expect(device).not_to be_overdue
       expect(device.days_overdue).to eq 0
     end
 
@@ -65,11 +65,11 @@ RSpec.describe Device do
     borrower = build :borrower
     borrower.save!
     device.issue borrower
-    expect(device.issued?).to be_truthy
+    expect(device).to be_issued
 
     device.return
     device.save!
-    expect(device.issued?).to be_falsy
+    expect(device).not_to be_issued
   end
 
   it 'has a barcode' do
