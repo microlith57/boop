@@ -14,15 +14,15 @@
 			],
 			"env": {
 				// Change these to whatever works on your system (check `env`)
-				"GEM_HOME"       : "/home/microlith57/.rvm/gems/ruby-2.5.1",
-				"GEM_PATH"       : "/home/microlith57/.rvm/gems/ruby-2.5.1:/home/microlith57/.rvm/gems/ruby-2.5.1@global",
-				"PATH"           : "/home/microlith57/.rvm/gems/ruby-2.5.1/bin:/home/microlith57/.rvm/gems/ruby-2.5.1@global/bin:/usr/share/rvm/rubies/ruby-2.5.1/bin:/usr/share/rvm/bin:/home/microlith57/anaconda3/bin:/home/microlith57/anaconda3/condabin:/home/microlith57/.yarn/bin:/home/microlith57/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+				"GEM_HOME"       : "/home/microlith57/.rvm/gems/ruby-2.7.2",
+				"GEM_PATH"       : "/home/microlith57/.rvm/gems/ruby-2.7.2:/home/microlith57/.rvm/gems/ruby-2.7.2@global",
+				// "PATH"           : "/home/microlith57/.rvm/gems/ruby-2.7.2/bin:/home/microlith57/.rvm/gems/ruby-2.7.2@global/bin:/usr/share/rvm/rubies/ruby-2.7.2/bin:/usr/share/rvm/bin:/home/microlith57/anaconda3/bin:/home/microlith57/anaconda3/condabin:/home/microlith57/.yarn/bin:/home/microlith57/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
 				"rvm_bin_path"   : "/home/microlith57/.rvm/bin",
 				"rvm_delete_flag": "0",
 				"rvm_path"       : "/home/microlith57/.rvm",
 				"rvm_prefix"     : "/home/microlith57",
-				"rvm_ruby_string": "ruby-2.5.1",
-				"rvm_version"    : "1.29.9 latest",
+				"rvm_ruby_string": "ruby-2.7.2",
+				"rvm_version"    : "1.29.10 manual"
       },
       "pathToBundler": "bundle"
 		},
@@ -32,7 +32,7 @@
 			"request": "launch",
 			"cwd": "${workspaceRoot}",
 			// Change these to `which rspec`
-			"program": "/home/microlith57/.rvm/gems/ruby-2.5.1/bin/rspec",
+			"program": "/home/microlith57/.rvm/gems/ruby-2.7.2/bin/rspec",
 			"args":[
         "${workspaceRoot}/spec",
 				"--format", "documentation",
@@ -41,14 +41,14 @@
 			"debuggerPort": "1235",
 			"env": {
 				// Same as above
-				"GEM_HOME"       : "/home/microlith57/.rvm/gems/ruby-2.5.1",
-				"GEM_PATH"       : "/home/microlith57/.rvm/gems/ruby-2.5.1:/home/microlith57/.rvm/gems/ruby-2.5.1@global",
-				"PATH"           : "/home/microlith57/.rvm/gems/ruby-2.5.1/bin:/home/microlith57/.rvm/gems/ruby-2.5.1@global/bin:/usr/share/rvm/rubies/ruby-2.5.1/bin:/usr/share/rvm/bin:/home/microlith57/anaconda3/bin:/home/microlith57/anaconda3/condabin:/home/microlith57/.yarn/bin:/home/microlith57/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+				"GEM_HOME"       : "/home/microlith57/.rvm/gems/ruby-2.7.2",
+				"GEM_PATH"       : "/home/microlith57/.rvm/gems/ruby-2.7.2:/home/microlith57/.rvm/gems/ruby-2.7.2@global",
+				"PATH"           : "/home/microlith57/.rvm/gems/ruby-2.7.2/bin:/home/microlith57/.rvm/gems/ruby-2.7.2@global/bin:/usr/share/rvm/rubies/ruby-2.7.2/bin:/usr/share/rvm/bin:/home/microlith57/anaconda3/bin:/home/microlith57/anaconda3/condabin:/home/microlith57/.yarn/bin:/home/microlith57/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
 				"rvm_bin_path"   : "/home/microlith57/.rvm/bin",
 				"rvm_delete_flag": "0",
 				"rvm_path"       : "/home/microlith57/.rvm",
 				"rvm_prefix"     : "/home/microlith57",
-				"rvm_ruby_string": "ruby-2.5.1",
+				"rvm_ruby_string": "ruby-2.7.2",
 				"rvm_version"    : "1.29.9 latest",
 			},
 		},
