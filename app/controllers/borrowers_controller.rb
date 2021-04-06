@@ -17,15 +17,17 @@ class BorrowersController < ApplicationController
 
     @q = Borrower.ransack query
     @q.sorts = 'name asc' if @q.sorts.empty?
-
-    @pagy, @borrowers = pagy(
-      @q.result(distinct: true),
-      items: params[:limit] || Pagy::VARS[:items]
-    )
+    result = @q.result
 
     respond_to do |format|
-      format.html
+      format.html do
+        @pagy, @borrowers = pagy(
+          result.includes(:barcode, :loans),
+          items: params[:limit] || Pagy::VARS[:items]
+        )
+      end
       format.csv do
+        @borrowers = result.includes(:barcode)
         data = CSV.generate(headers: true) do |csv|
           csv << %w[barcode name code email allowance]
           @borrowers.each do |borrower|

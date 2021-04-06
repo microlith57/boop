@@ -15,15 +15,18 @@ class DevicesController < ApplicationController
 
     @q = Device.ransack query
     @q.sorts = 'name asc' if @q.sorts.empty?
-
-    @pagy, @devices = pagy(
-      @q.result.includes(:barcode, :loans),
-      items: params[:limit] || Pagy::VARS[:items]
-    )
+    result = @q.result
 
     respond_to do |format|
-      format.html
+      format.html do
+        @pagy, @devices = pagy(
+          result.includes(:barcode, :loans),
+          items: params[:limit] || Pagy::VARS[:items]
+        )
+      end
       format.csv do
+        @devices = result.includes(:barcode)
+
         data = CSV.generate(headers: true) do |csv|
           csv << %w[barcode name]
           @devices.each do |device|
