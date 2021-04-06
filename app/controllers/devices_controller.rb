@@ -8,7 +8,7 @@ class DevicesController < ApplicationController
   def index
     query = params[:q]
 
-    if query && (bar = Barcode.find_by code: query[:name_cont]) && bar.device?
+    if query && (bar = Barcode.find_by code: query[:name_or_code_cont]) && bar.device?
       redirect_to bar.device
       return
     end
@@ -28,11 +28,12 @@ class DevicesController < ApplicationController
         @devices = result.includes(:barcode)
 
         data = CSV.generate(headers: true) do |csv|
-          csv << %w[barcode name]
+          csv << %w[barcode name code]
           @devices.each do |device|
             csv << [
               device.barcode.code,
-              device.name
+              device.name,
+              device.code
             ]
           end
         end
@@ -77,7 +78,7 @@ class DevicesController < ApplicationController
 
     Device.transaction do
       csv.each.with_index do |line, lineno|
-        hash = line.to_h.slice 'name', 'description', 'notes'
+        hash = line.to_h.slice 'name', 'code', 'description', 'notes'
 
         Device.perform_upload lineno + 1,
                               line['operation'],
@@ -112,13 +113,12 @@ class DevicesController < ApplicationController
 
   # @todo move into {Device} class?
   # :reek:UtilityFunction
-  def find_device(search_name)
-    table = Device.arel_table
-    Device.find_by!(table[:name].matches(search_name))
+  def find_device(search_code)
+    Device.find_by! code: search_code.downcase
   end
 
   def device_params
-    params.require(:device).permit(:name, :description, :notes)
+    params.require(:device).permit(:name, :code, :description, :notes)
   end
 
   def barcode_param
