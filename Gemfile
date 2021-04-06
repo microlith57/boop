@@ -112,7 +112,7 @@ end
 gem 'dotenv-rails'
 
 # Webpacker to pack JS files
-gem 'webpacker', '~> 4.x'
+gem 'webpacker', '~> 5.x'
 
 # Human-readable local time
 gem 'local_time'
