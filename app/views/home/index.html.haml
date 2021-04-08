@@ -37,7 +37,7 @@
       = hidden_field_tag :override_allowance, 0, id: nil, form: 'issuing-device-form'
       %article.borrower-info{ 'data-target' => 'issuing-panel.summaryPane' }
 
-      = form_with url: issue_path,
+      = form_with url: loans_path,
         format: :json,
         id: 'issuing-device-form',
         data: { target: 'issuing-panel.deviceForm',
@@ -51,7 +51,7 @@
     %section.tabs-panel#returning-panel{ 'data-controller' => 'returning-panel' }
       %p.status{ 'data-target': 'returning-panel.status' } Waiting
 
-      = form_with url: return_path,
+      = form_with url: return_loans_path,
         format: :json,
         data: { target: 'returning-panel.form',
         action: 'ajax:success->returning-panel#success ajax:error->returning-panel#error' } do |f|
