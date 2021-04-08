@@ -31,7 +31,7 @@
         %th= sort_link @q, :barcode
         %th= sort_link @q, :created_at, 'Created'
         %th= sort_link @q, :allowance
-        -# TODO: Sort link for this - by date issued on loan
+        -# TODO: Sort/filter options
         %th Overdues
     %tbody
       - @borrowers.each do |borrower|

@@ -96,6 +96,17 @@ class Device < ApplicationRecord
     loans_by_creation_asc.overdue.first.days_overdue
   end
 
+  # @return string Human friendly device state.
+  def status
+    if overdue?
+      "#{days_overdue} days overdue"
+    elsif issued?
+      'Issued'
+    else
+      'Available'
+    end
+  end
+
   def self.perform_upload(line, operation, barcode, hash)
     if operation.blank?
       raise UploadHelper::UploadException.new line,
