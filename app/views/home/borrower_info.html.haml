@@ -6,6 +6,9 @@
       This borrower has already #{@borrower.allowance_state} their allowance!
     .spacer
     = label_tag :"override-allowance", 'Override', class: 'middle'
-    %input.middle#override-allowance{ type: :checkbox, name: :override,
-                                required: true, form: 'issuing-device-form' }
+    %input.middle#override-allowance{ type: :checkbox,
+                                      name: :override_allowance,
+                                      value: :override,
+                                      required: true,
+                                      form: 'issuing-device-form' }
 = hidden_field_tag :borrower, @borrower.barcode, required: true, form: 'issuing-device-form'

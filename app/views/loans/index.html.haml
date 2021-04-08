@@ -1,0 +1,42 @@
+= render 'general/menu' do
+  %li
+    %span.header Loans
+  %li.search
+    = search_form_for @q, role: 'search', class: 'input-group' do |f|
+      = f.search_field :borrower_name_or_borrower_code_or_device_name_or_device_code_cont,
+        class: 'small input-group-field', placeholder: 'Search loans...'
+
+      .input-group-button
+        %button.button{ type: 'submit' }
+          %span.show-for-sr Search
+          %span{ 'aria-hidden' => 'true' }
+            %i.fi-magnifying-glass
+  %li.spacer
+  %li= link_to 'Download CSV', loans_url(format: :csv), class: 'clear button'
+%main
+  %table
+    %thead
+      %tr
+        %th= sort_link @q, :created_at, 'Issued'
+        %th= sort_link @q, :returned_at, 'Returned'
+        %th= sort_link @q, :borrower_name, 'Borrower'
+        %th= sort_link @q, :device_name, 'Device'
+        -# TODO: Sort/filter options
+        %th Status
+    %tbody
+      - @loans.each do |loan|
+        %tr
+          %td= local_time loan.created_at
+          %td= local_time loan.returned_at
+          %td= link_to loan.borrower.name, loan.borrower
+          %td= link_to loan.device.name, loan.device
+          - if loan.overdue?
+            %td= "#{pluralize(loan.days_overdue, 'day')} overdue"
+          - elsif loan.active?
+            %td Active
+          - else
+            %td Returned
+
+
+
+  != pagy_foundation_nav @pagy

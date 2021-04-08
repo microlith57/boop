@@ -44,6 +44,12 @@ class Device < ApplicationRecord
     code
   end
 
+  # @return [Loan] this device's current loan
+  # @raise [ActiveRecord::RecordNotFound] if the device is not issued
+  def current_loan!
+    current_loan || (raise ActiveRecord::RecordNotFound, 'Device not issued')
+  end
+
   # Issues the device *to* a Borrower, without checking allowance.
   #
   # @param new_borrower [Borrower] the borrower that the device will belong to.
