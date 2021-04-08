@@ -31,7 +31,8 @@
         %th= sort_link @q, :barcode_code
         %th= sort_link @q, :created_at, 'Created'
         %th= sort_link @q, :current_loan_created_at, [:current_loan_created_at, :name], 'Issued'
-        %th Days Overdue
+        -# TODO: Sort/filter options
+        %th Status
     %tbody
       - @devices.each do |device|
         %tr
@@ -50,8 +51,5 @@
           - else
             %td -
 
-          - if device.overdue?
-            %td= device.days_overdue
-          - else
-            %td -
+          %td= device.status
   != pagy_foundation_nav @pagy
