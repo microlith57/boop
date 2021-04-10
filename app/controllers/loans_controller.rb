@@ -18,6 +18,7 @@ class LoansController < ApplicationController
           result,
           items: params[:limit] || Pagy::VARS[:items]
         )
+        render 'index'
       end
       format.csv do
         @loans = result
@@ -28,6 +29,74 @@ class LoansController < ApplicationController
               loan.created_at,
               loan.returned_at,
               loan.borrower.barcode.code,
+              loan.device.barcode.code
+            ]
+          end
+        end
+        send_data data, filename: 'loans.csv'
+      end
+    end
+  end
+
+  def index_device
+    query = params[:q]
+
+    @device = find_device params[:id]
+
+    @q = Loan.where(device: @device).ransack query
+    @q.sorts = 'created_at desc' if @q.sorts.empty?
+    result = @q.result.includes(:borrower, :device)
+
+    respond_to do |format|
+      format.html do
+        @pagy, @loans = pagy(
+          result,
+          items: params[:limit] || Pagy::VARS[:items]
+        )
+        render :index
+      end
+      format.csv do
+        @loans = result
+        data = CSV.generate(headers: true) do |csv|
+          csv << %w[created_at returned_at borrower]
+          @loans.each do |loan|
+            csv << [
+              loan.created_at,
+              loan.returned_at,
+              loan.borrower.barcode.code
+            ]
+          end
+        end
+        send_data data, filename: 'loans.csv'
+      end
+    end
+  end
+
+  def index_borrower
+    query = params[:q]
+
+    @borrower = find_borrower params[:id]
+
+    @q = Loan.where(borrower: @borrower).ransack query
+    @q.sorts = 'created_at desc' if @q.sorts.empty?
+    result = @q.result.includes(:borrower, :device)
+
+    respond_to do |format|
+      format.html do
+        @pagy, @loans = pagy(
+          result,
+          items: params[:limit] || Pagy::VARS[:items]
+        )
+        render :index
+      end
+      format.csv do
+        @loans = result
+        data = CSV.generate(headers: true) do |csv|
+          csv << %w[created_at returned_at device]
+          @loans.each do |loan|
+            csv << [
+              loan.created_at,
+              loan.returned_at,
               loan.device.barcode.code
             ]
           end
@@ -72,6 +141,18 @@ class LoansController < ApplicationController
 
   private
 
+  # @todo move into {Borrower} class?
+  # :reek:UtilityFunction
+  def find_borrower(search_code)
+    Borrower.find_by! code: search_code.downcase
+  end
+
+  # @todo move into {Device} class?
+  # :reek:UtilityFunction
+  def find_device(search_code)
+    Device.find_by! code: search_code.downcase
+  end
+
   # rubocop:disable Style/GuardClause
   def validate_allowance
     unless @borrower.allowed_another_device? || params[:override_allowance] == 'override'
@@ -87,8 +168,8 @@ class LoansController < ApplicationController
     status = case exception
              when ActiveRecord::RecordNotFound    then :not_found
              when ActiveRecord::RecordNotSaved    then :forbidden # REVIEW
-             when ActiveRecord::RecordInvalid     then :not_acceptable # REVIEW
-             when ActiveRecord::ActiveRecordError then :not_acceptable # REVIEW
+             when ActiveRecord::RecordInvalid,
+                  ActiveRecord::ActiveRecordError then :not_acceptable # REVIEW
              end
     render plain: exception.message, status: status
   end

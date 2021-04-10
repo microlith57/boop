@@ -11,12 +11,14 @@ Rails.application.routes.draw do
 
   resources :devices do
     get 'barcode', on: :member
+    get 'loans',   on: :member, to: 'loans#index_device'
 
     post 'upload', on: :collection
   end
 
   resources :borrowers do
     get 'barcode', on: :member
+    get 'loans',   on: :member, to: 'loans#index_borrower'
 
     post 'upload', on: :collection
   end
