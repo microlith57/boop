@@ -1,5 +1,8 @@
 = render 'general/menu' do
   %li
+    - if (resource = @borrower || @device)
+      = link_to resource.name, resource
+      \/
     %span.header Loans
   %li.search
     = search_form_for @q, role: 'search', class: 'input-group' do |f|
@@ -12,15 +15,22 @@
           %span{ 'aria-hidden' => 'true' }
             %i.fi-magnifying-glass
   %li.spacer
-  %li= link_to 'Download CSV', loans_url(format: :csv), class: 'clear button'
+  - if @borrower
+    %li= link_to 'Download CSV', loans_borrower_url(@borrower, format: :csv), class: 'clear button'
+  - elsif @device
+    %li= link_to 'Download CSV', loans_device_url(@device, format: :csv), class: 'clear button'
+  - else
+    %li= link_to 'Download CSV', loans_url(format: :csv), class: 'clear button'
 %main
   %table
     %thead
       %tr
         %th= sort_link @q, :created_at, 'Issued'
         %th= sort_link @q, :returned_at, 'Returned'
-        %th= sort_link @q, :borrower_name, 'Borrower'
-        %th= sort_link @q, :device_name, 'Device'
+        - unless @borrower
+          %th= sort_link @q, :borrower_name, 'Borrower'
+        - unless @device
+          %th= sort_link @q, :device_name, 'Device'
         -# TODO: Sort/filter options
         %th Status
     %tbody
@@ -28,15 +38,15 @@
         %tr
           %td= local_time loan.created_at
           %td= local_time loan.returned_at
-          %td= link_to loan.borrower.name, loan.borrower
-          %td= link_to loan.device.name, loan.device
+          - unless @borrower
+            %td= link_to loan.borrower.name, loan.borrower
+          - unless @device
+            %td= link_to loan.device.name, loan.device
           - if loan.overdue?
             %td= "#{pluralize(loan.days_overdue, 'day')} overdue"
           - elsif loan.active?
             %td Active
           - else
             %td Returned
-
-
 
   != pagy_foundation_nav @pagy

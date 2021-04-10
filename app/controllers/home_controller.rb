@@ -25,8 +25,8 @@ class HomeController < ApplicationController
     status = case exception
              when ActiveRecord::RecordNotFound    then :not_found
              when ActiveRecord::RecordNotSaved    then :forbidden # REVIEW
-             when ActiveRecord::RecordInvalid     then :not_acceptable # REVIEW
-             when ActiveRecord::ActiveRecordError then :not_acceptable # REVIEW
+             when ActiveRecord::RecordInvalid,
+                  ActiveRecord::ActiveRecordError then :not_acceptable # REVIEW
              end
     render plain: exception.message, status: status
   end

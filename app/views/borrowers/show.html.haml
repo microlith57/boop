@@ -2,6 +2,7 @@
   %li
     %span.header= @borrower.name
   %li.spacer
+  %li= link_to 'Loans', loans_borrower_url(@borrower)
   %li= link_to 'Barcode', barcode_borrower_url(@borrower), 'data-turbolinks': false
   %li= link_to 'Edit', edit_borrower_url(@borrower)
   %li= link_to 'Delete', borrower_url(@borrower), method: :delete, confirm: 'Are you sure?'
