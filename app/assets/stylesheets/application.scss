@@ -53,6 +53,7 @@ ul.menu li {
   > a {
     padding: 0px;
     line-height: 40px;
+    display: inline-block;
 
     &.current-page {
       $anchor-color-current: darken($anchor-color, 15%);

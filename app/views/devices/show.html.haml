@@ -7,6 +7,7 @@
       .label.alert
         = pluralize(@device.days_overdue, 'day') + ' overdue'
   %li.spacer
+  %li= link_to 'Loans', loans_device_url(@device)
   %li= link_to 'Barcode', barcode_device_url(@device), 'data-turbolinks': false
   %li= link_to 'Edit', edit_device_url(@device)
   %li= link_to 'Delete', device_url(@device), method: :delete, confirm: 'Are you sure?'
