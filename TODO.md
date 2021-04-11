@@ -1,9 +1,6 @@
 # TODOs
 
-- Search doesn't work in some cases (which?)
-- Fix `foundation-rails` using `sass` instead of `sassc`
-
----
+## Allocations
 
 - Staff can book devices in the future
   - Form layout:
