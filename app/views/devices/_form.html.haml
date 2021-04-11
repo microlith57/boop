@@ -25,7 +25,10 @@
   = form.label :notes
   = form.rich_text_area :notes
 
-  = form.label :barcode
+  - if new_device
+    = form.label :barcode, 'Barcode (leave empty for automatic)'
+  - else
+    = form.label :barcode
   = form.text_field :barcode, class: 'monospace'
 
   = form.submit
