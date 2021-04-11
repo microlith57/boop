@@ -84,7 +84,6 @@ gem 'pagy'
 
 # Decent UI framework
 gem 'autoprefixer-rails'
-gem 'foundation-rails'
 
 # Solargraph language server
 gem 'solargraph', group: :development
