@@ -3,7 +3,7 @@
 class Device < ApplicationRecord
   # @!attribute loans
   #   @return [Array<Loan>]
-  has_many :loans, dependent: :nullify
+  has_many :loans, dependent: :destroy
 
   # @!attribute active_loans
   #   @return [Array<Loan>]
@@ -15,15 +15,21 @@ class Device < ApplicationRecord
   has_one  :current_loan, -> { where(returned_at: nil).order('created_at') },
            class_name: 'Loan', inverse_of: :device
 
-  # @!attribute issuers
-  #   @return [Array<Issuer>]
-  has_many :issuers, through: :loans
+  # @!attribute borrowers
+  #   @return [Array<Borrower>]
+  has_many :borrowers, through: :loans
 
   # @!attribute name
   #   @return [String]
   validates :name,
+            presence: true
+
+  # @!attribute code
+  #   @return [String]
+  validates :code,
             presence: true,
-            uniqueness: { case_insensitive: true }
+            uniqueness: { case_insensitive: true },
+            format: { with: /\A[a-z0-9\-_]+\z/ } # Alphanumeric
 
   has_rich_text :notes
 
@@ -33,26 +39,30 @@ class Device < ApplicationRecord
   #     REVIEW: Should old barcodes be preserved?
   has_one :barcode, as: :owner, dependent: :destroy
 
-  # @return [String] the URL-safe {#name} of this Device.
+  # @return [String] the URL-safe {#code} of this Device.
   def to_param
-    name.parameterize
+    code
   end
 
-  # Issues the device *to* an Issuer, without checking allowance.
+  # @return [Loan] this device's current loan
+  # @raise [ActiveRecord::RecordNotFound] if the device is not issued
+  def current_loan!
+    current_loan || (raise ActiveRecord::RecordNotFound, 'Device not issued')
+  end
+
+  # Issues the device *to* a Borrower, without checking allowance.
   #
-  # @param new_issuer [Issuer] the issuer that the device will belong to.
+  # @param new_borrower [Borrower] the borrower that the device will belong to.
   # @return [nil]
   # @raise [ActiveRecord::RecordNotSaved] if the device already has an active
   #   Loan
-  def issue(issuer)
-    if loans.active.any?
-      raise ActiveRecord::RecordNotSaved, 'Device is already issued'
-    end
+  def issue(borrower)
+    raise ActiveRecord::RecordNotSaved, 'Device is already issued' if loans.active.any?
 
-    issuers << issuer
+    borrowers << borrower
   end
 
-  # Return the device from its issuer.
+  # Return the device from its borrower.
   # This is accomplished by returning the newest active loan on the device,
   # allowing for expansion to a loan stack.
   # :reek:FeatureEnvy
@@ -92,6 +102,17 @@ class Device < ApplicationRecord
     loans_by_creation_asc.overdue.first.days_overdue
   end
 
+  # @return string Human friendly device state.
+  def status
+    if overdue?
+      "#{days_overdue} days overdue"
+    elsif issued?
+      'Issued'
+    else
+      'Available'
+    end
+  end
+
   def self.perform_upload(line, operation, barcode, hash)
     if operation.blank?
       raise UploadHelper::UploadException.new line,
@@ -109,23 +130,19 @@ class Device < ApplicationRecord
       device.save!
       barcode.save!
     when :edit
-      if barcode.blank?
-        raise UploadHelper::UploadException.new line, 'barcode must be present'
-      end
+      raise UploadHelper::UploadException.new line, 'barcode must be present' if barcode.blank?
 
       barcode = Barcode.find_by! code: barcode
       device = barcode.device!
 
       device.update! hash
     when :delete
-      if barcode.blank?
-        raise UploadHelper::UploadException.new line, 'barcode must be present'
-      end
+      raise UploadHelper::UploadException.new line, 'barcode must be present' if barcode.blank?
 
       barcode = Barcode.find_by! code: barcode
       device = barcode.device!
 
-      device.delete
+      device.destroy
     else
       raise UploadHelper::UploadException.new line,
                                               "operation must be 'create', " \

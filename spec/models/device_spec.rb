@@ -12,15 +12,15 @@ RSpec.describe Device do
 
     it 'can detect non-issued devices' do
       device = build :device
-      expect(device.issued?).to be_falsy
-      expect(device.overdue?).to be_falsy
+      expect(device).not_to be_issued
+      expect(device).not_to be_overdue
       expect(device.days_overdue).to eq 0
     end
 
     it 'correctly chooses the most-overdue loan' do
-      issuer = build(:issuer)
-      issuer.save!
-      issuer.barcode.save!
+      borrower = build(:borrower)
+      borrower.save!
+      borrower.barcode.save!
 
       times = [
         5.minutes.ago,
@@ -37,7 +37,7 @@ RSpec.describe Device do
 
       times.each do |time|
         loan = build :loan,
-                     device: device, issuer: issuer,
+                     device: device, borrower: borrower,
                      created_at: time
         loan.save!
 
@@ -49,27 +49,27 @@ RSpec.describe Device do
   end
 
   it 'can be issued' do
-    issuer = build :issuer
-    issuer.save!
+    borrower = build :borrower
+    borrower.save!
     device = build :device
 
-    device.issue issuer
+    device.issue borrower
     device.save!
-    expect(device.current_loan.issuer).to eq issuer
-    expect(issuer.devices).to include device
+    expect(device.current_loan.borrower).to eq borrower
+    expect(borrower.devices).to include device
   end
 
   it 'can be returned' do
     device = build :device
     device.save!
-    issuer = build :issuer
-    issuer.save!
-    device.issue issuer
-    expect(device.issued?).to be_truthy
+    borrower = build :borrower
+    borrower.save!
+    device.issue borrower
+    expect(device).to be_issued
 
     device.return
     device.save!
-    expect(device.issued?).to be_falsy
+    expect(device).not_to be_issued
   end
 
   it 'has a barcode' do

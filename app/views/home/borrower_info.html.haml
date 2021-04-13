@@ -1,0 +1,14 @@
+%h1= @borrower.name
+%span.summary.hoverable{ title: 'Overdues/Issues/Allowance' }= @borrower.device_summary
+- unless @borrower.allowed_another_device?
+  .input-group.allowance_full
+    %label.middle
+      This borrower has already #{@borrower.allowance_state} their allowance!
+    .spacer
+    = label_tag :"override-allowance", 'Override', class: 'middle'
+    %input.middle#override-allowance{ type: :checkbox,
+                                      name: :override_allowance,
+                                      value: :override,
+                                      required: true,
+                                      form: 'issuing-device-form' }
+= hidden_field_tag :borrower, @borrower.barcode, required: true, form: 'issuing-device-form'

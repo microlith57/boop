@@ -26,7 +26,7 @@ module ApplicationHelper
     html_options ||= {}
 
     if current_page? options
-      classes = (html_options['class'] || '') + ' current-page'
+      classes = "#{html_options['class'] || ''} current-page"
       html_options['class'] = classes.strip
     end
 

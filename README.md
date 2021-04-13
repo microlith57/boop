@@ -70,5 +70,5 @@ To delete an admin:
 
 ```ruby
 admin = Admin.find_by! email: 'user@example.org'
-admin.delete
+admin.destroy
 ```

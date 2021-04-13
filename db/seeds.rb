@@ -17,7 +17,7 @@ Admin.create(
   password: 'password'
 )
 
-rohan = Issuer.new(
+rohan = Borrower.new(
   name: 'Rohan Crookbain',
   code: 'rohancrookbain',
   email: 'rohancrookbain@spotswoodcollege.school.nz',
@@ -29,7 +29,7 @@ rohan_b.generate_code
 rohan.save!
 rohan_b.save!
 
-cla = Issuer.new(
+cla = Borrower.new(
   name: 'Chris Lapworth',
   code: 'cla',
   email: 'cla@spotswoodcollege.school.nz',

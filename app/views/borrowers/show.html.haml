@@ -1,0 +1,24 @@
+= render 'general/menu' do
+  %li
+    %span.header= @borrower.name
+  %li.spacer
+  %li= link_to 'Loans', loans_borrower_url(@borrower)
+  %li= link_to 'Barcode', barcode_borrower_url(@borrower), 'data-turbolinks': false
+  %li= link_to 'Edit', edit_borrower_url(@borrower)
+  %li= link_to 'Delete', borrower_url(@borrower), method: :delete, confirm: 'Are you sure?'
+%main
+  %p= @borrower.email
+  %pre= @borrower.barcode
+  %p
+    Device Summary:
+    %abbr.hoverable{ title: 'Overdues/Issues/Allowance' }= @borrower.device_summary
+  - if @borrower.loans.active.empty?
+    %p No devices issued
+  - else
+    Currently issuing:
+    %ul
+      - @borrower.loans.active.each do |loan|
+        %li= link_to loan.device.name, device_path(loan.device)
+
+  %p
+    = @borrower.notes
