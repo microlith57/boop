@@ -1,4 +1,6 @@
 = render 'general/menu' do
+  %li
+    %span.header Boop
   %li.search
     = form_with url: barcodes_path, local: true, method: :get, role: 'search',
       class: 'input-group' do |f|
