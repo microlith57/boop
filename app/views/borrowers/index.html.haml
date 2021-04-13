@@ -1,0 +1,47 @@
+= render 'general/menu' do
+  %li
+    %span.header Borrowers
+  %li.search
+    = search_form_for @q, role: 'search', class: 'input-group' do |f|
+      = f.search_field :name_or_code_or_email_cont,
+        class: 'small input-group-field', placeholder: 'Search borrowers...'
+
+      .input-group-button
+        %button.button{ type: 'submit' }
+          %span.show-for-sr Search
+          %span{ 'aria-hidden' => 'true' }
+            %i.fi-magnifying-glass
+  %li.spacer
+  %li= link_to 'New', new_borrower_url, class: 'clear button'
+  %li= link_to 'Download CSV', borrowers_url(format: :csv), class: 'clear button'
+  %li
+    = form_with url: upload_borrowers_path, multipart: true,
+      data: { controller: 'upload-form' } do
+      %label.clear.button{for: 'borrower-upload'}
+        Upload CSV
+      %input.show-for-sr#borrower-upload{name: :file,
+                                      type: :file,
+                                      accept: '.csv',
+                                      'data-action': 'upload-form#upload'}
+%main
+  %table
+    %thead
+      %tr
+        %th= sort_link @q, :name
+        %th= sort_link @q, :barcode
+        %th= sort_link @q, :created_at, 'Created'
+        %th= sort_link @q, :allowance
+        -# TODO: Sort/filter options
+        %th Overdues
+    %tbody
+      - @borrowers.each do |borrower|
+        %tr
+          %td= link_to borrower.name, borrower
+          %td
+            %pre= borrower.barcode
+          %td= local_time borrower.created_at
+          %td= borrower.allowance || '∞'
+          %td= borrower.overdues.size
+
+
+  != pagy_foundation_nav @pagy

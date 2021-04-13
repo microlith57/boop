@@ -5,7 +5,7 @@
     "@rails/actioncable": "^6.0.1",
     "@rails/actiontext": "^6.0.2-1",
     "@rails/ujs": "^6.0.0-alpha",
-    "@rails/webpacker": "^4.0.7",
+    "@rails/webpacker": "^5.0",
     "babel-loader": "^8.0.6",
     "core-js": "3",
     "foundation-sites": "^6.5.3",

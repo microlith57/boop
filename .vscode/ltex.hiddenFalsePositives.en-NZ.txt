@@ -1,1 +1,2 @@
 {"rule":"TO_DO_HYPHEN","sentence":"^\\QTODOs\\E$"}
+{"rule":"STARS_AND_STEPS","sentence":"^\\QDevice CSV download only downloads 1 page\nFix \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q using \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q instead of \\E(?:Dummy|Ina|Jimmy-)[0-9]+$"}

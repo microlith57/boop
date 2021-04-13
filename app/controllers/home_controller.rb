@@ -10,77 +10,23 @@ class HomeController < ApplicationController
     @q = Barcode.ransack
   end
 
-  def issuer_info
-    # @type [Issuer]
-    @issuer = Barcode.find_by!(code: params[:issue_to]).issuer!
+  def borrower_info
+    # @type [Borrower]
+    @borrower = Barcode.find_by!(code: params[:issue_to]).borrower!
 
-    render 'home/issuer_info', layout: false
+    render 'home/borrower_info', layout: false
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => exc
-    show_text_errors(exc)
+    show_text_errors exc
   end
 
-  def issue
-    # @type [Issuer]
-    @issuer = Barcode.find_by!(code: params[:issuer]).issuer!
-    # @type [Device]
-    @device = Barcode.find_by!(code: params[:issue_with]).device!
-
-    validate_allowance unless params[:"override-allowance"] == 'override'
-
-    @device.issue @issuer
-    @device.save!
-
-    render plain: "Issued #{@device.to_param} to #{@issuer.to_param}"
-  rescue ActiveRecord::ActiveRecordError => exc
-    show_text_errors(exc)
-  end
-
-  # :reek:TooManyStatements
-  # :reek:DuplicateMethodCall
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-  def return
-    # @type [Loan]
-    @loan = Barcode.find_by!(code: params[:device]).device!.current_loan
-    if @loan.blank?
-      raise ActiveRecord::RecordNotFound, 'Device already returned'
-    end
-
-    response = 'Success'
-    if @loan.overdue?
-      # TODO: Use `pluralize` instead
-      response += if @loan.days_overdue == 1
-                    " (#{@loan.days_overdue} day overdue)"
-                  else
-                    " (#{@loan.days_overdue} days overdue)"
-                  end
-    end
-
-    @loan.return
-    @loan.save!
-
-    render plain: response
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => exc
-    show_text_errors(exc)
-  end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
-  private
-
-  def validate_allowance
-    return if @issuer.allowed_another_device?
-
-    raise ActiveRecord::RecordNotSaved,
-          "Issuer allowance already #{@issuer.allowance_state}"
-  end
-
+  # @todo move to helper
   # @param exception [Exception]
-  # REVIEW: Should we send whole stack trace?
   def show_text_errors(exception)
     status = case exception
              when ActiveRecord::RecordNotFound    then :not_found
              when ActiveRecord::RecordNotSaved    then :forbidden # REVIEW
-             when ActiveRecord::RecordInvalid     then :not_acceptable # REVIEW
-             when ActiveRecord::ActiveRecordError then :not_acceptable # REVIEW
+             when ActiveRecord::RecordInvalid,
+                  ActiveRecord::ActiveRecordError then :not_acceptable # REVIEW
              end
     render plain: exception.message, status: status
   end

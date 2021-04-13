@@ -3,10 +3,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.0'
+ruby '3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0'
+gem 'rails', '~> 6.1'
 # Use postgreSQL as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
@@ -48,7 +48,7 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console'
   # anywhere in the code.
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen', '~> 3.3'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the
   # background. Read more: https://github.com/rails/spring
@@ -84,7 +84,6 @@ gem 'pagy'
 
 # Decent UI framework
 gem 'autoprefixer-rails'
-gem 'foundation-rails'
 
 # Solargraph language server
 gem 'solargraph', group: :development
@@ -94,6 +93,7 @@ group :development do
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
+  gem 'rubocop-rspec'
 end
 
 # Reek
@@ -112,7 +112,7 @@ end
 gem 'dotenv-rails'
 
 # Webpacker to pack JS files
-gem 'webpacker', '~> 4.x'
+gem 'webpacker', '~> 5.x'
 
 # Human-readable local time
 gem 'local_time'
