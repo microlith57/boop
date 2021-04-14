@@ -10,6 +10,12 @@ class Barcode < ApplicationRecord
                              ENV['DEFAULT_BARCODE_LENGTH'].to_i
                            end
 
+  BARCODE_HEIGHT = if ENV['BARCODE_HEIGHT'].to_i.zero?
+                     30
+                   else
+                     ENV['BARCODE_HEIGHT'].to_i
+                   end
+
   # @!attribute owner
   #   @return [Device, Borrower] The owner of the barcode.
   #   @todo
@@ -31,7 +37,7 @@ class Barcode < ApplicationRecord
   # @return [String] the {#code} as raw PNG data
   def png
     code_obj = Barby::Code128.new(code)
-    Barby::PngOutputter.new(code_obj).to_png
+    Barby::PngOutputter.new(code_obj).to_png(height: 30)
   end
 
   # @return [String] This barcode's string representation.
