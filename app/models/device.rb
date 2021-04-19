@@ -39,6 +39,10 @@ class Device < ApplicationRecord
   #     REVIEW: Should old barcodes be preserved?
   has_one :barcode, as: :owner, dependent: :destroy
 
+  # @!attribute group
+  #   @return [Group]
+  belongs_to :group, optional: true
+
   # @return [String] the URL-safe {#code} of this Device.
   def to_param
     code
