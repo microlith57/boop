@@ -20,6 +20,6 @@ module Boop
     # the framework and any gems in your application.
 
     # Set the default time zone
-    config.time_zone = ENV['TIMEZONE'] || 'UTC'
+    config.time_zone = ENV.fetch('TIMEZONE', 'UTC')
   end
 end
