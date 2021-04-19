@@ -37,7 +37,10 @@
       - @loans.each do |loan|
         %tr
           %td= local_time loan.created_at
-          %td= local_time loan.returned_at
+          - if loan.active?
+            %td -
+          - else
+            %td= local_time loan.returned_at
           - unless @borrower
             %td= link_to loan.borrower.name, loan.borrower
           - unless @device
