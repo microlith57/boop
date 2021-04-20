@@ -4,11 +4,9 @@ require 'barby/barcode/code_128'
 require 'barby/outputter/png_outputter'
 
 class Barcode < ApplicationRecord
-  DEFAULT_BARCODE_LENGTH = if ENV['DEFAULT_BARCODE_LENGTH'].to_i.zero?
-                             10
-                           else
-                             ENV['DEFAULT_BARCODE_LENGTH'].to_i
-                           end
+  DEFAULT_BARCODE_LENGTH = ENV.fetch('DEFAULT_BARCODE_LENGTH', '10').to_i
+
+  BARCODE_HEIGHT = ENV.fetch('BARCODE_HEIGHT', '30').to_i
 
   # @!attribute owner
   #   @return [Device, Borrower] The owner of the barcode.
@@ -31,7 +29,7 @@ class Barcode < ApplicationRecord
   # @return [String] the {#code} as raw PNG data
   def png
     code_obj = Barby::Code128.new(code)
-    Barby::PngOutputter.new(code_obj).to_png
+    Barby::PngOutputter.new(code_obj).to_png(height: 30)
   end
 
   # @return [String] This barcode's string representation.

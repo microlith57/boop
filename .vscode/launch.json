@@ -9,29 +9,26 @@
 			"type": "Ruby",
 			"request": "launch",
 			"program": "${workspaceRoot}/bin/rails",
-			"args": [
-				"server"
-			],
+			"args": ["server"],
 			"env": {
-				// Change these to whatever works on your system (check `env`)
-				"GEM_HOME"       : "/home/microlith57/.rvm/gems/ruby-3.0.0",
-				"GEM_PATH"       : "/home/microlith57/.rvm/gems/ruby-3.0.0:/home/microlith57/.rvm/gems/ruby-3.0.0@global",
-				"rvm_delete_flag": "0",
-				"rvm_bin_path"   : "/usr/share/rvm/bin",
-				"rvm_path"       : "/usr/share/rvm",
-				"rvm_prefix"     : "/usr/share",
-				"rvm_ruby_string": "ruby-3.0.0",
-				"rvm_version"    : "1.29.12 latest"
+				"GEM_HOME"       : "${env:GEM_HOME}",
+				"GEM_PATH"       : "${env:GEM_PATH}",
+				"rvm_delete_flag": "${env:rvm_delete_flag}",
+				"rvm_bin_path"   : "${env:rvm_bin_path}",
+				"rvm_path"       : "${env:rvm_path}",
+				"rvm_prefix"     : "${env:rvm_prefix}",
+				"rvm_ruby_string": "${env:rvm_ruby_string}",
+				"rvm_version"    : "${env:rvm_version}"
       },
-      "pathToBundler": "bundle"
+      "pathToBundler": "bundle",
+      "showDebuggerOutput": true
 		},
 		{
 			"name": "spec",
 			"type": "Ruby",
 			"request": "launch",
 			"cwd": "${workspaceRoot}",
-			// Change these to `which rspec`
-			"program": "/home/microlith57/.rvm/gems/ruby-3.0.0/bin/rspec",
+			"program": "${env:GEM_HOME}/bin/rspec",
 			"args":[
         "${workspaceRoot}/spec",
 				"--format", "documentation",
@@ -39,17 +36,17 @@
 			],
 			"debuggerPort": "1235",
 			"env": {
-				// Same as above
-				"GEM_HOME"       : "/home/microlith57/.rvm/gems/ruby-3.0.0",
-				"GEM_PATH"       : "/home/microlith57/.rvm/gems/ruby-3.0.0:/home/microlith57/.rvm/gems/ruby-3.0.0@global",
-				"PATH"           : "/home/microlith57/.rvm/gems/ruby-3.0.0/bin:/home/microlith57/.rvm/gems/ruby-3.0.0@global/bin:/usr/share/rvm/rubies/ruby-3.0.0/bin:/usr/share/rvm/bin:/home/microlith57/anaconda3/bin:/home/microlith57/anaconda3/condabin:/home/microlith57/.yarn/bin:/home/microlith57/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
-				"rvm_bin_path"   : "/home/microlith57/.rvm/bin",
-				"rvm_delete_flag": "0",
-				"rvm_path"       : "/home/microlith57/.rvm",
-				"rvm_prefix"     : "/home/microlith57",
-				"rvm_ruby_string": "ruby-3.0.0",
-				"rvm_version"    : "1.29.9 latest",
-			},
+				"GEM_HOME"       : "${env:GEM_HOME}",
+				"GEM_PATH"       : "${env:GEM_PATH}",
+				"rvm_delete_flag": "${env:rvm_delete_flag}",
+				"rvm_bin_path"   : "${env:rvm_bin_path}",
+				"rvm_path"       : "${env:rvm_path}",
+				"rvm_prefix"     : "${env:rvm_prefix}",
+				"rvm_ruby_string": "${env:rvm_ruby_string}",
+				"rvm_version"    : "${env:rvm_version}"
+      },
+      "pathToBundler": "bundle",
+      "showDebuggerOutput": true
 		},
 		{
 			"name": "firefox",
