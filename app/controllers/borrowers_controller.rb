@@ -122,7 +122,7 @@ class BorrowersController < ApplicationController
   end
 
   def borrower_params
-    params.require(:borrower).permit(:name, :email, :code, :allowance)
+    params.require(:borrower).permit(:name, :email, :code, :allowance, :notes)
   end
 
   def barcode_param
