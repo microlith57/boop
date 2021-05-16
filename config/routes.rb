@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     post 'upload', on: :collection
   end
 
+  resources :groups, except: %i[new edit]
+
   resources :borrowers do
     get 'barcode', on: :member
     get 'loans',   on: :member, to: 'loans#index_borrower'

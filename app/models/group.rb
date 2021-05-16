@@ -20,4 +20,9 @@ class Group < ApplicationRecord
   def root?
     parent.blank?
   end
+
+  # @return [String] the URL-safe {#code} of this Group.
+  def to_param
+    code
+  end
 end
