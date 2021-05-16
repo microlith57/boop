@@ -1,7 +1,9 @@
 = render 'general/menu' do
   %li
-    %span.header
-      = @device.name
+    - if @device.group.present?
+      = link_to @device.group.name, @device.group
+      \/
+    %span.header= @device.name
   - if @device.overdue?
     %li
       .label.alert
