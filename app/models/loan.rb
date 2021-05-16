@@ -5,7 +5,7 @@ class Loan < ApplicationRecord
   #   'day' rolls over -- for example, with a rollover of 4:30 pm, if a borrower
   #   takes out a device at 4:00 pm and it is now 5:00 pm *the same day*, it is
   #   deemed the next day, so the device is 1 day overdue.
-  DEFAULT_ROLLOVER_TIME = Time.zone.parse(ENV['ROLLOVER_TIME'] || '4:30 pm NZST')
+  DEFAULT_ROLLOVER_TIME = Time.zone.parse ENV.fetch('ROLLOVER_TIME', '4:30 pm NZST')
 
   # @!attribute borrower
   #   @return [Borrower]
