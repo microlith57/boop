@@ -35,8 +35,6 @@ class Device < ApplicationRecord
 
   # @!attribute barcode
   #   @return [Barcode]
-  #   @todo
-  #     REVIEW: Should old barcodes be preserved?
   has_one :barcode, as: :owner, dependent: :destroy
 
   # @!attribute group

@@ -39,8 +39,6 @@ class Borrower < ApplicationRecord
 
   # @!attribute barcode
   #   @return [Barcode] The borrower's barcode
-  #   @todo
-  #     REVIEW: Should old barcodes be preserved?
   has_one :barcode, as: :owner, dependent: :destroy
 
   # @return [Array(Loan)] this borrower's overdue loans.
