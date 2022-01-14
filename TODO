@@ -1,0 +1,31 @@
+Allocations:
+  ☐ Add allocations
+  Groups:
+    ✔ Devices are in groups @done(21-05-16 16:06)
+    ✔ Groups are in groups @done(21-05-16 16:06)
+    ☐ Groups display as tree
+    ☐ Can create and update groups
+    ☐ Group health/status view
+      bar of overdue/loaned to borrower/loaned to allocation/allocated/unallocated
+  ☐ Can't loan over group capacity
+  ☐ Can't allocate over group capacity
+  ☐ Warning shows when about to meet group capacity when loaning
+  ☐ Allocation acts like a borrower (has a barcode and can issue devices)
+  ☐ Allocation can draw from all devices in its group, including subgroups
+  Interface:
+    ☐ Form to book devices in the future
+      > User ID           [______]
+      > ---
+      > (if allocating now)
+      > Allocation End    [datetime picker | hh:mm from now]
+      > (if allocating later)
+      > Allocation Start  [datetime picker]
+      > Allocation End    [datetime picker w/ durations]
+      > ---
+      > Group             [Group]
+      > Number of Devices [__ | all]
+
+    ☐ Print out ticket with barcode on it?
+    ☐ Notify if allocation cannot be performed
+      ☐ Identify circumstances under which this is necessary
+      ☐ Identify method of notification

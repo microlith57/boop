@@ -1,0 +1,18 @@
+= render 'general/menu' do
+  %li
+    %span.header Groups
+%main
+  -# TODO: Display differently (tree view)
+  %table
+    %thead
+      %tr
+        %th= sort_link @q, :name
+        %th= sort_link @q, :code
+        %th= sort_link @q, :created_at, 'Created'
+    %tbody
+      - @groups.each do |group|
+        %tr
+          %td= link_to group.name, group
+          %td= group.code
+          %td= local_time group.created_at
+  != pagy_foundation_nav @pagy

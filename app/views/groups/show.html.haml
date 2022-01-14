@@ -1,0 +1,7 @@
+= render 'general/menu' do
+  %li
+    - if @group.parent.present?
+      = link_to @group.parent.name, @group.parent
+      \/
+    %span.header= @group.name
+%main
