@@ -69,7 +69,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    addressable (2.7.0)
+    addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
     autoprefixer-rails (10.2.4.0)
@@ -175,12 +175,12 @@ GEM
     marcel (1.0.1)
     method_source (1.0.0)
     mini_mime (1.0.3)
-    mini_portile2 (2.5.0)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
     msgpack (1.4.2)
-    nio4r (2.5.7)
-    nokogiri (1.11.3)
-      mini_portile2 (~> 2.5.0)
+    nio4r (2.5.8)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pagy (4.2.0)
@@ -190,8 +190,9 @@ GEM
     pg (1.2.3)
     psych (3.3.1)
     public_suffix (4.0.6)
-    puma (3.12.6)
-    racc (1.5.2)
+    puma (4.3.9)
+      nio4r (~> 2.0)
+    racc (1.6.0)
     rack (2.2.3)
     rack-proxy (0.6.5)
       rack
@@ -382,7 +383,7 @@ DEPENDENCIES
   local_time
   pagy
   pg
-  puma (~> 3.12)
+  puma (~> 4.3)
   rails (~> 6.1)
   ransack!
   reek
