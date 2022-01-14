@@ -6,7 +6,7 @@ Its current main goal is to be better than writing on paper.
 
 ## Requirements
 
-Boop requires Ruby 3.0.1, Bundler, Node 10, Yarn, and preferably a Linux environment.
+Boop requires Ruby 3.0.1, Bundler, Node 16, Yarn, and preferably a Linux environment.
 It must be connected to a PostgreSQL database.
 
 To install it in a consistent environment, a [Docker Compose configuration](https://github.com/microlith57/boop_docker/pkgs/container/boop_docker%2Fboop) is provided; this is the recommended method of installaton.
