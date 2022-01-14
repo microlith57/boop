@@ -11,7 +11,7 @@
     "foundation-sites": "^6.5.3",
     "jquery": "^3.4.1",
     "local-time": "^2.1.0",
-    "node-sass": "^4.13.0",
+    "sass": "^1.48.0",
     "stimulus": "^1.1.1",
     "trix": "^1.2.2",
     "turbolinks": "^5.2.0",
