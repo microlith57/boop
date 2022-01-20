@@ -28,7 +28,7 @@
     %thead
       %tr
         %th= sort_link @q, :name
-        %th= sort_link @q, :barcode_code
+        %th= sort_link @q, :barcode
         %th= sort_link @q, :created_at, 'Created'
         %th= sort_link @q, :current_loan_created_at, [:current_loan_created_at, :name], 'Issued'
         -# TODO: Sort/filter options
