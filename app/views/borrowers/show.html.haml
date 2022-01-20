@@ -1,6 +1,9 @@
 = render 'general/menu' do
   %li
     %span.header= @borrower.name
+  %li
+    %span
+      %code= @borrower.code
   %li.spacer
   %li= link_to 'Loans', loans_borrower_url(@borrower)
   %li= link_to 'Barcode', barcode_borrower_url(@borrower), 'data-turbolinks': false
